@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeSnoop", "Source\Yout
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{79136768-C860-4E98-B246-9406BEC6CF13}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{04E3BA06-7735-40DE-896E-FFC89A29490A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{79136768-C860-4E98-B246-9406BEC6CF13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79136768-C860-4E98-B246-9406BEC6CF13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79136768-C860-4E98-B246-9406BEC6CF13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04E3BA06-7735-40DE-896E-FFC89A29490A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04E3BA06-7735-40DE-896E-FFC89A29490A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04E3BA06-7735-40DE-896E-FFC89A29490A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04E3BA06-7735-40DE-896E-FFC89A29490A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

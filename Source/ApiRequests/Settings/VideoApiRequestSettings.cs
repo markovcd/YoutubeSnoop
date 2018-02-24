@@ -14,7 +14,7 @@ namespace YoutubeSnoop.ApiRequests.Settings
         public IEnumerable<ApiArgument> GetArguments()
         {
             yield return new ApiPartArgument(PartType.Snippet);
-            yield return new ApiIdArgument(Id);
+            yield return new ApiArgument("id", Id);
         }
     }
 }

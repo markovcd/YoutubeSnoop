@@ -47,7 +47,7 @@ namespace YoutubeSnoop
         {
             var settings = new PlaylistApiRequestSettings
             {
-                Id = _parent.Id,
+                PlaylistId = _parent.Id,
                 PageToken = pageToken,
                 MaxResults = _parent.Buffer
             };

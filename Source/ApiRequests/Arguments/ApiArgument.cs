@@ -5,7 +5,7 @@
         public virtual string ArgumentName { get; }
         public virtual string ArgumentValue { get; }
 
-        protected ApiArgument(string argumentName, string argumentValue)
+        public ApiArgument(string argumentName, string argumentValue)
         {
             ArgumentName = argumentName;
             ArgumentValue = argumentValue;
@@ -20,5 +20,10 @@
         {
             return $"{ArgumentName}={ArgumentValue}";
         }
+    }
+
+    public class ApiArgument<T> : ApiArgument
+    {
+        public ApiArgument(string argumentName, T argumentValue) : base(argumentName, argumentValue.ToString()) { }
     }
 }

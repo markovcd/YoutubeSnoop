@@ -1,4 +1,4 @@
-﻿namespace YoutubePlaylistSnoop.Entities
+﻿namespace YoutubeSnoop.Entities
 {
     class Thumbnail
     {

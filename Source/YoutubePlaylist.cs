@@ -1,20 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using YoutubeSnoop.ApiRequests;
 
-namespace YoutubePlaylistSnoop
+namespace YoutubeSnoop
 {
-    public class YoutubePlaylist : IEnumerable<YoutubeVideoInfo>
+    public class YoutubePlaylist : IEnumerable<YoutubeVideo>
     {
-        public string PlaylistId { get; }
+        public string Id { get; }
         public int Buffer { get; }
 
-        public YoutubePlaylist(string playlistId, int buffer = 20)
+        public YoutubePlaylist(string id, int buffer = 20)
         {
-            PlaylistId = playlistId;
+            Id = id;
             Buffer = buffer;
         }
 
-        public IEnumerator<YoutubeVideoInfo> GetEnumerator()
+        public IEnumerator<YoutubeVideo> GetEnumerator()
         {
             return new YoutubePlaylistEnumerator(this);
         }
@@ -23,5 +24,57 @@ namespace YoutubePlaylistSnoop
         {
             return GetEnumerator();
         }
+    }
+
+    class YoutubePlaylistEnumerator : IEnumerator<YoutubeVideo>
+    {
+        private readonly YoutubePlaylist _parent;
+
+        private int _index;
+        private Entities.Response _playlist;
+
+        public YoutubeVideo Current { get; private set; }
+        object IEnumerator.Current => Current;
+
+        public YoutubePlaylistEnumerator(YoutubePlaylist parent)
+        {
+            _parent = parent;
+            Reset();
+        }
+
+        private Entities.Response GetPlaylist(string pageToken = "")
+        {
+            var api = new PlaylistApiRequest(_parent.Id, pageToken, _parent.Buffer);
+            return api.Response;
+        }
+
+        private void UpdateCurrent()
+        {
+            Current = new YoutubeVideo(_playlist.Items[_index].Snippet);
+        }
+
+        public bool MoveNext()
+        {
+            _index++;
+            if (_index == _playlist.Items.Count)
+            {
+                _index = 0;
+                if (string.IsNullOrWhiteSpace(_playlist.NextPageToken)) return false;
+                _playlist = GetPlaylist(_playlist.NextPageToken);
+            }
+
+            UpdateCurrent();
+
+            return true;
+        }
+
+        public void Reset()
+        {
+            _index = 0;
+            _playlist = GetPlaylist();
+            UpdateCurrent();
+        }
+
+        public void Dispose() { }
     }
 }

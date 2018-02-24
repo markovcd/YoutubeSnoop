@@ -1,6 +1,6 @@
-﻿namespace YoutubeSnoop.ApiArguments
+﻿namespace YoutubeSnoop.ApiRequests.Arguments
 {
-    public abstract class ApiArgument
+    public class ApiArgument
     {
         public virtual string ArgumentName { get; }
         public virtual string ArgumentValue { get; }

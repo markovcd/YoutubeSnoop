@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using YoutubeSnoop.ApiRequests;
+using YoutubeSnoop.ApiRequests.Settings;
 
 namespace YoutubeSnoop
 {
@@ -44,8 +45,14 @@ namespace YoutubeSnoop
 
         private Entities.Response GetPlaylist(string pageToken = "")
         {
-            var api = new PlaylistApiRequest(_parent.Id, pageToken, _parent.Buffer);
-            return api.Response;
+            var settings = new PlaylistApiRequestSettings
+            {
+                Id = _parent.Id,
+                PageToken = pageToken,
+                MaxResults = _parent.Buffer
+            };
+            
+            return settings.Deserialize();
         }
 
         private void UpdateCurrent()

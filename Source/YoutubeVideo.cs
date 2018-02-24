@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using YoutubeSnoop.ApiRequests;
+using YoutubeSnoop.ApiRequests.Settings;
 
 namespace YoutubeSnoop
 {
@@ -29,7 +30,13 @@ namespace YoutubeSnoop
             Thumbnails = snippet.Thumbnails?.ToDictionary(kv => kv.Key, kv => kv.Value.Url);
         }
 
-        public YoutubeVideo(string id) : this(new VideoApiRequest(id).Response.Items.First().Snippet)
+        private static Entities.Snippet GetSnippet(string id)
+        {
+            var settings = new VideoApiRequestSettings { Id = id };
+            return settings.Deserialize().Items.First().Snippet;
+        }
+
+        public YoutubeVideo(string id) : this(GetSnippet(id))
         {
             VideoId = id;
         }

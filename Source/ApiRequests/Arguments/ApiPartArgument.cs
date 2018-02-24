@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace YoutubeSnoop.ApiArguments
+namespace YoutubeSnoop.ApiRequests.Arguments
 {
     public enum PartType
     {

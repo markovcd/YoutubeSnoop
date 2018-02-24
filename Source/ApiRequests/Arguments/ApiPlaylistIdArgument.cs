@@ -1,4 +1,4 @@
-﻿namespace YoutubeSnoop.ApiArguments
+﻿namespace YoutubeSnoop.ApiRequests.Arguments
 {
     public class ApiPlaylistIdArgument : ApiArgument
     {

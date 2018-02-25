@@ -51,7 +51,7 @@ namespace YoutubeSnoop
                 PageToken = pageToken,
                 MaxResults = _parent.Buffer
             };
-            
+
             return settings.Deserialize();
         }
 

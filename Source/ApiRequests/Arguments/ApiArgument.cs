@@ -18,6 +18,7 @@
 
         public override string ToString()
         {
+            if (string.IsNullOrEmpty(ArgumentValue)) return string.Empty;
             return $"{ArgumentName}={ArgumentValue}";
         }
     }

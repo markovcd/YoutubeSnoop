@@ -1,6 +1,6 @@
 ﻿namespace YoutubeSnoop.Entities
 {
-    class Thumbnail
+    public class Thumbnail
     {
         public string Url { get; set; }
         public int Width { get; set; }

@@ -3,41 +3,80 @@ using System.Net;
 using YoutubeSnoop.Static;
 using Newtonsoft.Json;
 using YoutubeSnoop.ApiRequests.Settings;
+using YoutubeSnoop.Entities.Interfaces;
+using System.Collections.Generic;
+using System.Collections;
+using YoutubeSnoop.Entities.Enumerables;
+using YoutubeSnoop.ApiRequests.Settings.Interfaces;
 
 namespace YoutubeSnoop.ApiRequests
 {
-    static class ApiRequest
+    public abstract class ApiRequest<TResponse, TItem> : IEnumerable<TItem>
+        where TResponse : class, IPagedResponse<TItem>
+        where TItem : ISnippetResponse
     {
         private const string _apiKey = "AIzaSyAHVb6LDoO5aARmDlUe9PIeU_U1et1bWd8"; // project Api key, do not touch!
         private const string _apiUrl = "https://www.googleapis.com/youtube/v3/{0}?{1}&key={2}";
 
-        public static string FormatApiUrl(IApiRequestSettings settings)
-        {
-            var requestTypeString = settings.RequestType.GetDescription();
-            var argumentString = settings.GetArguments().Aggregate("", (s, a) => $"{s}&{a}").Substring(1);
+        private TResponse _response;
+        public TResponse Response => _response ?? (_response = Deserialize(PageToken));
 
-            return string.Format(_apiUrl, requestTypeString, argumentString, _apiKey);
+        public IApiRequestSettings Settings { get; }
+        public ApiRequestType RequestType { get; }
+        public int MaxResults { get; }
+        public string PageToken { get; set; }
+
+        protected ApiRequest(ApiRequestType requestType, int maxResults, IApiRequestSettings settings, string pageToken = null)
+        {
+            RequestType = requestType;
+            MaxResults = maxResults;
+            Settings = settings;
+            PageToken = pageToken;
         }
 
-        public static string RequestData(string requestUrl)
+        protected static string FormatApiUrl(ApiRequestType requestType, string pageToken, int maxResults, IApiRequestSettings settings)
+        {
+            var arguments = settings.GetArguments().ToList();
+            arguments.Add(new Arguments.ApiPartArgument(Arguments.PartType.Snippet));
+            arguments.Add(new Arguments.ApiArgument("pageToken", pageToken));
+            arguments.Add(new Arguments.ApiArgument<int>("maxResults", maxResults));
+
+            var argumentString = arguments.Aggregate("", (s, a) => $"{s}&{a}").Substring(1);
+
+            return string.Format(_apiUrl, requestType.GetDescription(), argumentString, _apiKey);
+        }
+
+        protected static string RequestData(string requestUrl)
         {
             var http = new WebClient();
             return http.DownloadString(requestUrl);
         }
 
-        public static string RequestData(IApiRequestSettings settings)
+        protected static string RequestData(ApiRequestType requestType, string pageToken, int maxResults, IApiRequestSettings settings)
         {
-            return RequestData(FormatApiUrl(settings));
+            return RequestData(FormatApiUrl(requestType, pageToken, maxResults, settings));
         }
 
-        public static Entities.Response Deserialize(string data)
+        protected static TResponse Deserialize(ApiRequestType requestType, string pageToken, int maxResults, IApiRequestSettings settings)
         {
-            return JsonConvert.DeserializeObject<Entities.Response>(data);
+            var data = RequestData(requestType, pageToken, maxResults, settings);
+            return JsonConvert.DeserializeObject<TResponse>(data);
         }
 
-        public static Entities.Response Deserialize(this IApiRequestSettings settings)
+        protected TResponse Deserialize(string pageToken)
         {
-            return Deserialize(RequestData(settings));
+            return Deserialize(RequestType, pageToken, MaxResults, Settings);
+        }
+
+        public IEnumerator<TItem> GetEnumerator()
+        {
+            var enumerable = new PagedResponseEnumerable<TResponse, TItem>(Response, Deserialize);
+            return enumerable.SelectMany(r => r.Items).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 

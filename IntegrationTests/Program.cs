@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using YoutubeSnoop;
+using YoutubeSnoop.ApiRequests;
+using YoutubeSnoop.ApiRequests.Settings;
 
 namespace IntegrationTests
 {
@@ -8,8 +10,21 @@ namespace IntegrationTests
     {
         static void Main(string[] args)
         {
-            var v = new YoutubeVideo("6vpOHq8bkzA");
-            var p = new YoutubePlaylist("PLg-NWZjrm22sznjdUEeNYSbA-Bt24f4SW").ToList();
+            var ps = new PlaylistApiRequestSettings();
+            ps.PlaylistId = "PLg-NWZjrm22usa_eVDKCADwbJ29JYOrDI";
+            var p = new PlaylistApiRequest(ps);
+            var pr = p.Response;
+            var l = p.ToList();
+
+            var vs = new VideoApiRequestSettings();
+            vs.Id = "6vpOHq8bkzA";
+            var v = new VideoApiRequest(vs);
+            var vr = v.Response;
+
+            var ss = new SearchApiRequestSettings();
+            ss.Query = "markovcd playlist";
+            var s = new SearchApiRequest(ss);
+            var sr = s.Response;
         }
     }
 }

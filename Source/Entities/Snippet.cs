@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using YoutubeSnoop.Entities.Converters;
 
 namespace YoutubeSnoop.Entities
 {
-    class Snippet
+    public class Snippet : Interfaces.ITitleDescription
     {
         public DateTime PublishedAt { get; set; }
         public string ChannelId { get; set; }
@@ -12,13 +14,17 @@ namespace YoutubeSnoop.Entities
         public string ChannelTitle { get; set; }
         public IList<string> Tags { get; set; }
         public string PlaylistId { get; set; }
-        public int Position { get; set; }
-        public int CategoryId { get; set; }
+        public int? Position { get; set; }
+        public int? CategoryId { get; set; }
         public string LiveBroadcastContent { get; set; }
         public TitleDescription Localized { get; set; }
-        public ResourceId ResourceId { get; set; }
         public IDictionary<string, Thumbnail> Thumbnails { get; set; }
+
+        [JsonConverter(typeof(ResourceIdConverter))]
+        public Interfaces.IResourceId ResourceId { get; set; }
     }
 
     
+
+
 }

@@ -1,6 +1,6 @@
 ﻿namespace YoutubeSnoop.Entities
 {
-    class TitleDescription
+    public class TitleDescription : Interfaces.ITitleDescription
     {
         public string Title { get; set; }
         public string Description { get; set; }

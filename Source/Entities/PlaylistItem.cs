@@ -1,8 +1,12 @@
-﻿namespace YoutubeSnoop.Entities
+﻿using Newtonsoft.Json;
+using YoutubeSnoop.Entities.Converters;
+
+namespace YoutubeSnoop.Entities
 {
-    class PlaylistItem
+    public class PlaylistItem : Interfaces.ISnippetResponse
     {
-        public string Kind { get; set; }
+        [JsonConverter(typeof(ResourceKindConverter))]
+        public ResourceKind Kind { get; set; }
         public string Etag { get; set; }
         public string Id { get; set; }
         public Snippet Snippet { get; set; }

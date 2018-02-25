@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using YoutubeSnoop.ApiRequests.Arguments;
+﻿using System.ComponentModel;
 
 namespace YoutubeSnoop.ApiRequests.Settings
 {
@@ -14,9 +12,4 @@ namespace YoutubeSnoop.ApiRequests.Settings
         Search
     }
 
-    interface IApiRequestSettings
-    {
-        IEnumerable<ApiArgument> GetArguments();
-        ApiRequestType RequestType { get; }
-    }
 }

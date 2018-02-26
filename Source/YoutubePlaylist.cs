@@ -1,87 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using YoutubeSnoop.ApiRequests;
-using YoutubeSnoop.ApiRequests.Settings;
-
-namespace YoutubeSnoop
+﻿namespace YoutubeSnoop
 {
-    public class YoutubePlaylist : IEnumerable<YoutubeVideo>
-    {
-        public string Id { get; }
-        public int Buffer { get; }
+    //public class YoutubePlaylist : IEnumerable<YoutubeVideo>
+    //{
+    //    public int Buffer { get; }
 
-        public YoutubePlaylist(string id, int buffer = 20)
-        {
-            Id = id;
-            Buffer = buffer;
-        }
+    //    public PlaylistApiRequestSettings Settings { get; }
 
-        public IEnumerator<YoutubeVideo> GetEnumerator()
-        {
-            return new YoutubePlaylistEnumerator(this);
-        }
+    //    private IList<YoutubeVideo> _videos;
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-    }
+    //    public YoutubePlaylist(string playlistId, int buffer = 20)
+    //        : this(new PlaylistApiRequestSettings { PlaylistId = playlistId}, buffer) { }
 
-    class YoutubePlaylistEnumerator : IEnumerator<YoutubeVideo>
-    {
-        private readonly YoutubePlaylist _parent;
+    //    public YoutubePlaylist( PlaylistApiRequestSettings settings, int buffer = 20)
+    //    {
+    //        Buffer = buffer;
+    //        Settings = settings;
+    //    }
 
-        private int _index;
-        private Entities.Response _playlist;
+    //    public IEnumerator<YoutubeVideo> GetEnumerator()
+    //    {
+    //        if (_videos == null)
+    //        {
+    //            var api = new PlaylistApiRequest(Settings);
+    //            _videos = api.TotalItems.Select(i => new YoutubeVideo(i.Snippet)).ToList();
+    //        }
 
-        public YoutubeVideo Current { get; private set; }
-        object IEnumerator.Current => Current;
+    //        return _videos.GetEnumerator();
+    //    }
 
-        public YoutubePlaylistEnumerator(YoutubePlaylist parent)
-        {
-            _parent = parent;
-            Reset();
-        }
-
-        private Entities.Response GetPlaylist(string pageToken = "")
-        {
-            var settings = new PlaylistApiRequestSettings
-            {
-                PlaylistId = _parent.Id,
-                PageToken = pageToken,
-                MaxResults = _parent.Buffer
-            };
-
-            return settings.Deserialize();
-        }
-
-        private void UpdateCurrent()
-        {
-            Current = new YoutubeVideo(_playlist.Items[_index].Snippet);
-        }
-
-        public bool MoveNext()
-        {
-            _index++;
-            if (_index == _playlist.Items.Count)
-            {
-                _index = 0;
-                if (string.IsNullOrWhiteSpace(_playlist.NextPageToken)) return false;
-                _playlist = GetPlaylist(_playlist.NextPageToken);
-            }
-
-            UpdateCurrent();
-
-            return true;
-        }
-
-        public void Reset()
-        {
-            _index = 0;
-            _playlist = GetPlaylist();
-            UpdateCurrent();
-        }
-
-        public void Dispose() { }
-    }
+    //    IEnumerator IEnumerable.GetEnumerator()
+    //    {
+    //        return GetEnumerator();
+    //    }
+    //}
 }

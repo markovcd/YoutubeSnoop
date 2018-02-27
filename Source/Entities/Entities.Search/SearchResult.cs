@@ -13,7 +13,7 @@ namespace YoutubeSnoop.Entities
         public string Etag { get; set; }
 
         [JsonConverter(typeof(ResourceIdConverter))]
-        public IResourceId Id { get; set; }
+        public IResource Id { get; set; }
 
         public SearchSnippet Snippet { get; set; }
     }

@@ -1,6 +1,6 @@
 ﻿namespace YoutubeSnoop.Interfaces
 {
-    public interface IResponse : IResourceId
+    public interface IResponse : IResource
     {
         string Etag { get; }
     }

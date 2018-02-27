@@ -17,6 +17,6 @@ namespace YoutubeSnoop.Entities
         public IDictionary<string, Thumbnail> Thumbnails { get; set; }
 
         [JsonConverter(typeof(ResourceIdConverter))]
-        public Interfaces.IResourceId ResourceId { get; set; }
+        public Interfaces.IResource ResourceId { get; set; }
     }
 }

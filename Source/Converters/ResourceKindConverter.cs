@@ -4,7 +4,7 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Converters
 {
-    internal class ResourceKindConverter : JsonConverter<ResourceKind>
+    public class ResourceKindConverter : JsonConverter<ResourceKind>
     {
         public static ResourceKind Convert(string s)
         {

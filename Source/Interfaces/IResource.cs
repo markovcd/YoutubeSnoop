@@ -2,7 +2,7 @@
 
 namespace YoutubeSnoop.Interfaces
 {
-    public interface IResourceId
+    public interface IResource
     {
         ResourceKind Kind { get; }
     }

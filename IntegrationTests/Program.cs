@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using YoutubeSnoop;
+using YoutubeSnoop.Entities;
 using YoutubeSnoop.Enums;
 using YoutubeSnoop.Settings;
 
@@ -9,19 +11,14 @@ namespace IntegrationTests
     {
         private static void Main(string[] args)
         {
-            var settings = new VideoApiRequestSettings
-            {
-                Id = "j_qWBhhQNzg"
-            };
+            var settings = new SearchApiRequestSettings();
+            settings.Order = SearchOrder.Date;
+            settings.PublishedAfter = new DateTime(2018, 02, 27);
+            settings.RegionCode = CountryCode.Pl;
+            settings.Query = "planking";
 
-            var parts = new[]
-            {
-                PartType.ContentDetails, PartType.Snippet, PartType.Statistics, PartType.Status, PartType.Localizations 
-            };
-
-            var api = ApiRequest.Create(settings, parts);
-
-            var l =  api.TotalItems.ToList();
+            var api = new ApiRequest<SearchResult, SearchApiRequestSettings>(settings, PartType.Snippet);
+            var response = api.Response;
         }
     }
 }

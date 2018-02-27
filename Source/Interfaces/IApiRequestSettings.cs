@@ -6,7 +6,7 @@ namespace YoutubeSnoop.Interfaces
 {
     public interface IApiRequestSettings
     {
-        ApiRequestType RequestType { get; }
+        RequestType RequestType { get; }
 
         IEnumerable<ApiArgument> GetArguments();
     }

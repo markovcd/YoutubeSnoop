@@ -1,40 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
-using YoutubeSnoop.Arguments;
+using YoutubeSnoop.Attributes;
+using YoutubeSnoop.Converters;
 using YoutubeSnoop.Enums;
-using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop.Settings
 {
-    public class SearchApiRequestSettings : IApiRequestSettings
+    public sealed class SearchApiRequestSettings : ApiRequestSettings
     {
-        public ApiRequestType RequestType => ApiRequestType.Search;
+        public override RequestType RequestType => RequestType.Search;
 
+        [ApiRequestArgumentName("q")]
         public string Query { get; set; }
-        public string Id { get; set; }
         public string ChannelId { get; set; }
+        public string ChannelType { get; set; }
+        public string EventType { get; set; }
+        public string Location { get; set; }
+        public string LocationRadius { get; set; }
         public SearchOrder? Order { get; set; }
+
+        [ApiRequestConverter(typeof(DateTimeConverter))]
         public DateTime? PublishedAfter { get; set; }
+
+        [ApiRequestConverter(typeof(DateTimeConverter))]
         public DateTime? PublishedBefore { get; set; }
+        public CountryCode? RegionCode { get; set; }
         public string RelatedToVideoId { get; set; }
+        public LanguageCode? RelevanceLanguage { get; set; }
         public SafeSearch? SafeSearch { get; set; }
         public string TopicId { get; set; }
         public string VideoCategoryId { get; set; }
         public Duration? VideoDuration { get; set; }
+        public string Type { get; set; }
+        public Caption? VideoCaption { get; set; }
+        public Definition? VideoDefinition { get; set; }
 
-        public IEnumerable<ApiArgument> GetArguments()
-        {
-            yield return new ApiArgument("q", Query);
-            yield return new ApiArgument("channelId", ChannelId);
-            yield return new ApiArgument<SearchOrder?>("order", Order);
-            yield return new ApiArgument<DateTime?>("publishedAfter", PublishedAfter);
-            yield return new ApiArgument<DateTime?>("publishedBefore", PublishedBefore);
-            yield return new ApiArgument("relatedToVideoId", RelatedToVideoId);
-            yield return new ApiArgument<SafeSearch?>("safeSearch", SafeSearch);
-            yield return new ApiArgument("topicId", TopicId);
-            // todo: type
-            yield return new ApiArgument("videoCategoryId", VideoCategoryId);
-            yield return new ApiArgument<Duration?>("videoDuration", VideoDuration);
-        }
+        [ApiRequestConverter(typeof(EnumDescriptionConverter))]
+        public Dimension? VideoDimension { get; set; }
+        public AnyOrTrue? VideoEmbeddable { get; set; }
+        public License? VideoLicense { get; set; }
+        public AnyOrTrue? VideoSyndicated { get; set; }
+        public VideoType? VideoType { get; set; }
     }
 }

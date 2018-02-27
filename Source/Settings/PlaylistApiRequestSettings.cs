@@ -1,21 +1,14 @@
-﻿using System.Collections.Generic;
-using YoutubeSnoop.Arguments;
-using YoutubeSnoop.Enums;
-using YoutubeSnoop.Interfaces;
+﻿using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Settings
 {
-    public class PlaylistApiRequestSettings : IApiRequestSettings
+    public sealed class PlaylistApiRequestSettings : ApiRequestSettings
     {
-        public string PlaylistId { get; set; }
-        public string VideoId { get; set; }
+        public override RequestType RequestType => RequestType.Playlists;
 
-        public ApiRequestType RequestType => ApiRequestType.PlaylistItems;
+        public string ChannelId { get; set; }
+        public string Hl { get; set; }
+        public string Id { get; set; }
 
-        public IEnumerable<ApiArgument> GetArguments()
-        {
-            yield return new ApiArgument("playlistId", PlaylistId);
-            yield return new ApiArgument("videoId", VideoId);
-        }
     }
 }

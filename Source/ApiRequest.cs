@@ -28,19 +28,19 @@ namespace YoutubeSnoop
             return new ApiRequest<Video, VideoApiRequestSettings>(settings, pageToken, maxResults);
         }
 
-        public static ApiRequest<PlaylistItem, PlaylistApiRequestSettings> Create(PlaylistApiRequestSettings settings, IEnumerable<PartType> partTypes, string pageToken = null, int maxResults = 20)
+        public static ApiRequest<PlaylistItem, PlaylistItemsApiRequestSettings> Create(PlaylistItemsApiRequestSettings settings, IEnumerable<PartType> partTypes, string pageToken = null, int maxResults = 20)
         {
-            return new ApiRequest<PlaylistItem, PlaylistApiRequestSettings>(settings, partTypes, pageToken, maxResults);
+            return new ApiRequest<PlaylistItem, PlaylistItemsApiRequestSettings>(settings, partTypes, pageToken, maxResults);
         }
 
-        public static ApiRequest<PlaylistItem, PlaylistApiRequestSettings> Create(PlaylistApiRequestSettings settings, PartType partType, string pageToken = null, int maxResults = 20)
+        public static ApiRequest<PlaylistItem, PlaylistItemsApiRequestSettings> Create(PlaylistItemsApiRequestSettings settings, PartType partType, string pageToken = null, int maxResults = 20)
         {
-            return new ApiRequest<PlaylistItem, PlaylistApiRequestSettings>(settings, partType, pageToken, maxResults);
+            return new ApiRequest<PlaylistItem, PlaylistItemsApiRequestSettings>(settings, partType, pageToken, maxResults);
         }
 
-        public static ApiRequest<PlaylistItem, PlaylistApiRequestSettings> Create(PlaylistApiRequestSettings settings, string pageToken = null, int maxResults = 20)
+        public static ApiRequest<PlaylistItem, PlaylistItemsApiRequestSettings> Create(PlaylistItemsApiRequestSettings settings, string pageToken = null, int maxResults = 20)
         {
-            return new ApiRequest<PlaylistItem, PlaylistApiRequestSettings>(settings, pageToken, maxResults);
+            return new ApiRequest<PlaylistItem, PlaylistItemsApiRequestSettings>(settings, pageToken, maxResults);
         }
 
         public static ApiRequest<SearchResult, SearchApiRequestSettings> Create(SearchApiRequestSettings settings, IEnumerable<PartType> partTypes, string pageToken = null, int maxResults = 20)
@@ -104,8 +104,8 @@ namespace YoutubeSnoop
             arguments.Add(new ApiArgument<bool>("prettyPrint", false));
 
             var argumentString = arguments.Select(a => a.ToString()).Where(s => !string.IsNullOrEmpty(s)).Aggregate((s1, s2) => $"{s1}&{s2}");
-            System.Diagnostics.Debug.Print(argumentString);
-            return string.Format(_apiUrl, settings.RequestType.GetDescription(), argumentString, _apiKey);
+
+            return string.Format(_apiUrl, settings.RequestType.ToCamelCase(), argumentString, _apiKey);
         }
 
         protected static string RequestData(string requestUrl)

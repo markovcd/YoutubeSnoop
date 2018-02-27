@@ -1,19 +1,17 @@
-﻿using System.Collections.Generic;
-using YoutubeSnoop.Arguments;
-using YoutubeSnoop.Enums;
-using YoutubeSnoop.Interfaces;
+﻿using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Settings
 {
-    public class VideoApiRequestSettings : IApiRequestSettings
+    public sealed class VideoApiRequestSettings : ApiRequestSettings
     {
-        public ApiRequestType RequestType => ApiRequestType.Videos;
+        public override RequestType RequestType => RequestType.Videos;
 
         public string Id { get; set; }
-
-        public IEnumerable<ApiArgument> GetArguments()
-        {
-            yield return new ApiArgument("id", Id);
-        }
+        public Chart? Chart { get; set; }
+        public string Hl { get; set; }
+        public int? MaxHeight { get; set; }
+        public int? MaxWidth { get; set; }
+        public CountryCode? RegionCode { get; set; }
+        public string VideoCategoryId { get; set; }
     }
 }

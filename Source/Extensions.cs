@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace YoutubeSnoop.Enums
+namespace YoutubeSnoop
 {
-    public static class EnumHelper
+    public static class Extensions
     {
         public static string GetDescription(this Enum value)
         {
@@ -12,6 +12,16 @@ namespace YoutubeSnoop.Enums
             if (fieldInfo == null) return null;
             var attribute = (DescriptionAttribute)fieldInfo.GetCustomAttribute(typeof(DescriptionAttribute));
             return attribute.Description;
+        }
+
+        public static string ToCamelCase(this string value)
+        {
+            return value.Substring(0, 1).ToLower() + value.Substring(1);
+        }
+
+        public static string ToCamelCase(this Enum value)
+        {
+            return ToCamelCase(value.ToString());
         }
     }
 }

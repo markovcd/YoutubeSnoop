@@ -1,16 +1,33 @@
 ﻿namespace YoutubeSnoop.Enums
 {
-    public enum ResourceKind
-    {
-        None,
-        Video,
-        Playlist,
-        Channel,
-        PlaylistItem,
-        SearchResult,
-        VideoListResponse,
-        SearchListResponse,
-        ChannelListResponse,
-        PlaylistItemListResponse,
-    }
+	public enum ResourceKind
+	{
+		None,
+		Video,
+		Playlist,
+		Channel,
+		ChannelSection,
+		Activity,
+		Caption,
+		Comment,
+		CommentThread,
+		GuideCategory,
+		PlaylistItem,
+		SearchResult,
+		VideoListResponse,
+		SearchListResponse,
+		ChannelListResponse,
+		PlaylistListResponse,
+		SubscriptionListResponse,
+		Subscription,
+		PlaylistItemListResponse,
+		GuideCategoryListResponse,
+		ChannelBannerResource,
+		I18nLanguageListResponse,
+		I18nRegionListResponse,
+		I18nLanguage,
+		I18nRegion,
+		VideoAbuseReportReason,
+		VideoCategory
+	}
 }

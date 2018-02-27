@@ -17,10 +17,11 @@ namespace YoutubeSnoop.Entities
         public IDictionary<string, TitleDescription> Localizations { get; set; }
         public ChannelSnippet Snippet { get; set; }
         public ChannelContentDetails ContentDetails { get; set; }
+        public ChannelContentOwnerDetails ContentOwnerDetails { get; set; }
         public ChannelStatistics Statistics { get; set; }
         public ChannelTopicDetails TopicDetails { get; set; }
         public ChannelStatus Status { get; set; }
         public ChannelBrandingSettings BrandingSettings { get; set; }
-        
+
     }
 }

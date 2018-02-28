@@ -5,7 +5,7 @@ using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop.Converters
 {
-    public class ResourceConverter : JsonConverter<IResource>
+    public class ResourceConverter : OneWayJsonConverter<IResource>
     {
         public override IResource ReadJson(JsonReader reader, Type objectType, IResource existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
@@ -19,11 +19,6 @@ namespace YoutubeSnoop.Converters
             }
 
             return null;
-        }
-
-        public override void WriteJson(JsonWriter writer, Interfaces.IResource value, JsonSerializer serializer)
-        {
-            throw new NotImplementedException();
         }
     }
 }

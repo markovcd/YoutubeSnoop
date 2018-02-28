@@ -4,7 +4,7 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Converters
 {
-    public class ResourceKindConverter : JsonConverter<ResourceKind>
+    public class ResourceKindConverter : OneWayJsonConverter<ResourceKind>
     {
         public static ResourceKind Convert(string s)
         {
@@ -26,11 +26,6 @@ namespace YoutubeSnoop.Converters
             }
 
             throw new InvalidOperationException();
-        }
-
-        public override void WriteJson(JsonWriter writer, ResourceKind value, JsonSerializer serializer)
-        {
-            throw new NotImplementedException();
         }
     }
 }

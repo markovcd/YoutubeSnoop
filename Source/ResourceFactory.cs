@@ -23,7 +23,18 @@ namespace YoutubeSnoop
 
             var responseType = typeof(Response<>).MakeGenericType(new[] { responseAttribute.EntityType });
             return (IResponse)JsonConvert.DeserializeObject(json, responseType);
+        }
 
+        public static TResource Deserialize<TResource>(string json) where TResource : IResource
+        {
+            return JsonConvert.DeserializeObject<TResource>(json);
+        }
+
+        public static Response<TItem> DeserializeResponse<TItem>(string json) where TItem : IResponse
+        {
+            var response = JsonConvert.DeserializeObject<Response<TItem>>(json);
+            response.Json = json;
+            return response;
         }
     }
 }

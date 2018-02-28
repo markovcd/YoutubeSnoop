@@ -1,7 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using YoutubeSnoop.Arguments;
 using YoutubeSnoop.Entities;
 using YoutubeSnoop.Enumerables;
@@ -99,8 +97,8 @@ namespace YoutubeSnoop
         {
             var arguments = settings.GetArguments().ToList();
             arguments.Add(new ApiPartArgument(partTypes));
-            arguments.Add(new ApiArgument("pageToken", pageToken));
-            arguments.Add(new ApiArgument<int>("maxResults", maxResults));
+            arguments.Add(new ApiArgument(nameof(pageToken), pageToken));
+            arguments.Add(new ApiArgument<int>(nameof(maxResults), maxResults));
             arguments.Add(new ApiArgument<bool>("prettyPrint", false));
 
             var argumentString = arguments.Select(a => a.ToString()).Where(s => !string.IsNullOrEmpty(s)).Aggregate((s1, s2) => $"{s1}&{s2}");
@@ -108,19 +106,11 @@ namespace YoutubeSnoop
             return string.Format(_apiUrl, settings.RequestType.ToCamelCase(), argumentString, _apiKey);
         }
 
-        protected static string RequestData(string requestUrl)
-        {
-            var http = new WebClient();
-            return http.DownloadString(requestUrl);
-        }
-
         public Response<TItem> Deserialize(string pageToken)
         {
             RequestUrl = FormatApiUrl(Settings, PartTypes, pageToken, MaxResults);
-            var data = RequestData(RequestUrl);
-            var response = JsonConvert.DeserializeObject<Response<TItem>>(data);
-            response.Json = data;
-            return response;
+            var json = JsonDownloader.Download(RequestUrl);
+            return ResourceFactory.DeserializeResponse<TItem>(json);
         }
     }
 }

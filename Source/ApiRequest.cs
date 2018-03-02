@@ -9,54 +9,6 @@ using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop
 {
-    public static class ApiRequest
-    {
-        public static ApiRequest<Video, VideoApiRequestSettings> Create(VideoApiRequestSettings settings, IEnumerable<PartType> partTypes, string pageToken = null, int maxResults = 20)
-        {
-            return new ApiRequest<Video, VideoApiRequestSettings>(settings, partTypes, pageToken, maxResults);
-        }
-
-        public static ApiRequest<Video, VideoApiRequestSettings> Create(VideoApiRequestSettings settings, PartType partType, string pageToken = null, int maxResults = 20)
-        {
-            return new ApiRequest<Video, VideoApiRequestSettings>(settings, partType, pageToken, maxResults);
-        }
-
-        public static ApiRequest<Video, VideoApiRequestSettings> Create(VideoApiRequestSettings settings, string pageToken = null, int maxResults = 20)
-        {
-            return new ApiRequest<Video, VideoApiRequestSettings>(settings, pageToken, maxResults);
-        }
-
-        public static ApiRequest<PlaylistItem, PlaylistItemsApiRequestSettings> Create(PlaylistItemsApiRequestSettings settings, IEnumerable<PartType> partTypes, string pageToken = null, int maxResults = 20)
-        {
-            return new ApiRequest<PlaylistItem, PlaylistItemsApiRequestSettings>(settings, partTypes, pageToken, maxResults);
-        }
-
-        public static ApiRequest<PlaylistItem, PlaylistItemsApiRequestSettings> Create(PlaylistItemsApiRequestSettings settings, PartType partType, string pageToken = null, int maxResults = 20)
-        {
-            return new ApiRequest<PlaylistItem, PlaylistItemsApiRequestSettings>(settings, partType, pageToken, maxResults);
-        }
-
-        public static ApiRequest<PlaylistItem, PlaylistItemsApiRequestSettings> Create(PlaylistItemsApiRequestSettings settings, string pageToken = null, int maxResults = 20)
-        {
-            return new ApiRequest<PlaylistItem, PlaylistItemsApiRequestSettings>(settings, pageToken, maxResults);
-        }
-
-        public static ApiRequest<SearchResult, SearchApiRequestSettings> Create(SearchApiRequestSettings settings, IEnumerable<PartType> partTypes, string pageToken = null, int maxResults = 20)
-        {
-            return new ApiRequest<SearchResult, SearchApiRequestSettings>(settings, partTypes, pageToken, maxResults);
-        }
-
-        public static ApiRequest<SearchResult, SearchApiRequestSettings> Create(SearchApiRequestSettings settings, PartType partType, string pageToken = null, int maxResults = 20)
-        {
-            return new ApiRequest<SearchResult, SearchApiRequestSettings>(settings, partType, pageToken, maxResults);
-        }
-
-        public static ApiRequest<SearchResult, SearchApiRequestSettings> Create(SearchApiRequestSettings settings, string pageToken = null, int maxResults = 20)
-        {
-            return new ApiRequest<SearchResult, SearchApiRequestSettings>(settings, pageToken, maxResults);
-        }
-    }
-
     public class ApiRequest<TItem, TSettings>
         where TItem : IResponse
         where TSettings : IApiRequestSettings

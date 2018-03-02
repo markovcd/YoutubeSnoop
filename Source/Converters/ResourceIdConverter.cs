@@ -19,9 +19,9 @@ namespace YoutubeSnoop.Converters
 
                 switch (kind)
                 {
-                    case ResourceKind.Video: return JsonConvert.DeserializeObject<VideoResourceId>(s);
-                    case ResourceKind.Playlist: return JsonConvert.DeserializeObject<PlaylistResourceId>(s);
-                    case ResourceKind.Channel: return JsonConvert.DeserializeObject<ChannelResourceId>(s);
+                    case ResourceKind.Video: return JsonConvert.DeserializeObject<ResourceIdVideo>(s);
+                    case ResourceKind.Playlist: return JsonConvert.DeserializeObject<ResourceIdPlaylist>(s);
+                    case ResourceKind.Channel: return JsonConvert.DeserializeObject<ResourceIdChannel>(s);
                     default: throw new InvalidOperationException();
                 }
             }

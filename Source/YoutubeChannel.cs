@@ -1,10 +1,10 @@
 ﻿
-using YoutubeSnoop.Entities;
+using YoutubeSnoop.Entities.Channels;
 using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeChannel : YoutubeSnippetBase<ChannelApiRequestSettings, ChannelSnippet, Channel>
+    public class YoutubeChannel : YoutubeSnippetBase<ChannelApiRequestSettings, Snippet, Channel>
     {
         private const string _youtubeUrl = @"https://www.youtube.com/channel/{0}";
 

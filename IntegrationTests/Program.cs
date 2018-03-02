@@ -4,6 +4,7 @@ using YoutubeSnoop;
 using YoutubeSnoop.Entities;
 using YoutubeSnoop.Enums;
 using YoutubeSnoop.Settings;
+using YoutubeSnoop.Entities.Search;
 
 namespace IntegrationTests
 {

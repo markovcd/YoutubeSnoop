@@ -11,11 +11,13 @@ namespace IntegrationTests
     {
         private static void Main(string[] args)
         {
-            var settings = new SearchApiRequestSettings();
-            settings.Order = SearchOrder.Date;
-            settings.PublishedAfter = new DateTime(2018, 02, 27);
-            settings.RegionCode = CountryCode.Pl;
-            settings.Query = "planking";
+            var settings = new SearchApiRequestSettings
+            {
+                Order = SearchOrder.Date,
+                PublishedAfter = new DateTime(2018, 02, 27),
+                RegionCode = CountryCode.Pl,
+                Query = "planking"
+            };
 
             var api = new ApiRequest<SearchResult, SearchApiRequestSettings>(settings, PartType.Snippet);
             var response = api.Response;

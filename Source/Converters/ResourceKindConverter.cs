@@ -6,7 +6,7 @@ namespace YoutubeSnoop.Converters
 {
     public class ResourceKindConverter : OneWayJsonConverter<ResourceKind>
     {
-        public static ResourceKind Convert(string s)
+        public static ResourceKind Parse(string s)
         {
             if (string.IsNullOrWhiteSpace(s)) return ResourceKind.None;
 
@@ -21,7 +21,7 @@ namespace YoutubeSnoop.Converters
         {
             if (reader.TokenType == JsonToken.String)
             {
-                var kind = Convert(reader.Value.ToString());
+                var kind = Parse(reader.Value.ToString());
                 return kind;
             }
 

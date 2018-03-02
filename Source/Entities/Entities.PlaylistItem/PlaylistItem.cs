@@ -5,7 +5,7 @@ using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop.Entities
 {
-    public class PlaylistItem : IResponse
+    public class PlaylistItem : ISnippetResponse<PlaylistItemSnippet>
     {
         [JsonConverter(typeof(ResourceKindConverter))]
         public ResourceKind Kind { get; set; }

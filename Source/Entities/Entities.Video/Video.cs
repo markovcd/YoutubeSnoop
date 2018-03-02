@@ -6,7 +6,7 @@ using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop.Entities
 {
-    public class Video : IResponse
+    public class Video : ISnippetResponse<VideoSnippet>
     {
         [JsonConverter(typeof(ResourceKindConverter))]
         public ResourceKind Kind { get; set; }

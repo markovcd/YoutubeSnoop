@@ -12,7 +12,7 @@ namespace YoutubeSnoop.Converters
             if (reader.TokenType == JsonToken.StartObject)
             {
                 var item = JObject.Load(reader);
-                var kind = ResourceKindConverter.Convert(item["kind"].Value<string>());
+                var kind = ResourceKindConverter.Parse(item["kind"].Value<string>());
                 var json = item.ToString();
 
                 return ResourceFactory.Deserialize(kind, json);

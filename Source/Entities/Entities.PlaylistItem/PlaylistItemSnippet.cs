@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using YoutubeSnoop.Converters;
+using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop.Entities
 {
-    public class PlaylistItemSnippet : Interfaces.ITitleDescription
+    public class PlaylistItemSnippet : ITitleDescription
     {
         public DateTime? PublishedAt { get; set; }
         public string ChannelId { get; set; }
@@ -17,6 +18,6 @@ namespace YoutubeSnoop.Entities
         public IDictionary<string, Thumbnail> Thumbnails { get; set; }
 
         [JsonConverter(typeof(ResourceIdConverter))]
-        public Interfaces.IResource ResourceId { get; set; }
+        public IResource ResourceId { get; set; }
     }
 }

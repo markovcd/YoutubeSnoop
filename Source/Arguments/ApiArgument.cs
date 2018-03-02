@@ -2,18 +2,13 @@
 {
     public class ApiArgument
     {
-        public virtual string ArgumentName { get; }
-        public virtual string ArgumentValue { get; }
+        public string ArgumentName { get; }
+        public string ArgumentValue { get; }
 
         public ApiArgument(string argumentName, string argumentValue)
         {
             ArgumentName = argumentName;
             ArgumentValue = argumentValue;
-        }
-
-        protected ApiArgument(string argumentName)
-        {
-            ArgumentName = argumentName;
         }
 
         public override string ToString()
@@ -27,7 +22,7 @@
     {
         public T Value { get; }
 
-        public ApiArgument(string argumentName, T argumentValue) : base(argumentName, argumentValue?.ToString())
+        public ApiArgument(string argumentName, T argumentValue) : base(argumentName, argumentValue?.ToString().ToCamelCase())
         {
             Value = argumentValue;
         }

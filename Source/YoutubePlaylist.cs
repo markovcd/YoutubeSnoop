@@ -1,36 +1,42 @@
-﻿namespace YoutubeSnoop
+﻿using YoutubeSnoop.Settings;
+using YoutubeSnoop.Entities;
+using System.Collections.Generic;
+using System.Linq;
+using YoutubeSnoop.Enums;
+using YoutubeSnoop.Interfaces;
+using System;
+
+namespace YoutubeSnoop
 {
-    //public class YoutubePlaylist : IEnumerable<YoutubeVideo>
-    //{
-    //    public int Buffer { get; }
+    public class YoutubePlaylistItems : YoutubeSnippetsBase<PlaylistItemsApiRequestSettings, PlaylistItemSnippet, PlaylistItem>
+    {
+        private const string _youtubeUrl = @"https://www.youtube.com/playlist?list={0}";
+        
+        public YoutubePlaylistItems(string playlistId) : this(new PlaylistItemsApiRequestSettings {  PlaylistId = playlistId }) { }
 
-    //    public PlaylistApiRequestSettings Settings { get; }
+        public YoutubePlaylistItems(PlaylistItemsApiRequestSettings settings) : base(settings)
+        {
+            PlaylistId = settings.PlaylistId;
+            Url = string.Format(_youtubeUrl, PlaylistId);
+            Resources = Snippets.Select(s => s.ResourceId)
 
-    //    private IList<YoutubeVideo> _videos;
+        }
 
-    //    public YoutubePlaylist(string playlistId, int buffer = 20)
-    //        : this(new PlaylistApiRequestSettings { PlaylistId = playlistId}, buffer) { }
+        public string Url { get; }
+        public string PlaylistId { get; }
 
-    //    public YoutubePlaylist( PlaylistApiRequestSettings settings, int buffer = 20)
-    //    {
-    //        Buffer = buffer;
-    //        Settings = settings;
-    //    }
+        public IEnumerable<IYoutubeResource> Resources { get; }
+    }
 
-    //    public IEnumerator<YoutubeVideo> GetEnumerator()
-    //    {
-    //        if (_videos == null)
-    //        {
-    //            var api = new PlaylistApiRequest(Settings);
-    //            _videos = api.TotalItems.Select(i => new YoutubeVideo(i.Snippet)).ToList();
-    //        }
-
-    //        return _videos.GetEnumerator();
-    //    }
-
-    //    IEnumerator IEnumerable.GetEnumerator()
-    //    {
-    //        return GetEnumerator();
-    //    }
-    //}
+    public static class YoutubeResourceFactory
+    {
+        public IYoutubeResource Create(IResource resourceId)
+        {
+            switch (resourceId.Kind)
+            {
+                case ResourceKind.Video: return new YoutubeVideo(((VideoResourceId)resourceId).VideoId);
+                default throw new InvalidOperationException();
+            }
+        }
+    }
 }

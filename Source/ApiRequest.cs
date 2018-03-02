@@ -5,7 +5,6 @@ using YoutubeSnoop.Entities;
 using YoutubeSnoop.Enumerables;
 using YoutubeSnoop.Enums;
 using YoutubeSnoop.Interfaces;
-using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop
 {

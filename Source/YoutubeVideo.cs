@@ -1,9 +1,10 @@
 ﻿using YoutubeSnoop.Entities.Videos;
+using YoutubeSnoop.Interfaces;
 using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeVideo : YoutubeSnippetBase<VideoApiRequestSettings, Snippet, Video>
+    public class YoutubeVideo : YoutubeRequest<VideoApiRequestSettings, Snippet, Video>, IYoutubeItem<Snippet>
     {
         private const string _youtubeUrl = @"https://www.youtube.com/watch?v={0}";
 

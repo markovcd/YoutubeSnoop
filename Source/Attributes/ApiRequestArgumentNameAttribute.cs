@@ -3,7 +3,7 @@
 namespace YoutubeSnoop.Attributes
 {
     [AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
-    sealed class ApiRequestArgumentNameAttribute : Attribute
+    public sealed class ApiRequestArgumentNameAttribute : Attribute
     { 
         public string Name { get; set; }
 

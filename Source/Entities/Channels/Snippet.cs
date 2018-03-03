@@ -10,7 +10,7 @@ namespace YoutubeSnoop.Entities.Channels
         public string Description { get; set; }
         public string CustomUrl { get; set; }
         public DateTime? PublishedAt { get; set; }
-        public IList<Thumbnail> Thumbnails { get; set; }
+        public IDictionary<string, Thumbnail> Thumbnails { get; set; }
         public string DefaultLanguage { get; set; }
         public TitleDescription Localized { get; set; }
         public string Country { get; set; }

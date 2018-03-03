@@ -10,16 +10,13 @@ namespace IntegrationTests
     {
         private static void Main(string[] args)
         {
-            var settings = new SearchApiRequestSettings
-            {
-                Order = SearchOrder.Date,
-                PublishedAfter = new DateTime(2018, 02, 27),
-                RegionCode = CountryCode.Pl,
-                Query = "planking"
-            };
+            var videoId = "6vpOHq8bkzA";
+            var channelId = "UCTxdujUsyc9TsjW1BnBxivg";
+            var playlistId = "PLg-NWZjrm22usa_eVDKCADwbJ29JYOrDI";
 
-            var api = new ApiRequest<SearchResult, SearchApiRequestSettings>(settings, PartType.Snippet);
-            var response = api.Response;
+            var video = new YoutubeVideo(videoId);
+            var channel = new YoutubeChannel(channelId);
+            var playlist = new YoutubePlaylist(playlistId);
         }
     }
 }

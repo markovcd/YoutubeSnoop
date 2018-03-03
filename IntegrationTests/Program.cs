@@ -17,6 +17,7 @@ namespace IntegrationTests
             var query = "jestem hardkorem";
 
             var video = new YoutubeVideo(videoId);
+            
             var channel = new YoutubeChannel(channelId);
 
             var playlist = new YoutubePlaylist(playlistId);

@@ -8,7 +8,7 @@ namespace YoutubeSnoop.Entities.PlaylistItems
 {
     public class Snippet : ITitleDescription
     {
-        public DateTime? PublishedAt { get; set; }
+        public DateTime PublishedAt { get; set; }
         public string ChannelId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

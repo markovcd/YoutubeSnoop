@@ -19,6 +19,7 @@ namespace YoutubeSnoop
 
         public static string ToCamelCase(this string value)
         {
+            if (string.IsNullOrEmpty(value)) return null;
             return value.Substring(0, 1).ToLower() + value.Substring(1);
         }
 

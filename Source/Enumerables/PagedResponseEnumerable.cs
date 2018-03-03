@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using YoutubeSnoop.Entities;
+using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop.Enumerables
 {
     public class PagedResponseEnumerable<TItem> : IEnumerable<Response<TItem>>
-        where TItem : Interfaces.IResponse
+        where TItem : IResponse
     {
         private Response<TItem> _response;
         private Func<string, Response<TItem>> _getNextResponse;

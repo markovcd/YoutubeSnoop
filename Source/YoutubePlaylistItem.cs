@@ -1,16 +1,25 @@
 ﻿using YoutubeSnoop.Entities.PlaylistItems;
+using YoutubeSnoop.Enums;
 using YoutubeSnoop.Interfaces;
-using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop
 {
-    public class YoutubePlaylistItem : IYoutubeItem<Snippet>
+    public class YoutubePlaylistItem : IYoutubeItem
     {
-        public Snippet Snippet { get; }
+        public ResourceKind Kind { get; }
+        public string Id { get; }
+        public PlaylistItem Response { get; }
 
-        public YoutubePlaylistItem(Snippet snippet)
+        private IYoutubeItem _details;
+        public IYoutubeItem Details => _details ?? (_details = Response.Snippet.ResourceId.GetYoutubeItem());
+
+        internal YoutubePlaylistItem(PlaylistItem playlistItem)
         {
-            Snippet = snippet;
+            Response = playlistItem;
+            Kind = playlistItem.Snippet.ResourceId.Kind;
+            Id = playlistItem.Snippet.ResourceId.GetId();
         }
+
+        
     }
 }

@@ -1,17 +1,24 @@
 ﻿using YoutubeSnoop.Entities.Search;
 using YoutubeSnoop.Interfaces;
-using YoutubeSnoop.Settings;
+using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeSearchResult : IYoutubeItem<Snippet>
+    public class YoutubeSearchResult : IYoutubeItem
     {
-        public Snippet Snippet { get; }
+        public SearchResult Item { get; }
+        public ResourceKind Kind { get; }
+        public string Id { get; }
+        public SearchResult Response { get; }
 
+        private IYoutubeItem _details;
+        public IYoutubeItem Details => _details ?? (_details = Response.Id.GetYoutubeItem());
 
-        public YoutubeSearchResult(Snippet snippet)
+        internal YoutubeSearchResult(SearchResult searchResult)
         {
-            Snippet = snippet;
+            Response = searchResult;
+            Kind = searchResult.Id.Kind;
+            Id = searchResult.Id.GetId();       
         }
     }
 }

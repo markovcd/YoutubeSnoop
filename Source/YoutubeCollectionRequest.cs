@@ -4,23 +4,18 @@ using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop
 {
-    public abstract class YoutubeCollectionRequest<TSettings, TSnippet, TItem>
-         where TItem : ISnippetResponse<TSnippet>
+    public class YoutubeCollectionRequest<TSettings, TItem>
+         where TItem : IResponse
          where TSettings : IApiRequestSettings
     {
         public TSettings Settings { get; }
-        public IList<TSnippet> Snippets { get; }
+        protected IList<TItem> Responses { get; }
 
         protected YoutubeCollectionRequest(TSettings settings)
         {
             Settings = settings;
             var api = new ApiRequest<TItem, TSettings>(settings);
-            Snippets = api.TotalItems.Select(i => i.Snippet).ToList();
-        }
-
-        protected YoutubeCollectionRequest(IEnumerable<TSnippet> snippets)
-        {
-            Snippets = snippets.ToList();
+            Responses = api.TotalItems.ToList(); // TODO: async
         }
     }
 }

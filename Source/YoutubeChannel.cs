@@ -4,7 +4,7 @@ using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeChannel : YoutubeRequest<ChannelApiRequestSettings, Snippet, Channel>, IYoutubeItem<Snippet>
+    public class YoutubeChannel : YoutubeRequest<ChannelApiRequestSettings, Channel>, IYoutubeItem
     {
         private const string _youtubeUrl = @"https://www.youtube.com/channel/{0}";
 
@@ -12,7 +12,7 @@ namespace YoutubeSnoop
 
         public YoutubeChannel(ChannelApiRequestSettings settings) : base(settings)
         {
-            Id = settings.Id;
+            Id = Response.Id;
             Url = string.Format(_youtubeUrl, Id);
         }
 

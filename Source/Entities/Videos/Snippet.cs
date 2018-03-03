@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop.Entities.Videos
 {
-    public class Snippet : Interfaces.ITitleDescription
+    public class Snippet : ITitleDescription
     {
         public DateTime PublishedAt { get; set; }
         public string ChannelId { get; set; }

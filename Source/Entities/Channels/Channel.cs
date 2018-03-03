@@ -6,7 +6,7 @@ using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop.Entities.Channels
 {
-    public class Channel : ISnippetResponse<Snippet>
+    public class Channel : IResponse
     {
         public string Etag { get; set; }
         public string Id { get; set; }

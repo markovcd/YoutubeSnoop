@@ -8,13 +8,16 @@ using System.Linq;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeSearch : YoutubeCollectionRequest<SearchApiRequestSettings, Snippet, SearchResult>, IYoutubeCollection<YoutubeSearchResult, Snippet>
+    public class YoutubeSearch : YoutubeCollectionRequest<SearchApiRequestSettings, SearchResult>, IYoutubeCollection<YoutubeSearchResult>
     {
-        public IList<YoutubeSearchResult> Items => throw new NotImplementedException();
+        public IList<YoutubeSearchResult> Items { get; }
 
         public YoutubeSearch(SearchApiRequestSettings settings) : base(settings)
         {
-            Snippets.First().
+            Items = Responses.Select(i => new YoutubeSearchResult(i)).ToList();
         }
+
+        public YoutubeSearch(string query) 
+            : base(new SearchApiRequestSettings { Query = query }) { }
     }
 }

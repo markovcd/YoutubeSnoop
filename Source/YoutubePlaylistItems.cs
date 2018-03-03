@@ -9,17 +9,16 @@ using YoutubeSnoop.Entities.PlaylistItems;
 
 namespace YoutubeSnoop
 {
-    public class YoutubePlaylistItems : YoutubeCollectionRequest<PlaylistItemsApiRequestSettings, Snippet, PlaylistItem>, IYoutubeCollection<YoutubePlaylistItem, Snippet>
+    public class YoutubePlaylistItems : YoutubeCollectionRequest<PlaylistItemsApiRequestSettings, PlaylistItem>, IYoutubeCollection<YoutubePlaylistItem>
     {
-
+        public IList<YoutubePlaylistItem> Items { get; }
 
         public YoutubePlaylistItems(PlaylistItemsApiRequestSettings settings) : base(settings)
         {
-            
+            Items = Responses.Select(i => new YoutubePlaylistItem(i)).ToList();
         }
 
-        public IList<YoutubePlaylistItem> Items => throw new NotImplementedException();
+        public YoutubePlaylistItems(string playlistId) 
+            : this(new PlaylistItemsApiRequestSettings { PlaylistId = playlistId }) { }
     }
-
-    
 }

@@ -3,21 +3,15 @@ using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop
 {
-    public abstract class YoutubeRequest<TSettings, TSnippet, TItem> : YoutubeCollectionRequest<TSettings, TSnippet, TItem>
-        where TItem : ISnippetResponse<TSnippet>
+    public class YoutubeRequest<TSettings, TItem> : YoutubeCollectionRequest<TSettings, TItem>
+        where TItem : IResponse
         where TSettings : IApiRequestSettings
-        where TSnippet : class
     {
-        public TSnippet Snippet { get; }
+        public TItem Response { get; }
 
         protected YoutubeRequest(TSettings settings) : base(settings)
         {
-            Snippet = Snippets.FirstOrDefault();
-        }
-
-        protected YoutubeRequest(TSnippet snippet) : base(new[] { snippet })
-        {
-            Snippet = snippet;
+            Response = Responses.FirstOrDefault();
         }
     }
 }

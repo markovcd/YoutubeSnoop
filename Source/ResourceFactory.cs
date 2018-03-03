@@ -10,20 +10,20 @@ namespace YoutubeSnoop
 {
     public static class ResourceFactory
     {
-        public static IResource Deserialize(ResourceKind kind, string json)
-        {
-            FieldInfo fieldInfo = kind.GetType().GetField(kind.ToString());
-            if (fieldInfo == null) throw new InvalidOperationException();
+        //public static IResource Deserialize(ResourceKind kind, string json)
+        //{
+        //    FieldInfo fieldInfo = kind.GetType().GetField(kind.ToString());
+        //    if (fieldInfo == null) throw new InvalidOperationException();
 
-            var resourceAttribute = fieldInfo.GetCustomAttribute<ApiResourceMappingAttribute>();
-            if (resourceAttribute != null) return (IResource)JsonConvert.DeserializeObject(json, resourceAttribute.EntityType);
+        //    var resourceAttribute = fieldInfo.GetCustomAttribute<ApiResourceMappingAttribute>();
+        //    if (resourceAttribute != null) return (IResource)JsonConvert.DeserializeObject(json, resourceAttribute.EntityType);
 
-            var responseAttribute = fieldInfo.GetCustomAttribute<ApiResponseMappingAttribute>();
-            if (responseAttribute == null) throw new InvalidOperationException();
+        //    var responseAttribute = fieldInfo.GetCustomAttribute<ApiResponseMappingAttribute>();
+        //    if (responseAttribute == null) throw new InvalidOperationException();
 
-            var responseType = typeof(Response<>).MakeGenericType(new[] { responseAttribute.EntityType });
-            return (IResponse)JsonConvert.DeserializeObject(json, responseType);
-        }
+        //    var responseType = typeof(Response<>).MakeGenericType(new[] { responseAttribute.EntityType });
+        //    return (IResponse)JsonConvert.DeserializeObject(json, responseType);
+        //}
 
         public static TResource Deserialize<TResource>(string json) where TResource : IResource
         {

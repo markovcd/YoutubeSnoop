@@ -18,7 +18,7 @@ namespace YoutubeSnoop
         public string Title { get; }
         public string Description { get; }
         public string ChannelTitle { get; }
-       
+
         internal YoutubeSearchResult(SearchResult searchResult)
         {
             Response = searchResult;

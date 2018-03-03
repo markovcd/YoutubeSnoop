@@ -15,9 +15,8 @@ namespace YoutubeSnoop
         public string Description { get; }
         public string CustomUrl { get; }
         public DateTime PublishedAt { get; }
-        public string Country { get; }
 
-        public YoutubeChannel(string id) 
+        public YoutubeChannel(string id)
             : this(new ChannelApiRequestSettings { Id = id }) { }
 
         public YoutubeChannel(ChannelApiRequestSettings settings) : base(settings)
@@ -28,7 +27,6 @@ namespace YoutubeSnoop
             Description = Response.Snippet.Description;
             CustomUrl = Response.Snippet.CustomUrl;
             PublishedAt = Response.Snippet.PublishedAt;
-            Country = Response.Snippet.Country;
-        }  
+        }
     }
 }

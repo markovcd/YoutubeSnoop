@@ -19,7 +19,7 @@ namespace YoutubeSnoop
         public string Description { get; }
         public string ChannelTitle { get; }
         public string PlaylistId { get; }
-        public int? Position { get; }       
+        public int? Position { get; }
 
         internal YoutubePlaylistItem(PlaylistItem playlistItem)
         {

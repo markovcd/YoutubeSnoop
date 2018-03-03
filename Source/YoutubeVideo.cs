@@ -17,9 +17,8 @@ namespace YoutubeSnoop
         public string ChannelTitle { get; }
         public string Title { get; }
         public string Description { get; }
-        public string DefaultLanguage { get; }
 
-        public YoutubeVideo(string id) 
+        public YoutubeVideo(string id)
             : this(new VideoApiRequestSettings { Id = id }) { }
 
         public YoutubeVideo(VideoApiRequestSettings settings) : base(settings)
@@ -31,7 +30,6 @@ namespace YoutubeSnoop
             ChannelTitle = Response.Snippet.ChannelTitle;
             Description = Response.Snippet.Description;
             Title = Response.Snippet.Title;
-            DefaultLanguage = Response.Snippet.DefaultLanguage;
 
             if (int.TryParse(Response.Snippet.CategoryId, out int categoryId)) CategoryId = categoryId;
         }

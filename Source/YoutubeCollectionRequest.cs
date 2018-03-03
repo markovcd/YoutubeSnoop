@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop
@@ -15,7 +14,7 @@ namespace YoutubeSnoop
         {
             Settings = settings;
             var api = new ApiRequest<TItem, TSettings>(settings);
-            Responses = api.TotalItems; 
+            Responses = api.TotalItems;
         }
     }
 }

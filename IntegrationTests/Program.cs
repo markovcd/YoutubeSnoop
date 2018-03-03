@@ -1,9 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using YoutubeSnoop;
-using YoutubeSnoop.Entities.Search;
-using YoutubeSnoop.Enums;
-using YoutubeSnoop.Settings;
 
 namespace IntegrationTests
 {
@@ -17,7 +13,7 @@ namespace IntegrationTests
             var query = "jestem hardkorem";
 
             var video = new YoutubeVideo(videoId);
-            
+
             var channel = new YoutubeChannel(channelId);
 
             var playlist = new YoutubePlaylist(playlistId);

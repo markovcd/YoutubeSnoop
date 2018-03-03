@@ -19,9 +19,8 @@ namespace YoutubeSnoop
         public string Title { get; }
         public string Description { get; }
         public string ChannelTitle { get; }
-        public string DefaultLanguage { get; }
 
-        public YoutubePlaylist(string id) 
+        public YoutubePlaylist(string id)
             : this(new PlaylistApiRequestSettings { Id = id }) { }
 
         public YoutubePlaylist(PlaylistApiRequestSettings settings) : base(settings)
@@ -33,7 +32,6 @@ namespace YoutubeSnoop
             Title = Response.Snippet.Title;
             Description = Response.Snippet.Description;
             ChannelTitle = Response.Snippet.ChannelTitle;
-            DefaultLanguage = Response.Snippet.DefaultLanguage;
-        }       
+        }
     }
 }

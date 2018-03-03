@@ -49,6 +49,6 @@ namespace YoutubeSnoop
                 case ResourceKind.Channel: return new YoutubeChannel(id);
                 default: throw new InvalidOperationException();
             }
-        }    
+        }
     }
 }

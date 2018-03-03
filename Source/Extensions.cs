@@ -14,7 +14,7 @@ namespace YoutubeSnoop
             FieldInfo fieldInfo = value.GetType().GetField(value.ToString());
             if (fieldInfo == null) return null;
             var attribute = fieldInfo.GetCustomAttribute<DescriptionAttribute>();
-            return attribute.Description;
+            return attribute?.Description;
         }
 
         public static string ToCamelCase(this string value)

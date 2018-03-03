@@ -12,6 +12,7 @@ namespace YoutubeSnoop
 
         public ResourceKind Kind { get; }
         public string Id { get; }
+        public string Url { get; }
         public PlaylistItem Response { get; }
         public DateTime PublishedAt { get; }
         public string ChannelId { get; }
@@ -24,6 +25,7 @@ namespace YoutubeSnoop
         internal YoutubePlaylistItem(PlaylistItem playlistItem)
         {
             Response = playlistItem;
+            Url = Extensions.GetUrl(Kind, Id);
             Kind = playlistItem.Snippet.ResourceId.Kind;
             Id = playlistItem.Snippet.ResourceId.GetId();
             PublishedAt = playlistItem.Snippet.PublishedAt;

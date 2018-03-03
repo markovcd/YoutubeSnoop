@@ -50,5 +50,20 @@ namespace YoutubeSnoop
                 default: throw new InvalidOperationException();
             }
         }
+
+        public static string GetUrl(ResourceKind kind, string id)
+        {
+            const string _playlistUrl = @"https://www.youtube.com/playlist?list={0}";
+            const string _channelUrl = @"https://www.youtube.com/channel/{0}";
+            const string _videoUrl = @"https://www.youtube.com/watch?v={0}";
+
+            switch (kind)
+            {
+                case ResourceKind.Video: return string.Format(_videoUrl, id);
+                case ResourceKind.Playlist: return string.Format(_playlistUrl, id);
+                case ResourceKind.Channel: return string.Format(_channelUrl, id);
+                default: throw new InvalidOperationException();
+            }
+        }
     }
 }

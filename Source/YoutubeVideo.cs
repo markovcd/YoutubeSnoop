@@ -7,8 +7,6 @@ namespace YoutubeSnoop
 {
     public class YoutubeVideo : YoutubeRequest<VideoApiRequestSettings, Video>, IYoutubeItem
     {
-        private const string _youtubeUrl = @"https://www.youtube.com/watch?v={0}";
-
         public string Url { get; }
         public string Id { get; }
         public int? CategoryId { get; }
@@ -24,7 +22,7 @@ namespace YoutubeSnoop
         public YoutubeVideo(VideoApiRequestSettings settings) : base(settings)
         {
             Id = Response.Id;
-            Url = string.Format(_youtubeUrl, Id);
+            Url = Extensions.GetUrl(Response.Kind, Response.Id);
             PublishedAt = Response.Snippet.PublishedAt;
             ChannelId = Response.Snippet.ChannelId;
             ChannelTitle = Response.Snippet.ChannelTitle;

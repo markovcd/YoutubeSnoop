@@ -1,4 +1,6 @@
-﻿namespace YoutubeSnoop.Arguments
+﻿using System;
+
+namespace YoutubeSnoop.Arguments
 {
     public class ApiArgument
     {
@@ -7,6 +9,8 @@
 
         public ApiArgument(string argumentName, string argumentValue)
         {
+            if (string.IsNullOrWhiteSpace(argumentName)) throw new ArgumentNullException(nameof(argumentName));
+
             ArgumentName = argumentName;
             ArgumentValue = argumentValue;
         }

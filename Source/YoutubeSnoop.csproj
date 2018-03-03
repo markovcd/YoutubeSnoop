@@ -5,15 +5,16 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Arkadiusz Markowski</Authors>
     <Company />
-    <Description>Lightweight .NET library to pull data from YouTube</Description>
+    <Description>Lightweight .NET library to pull data from YouTube. It deals only with list request and only those that don't need authentication. Supports lazy loading paginated results.
+</Description>
     <PackageLicenseUrl>https://opensource.org/licenses/BSD-3-Clause</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/markovcd/YoutubeSnoop</PackageProjectUrl>
     <RepositoryUrl>https://github.com/markovcd/YoutubeSnoop</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <PackageTags>youtube playlist</PackageTags>
-    <Version>1.0.0</Version>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <PackageTags>youtube data api v3 playlist channel video</PackageTags>
+    <Version>1.1.0</Version>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageId>YoutubeSnoop</PackageId>
     <Product>YoutubeSnoop</Product>

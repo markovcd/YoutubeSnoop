@@ -8,7 +8,7 @@ namespace YoutubeSnoop.Arguments
     {
         private const string _argumentName = "part";
 
-        public ApiPartArgument(IEnumerable<PartType> partTypes) : base(_argumentName, partTypes.Aggregate("", (s, p) => $"{s},{p}").Substring(1))
+        public ApiPartArgument(IEnumerable<PartType> partTypes) : base(_argumentName, partTypes.Select(pt => pt.ToCamelCase()).Aggregate((s, p) => $"{s},{p}"))
         {
             PartTypes = partTypes;
         }

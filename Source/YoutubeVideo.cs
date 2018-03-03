@@ -8,7 +8,8 @@ namespace YoutubeSnoop
     {
         private const string _youtubeUrl = @"https://www.youtube.com/watch?v={0}";
 
-        public YoutubeVideo(string id) : this(new VideoApiRequestSettings { Id = id }) { }
+        public YoutubeVideo(string id) 
+            : this(new VideoApiRequestSettings { Id = id }) { }
 
         public YoutubeVideo(VideoApiRequestSettings settings) : base(settings)
         {

@@ -11,6 +11,7 @@ namespace YoutubeSnoop.Settings
 
         [ApiRequestArgumentName("q")]
         public string Query { get; set; }
+
         public string ChannelId { get; set; }
         public string ChannelType { get; set; }
         public string EventType { get; set; }
@@ -23,6 +24,7 @@ namespace YoutubeSnoop.Settings
 
         [ApiRequestConverter(typeof(DateTimeConverter))]
         public DateTime? PublishedBefore { get; set; }
+
         public CountryCode? RegionCode { get; set; }
         public string RelatedToVideoId { get; set; }
         public LanguageCode? RelevanceLanguage { get; set; }
@@ -36,6 +38,7 @@ namespace YoutubeSnoop.Settings
 
         [ApiRequestConverter(typeof(EnumDescriptionConverter))]
         public Dimension? VideoDimension { get; set; }
+
         public AnyOrTrue? VideoEmbeddable { get; set; }
         public License? VideoLicense { get; set; }
         public AnyOrTrue? VideoSyndicated { get; set; }

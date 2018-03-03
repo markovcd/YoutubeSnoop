@@ -1,7 +1,7 @@
 ﻿namespace YoutubeSnoop.Interfaces
 {
-	public interface IApiRequestConverter
-	{
-		string Convert(object value);
-	}
+    public interface IApiRequestConverter
+    {
+        string Convert(object value);
+    }
 }

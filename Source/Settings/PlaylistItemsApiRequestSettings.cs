@@ -9,7 +9,5 @@ namespace YoutubeSnoop.Settings
         public string Id { get; set; }
 
         public override RequestType RequestType => RequestType.PlaylistItems;
-
-
     }
 }

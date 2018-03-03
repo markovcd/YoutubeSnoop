@@ -14,6 +14,5 @@ namespace YoutubeSnoop.Entities.Playlists
         public IList<string> Tags { get; set; }
         public string DefaultLanguage { get; set; }
         public TitleDescription Localized { get; set; }
-
     }
 }

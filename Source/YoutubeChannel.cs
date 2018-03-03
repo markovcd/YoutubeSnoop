@@ -8,7 +8,8 @@ namespace YoutubeSnoop
     {
         private const string _youtubeUrl = @"https://www.youtube.com/channel/{0}";
 
-        public YoutubeChannel(string id) : this(new ChannelApiRequestSettings { Id = id }) { }
+        public YoutubeChannel(string id) 
+            : this(new ChannelApiRequestSettings { Id = id }) { }
 
         public YoutubeChannel(ChannelApiRequestSettings settings) : base(settings)
         {

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using YoutubeSnoop;
-using YoutubeSnoop.Entities;
+using YoutubeSnoop.Entities.Search;
 using YoutubeSnoop.Enums;
 using YoutubeSnoop.Settings;
-using YoutubeSnoop.Entities.Search;
 
 namespace IntegrationTests
 {

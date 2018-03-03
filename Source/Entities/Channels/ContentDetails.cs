@@ -4,6 +4,4 @@
     {
         public RelatedPlaylists RelatedPlaylists { get; set; }
     }
-
-    
 }

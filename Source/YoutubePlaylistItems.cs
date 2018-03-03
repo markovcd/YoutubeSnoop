@@ -1,11 +1,8 @@
-﻿using YoutubeSnoop.Settings;
-using YoutubeSnoop.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using YoutubeSnoop.Enums;
-using YoutubeSnoop.Interfaces;
-using System;
 using YoutubeSnoop.Entities.PlaylistItems;
+using YoutubeSnoop.Interfaces;
+using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop
 {
@@ -18,7 +15,7 @@ namespace YoutubeSnoop
             Items = Responses.Select(i => new YoutubePlaylistItem(i)).ToList();
         }
 
-        public YoutubePlaylistItems(string playlistId) 
+        public YoutubePlaylistItems(string playlistId)
             : this(new PlaylistItemsApiRequestSettings { PlaylistId = playlistId }) { }
     }
 }

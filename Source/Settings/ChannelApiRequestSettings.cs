@@ -10,6 +10,5 @@ namespace YoutubeSnoop.Settings
         public string ForUsername { get; set; }
         public string Hl { get; set; }
         public string Id { get; set; }
-
     }
 }

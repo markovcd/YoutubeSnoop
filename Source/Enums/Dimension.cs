@@ -2,17 +2,15 @@
 
 namespace YoutubeSnoop.Enums
 {
-	public enum Dimension
-	{
-		[Description("any")]
-		Any,
+    public enum Dimension
+    {
+        [Description("any")]
+        Any,
 
-		[Description("2d")]
-		TwoDimensional,
+        [Description("2d")]
+        TwoDimensional,
 
-		[Description("3d")]
-		ThreeDimensional
-	}
-
-	
+        [Description("3d")]
+        ThreeDimensional
+    }
 }

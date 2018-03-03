@@ -13,7 +13,8 @@ namespace YoutubeSnoop.Arguments
             PartTypes = partTypes;
         }
 
-        public ApiPartArgument(PartType partType) : this(new[] { partType }) {  }
+        public ApiPartArgument(PartType partType) 
+            : this(new[] { partType }) { }
 
         public IEnumerable<PartType> PartTypes { get; }
     }

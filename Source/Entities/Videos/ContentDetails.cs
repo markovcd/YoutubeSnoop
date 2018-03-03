@@ -14,6 +14,4 @@ namespace YoutubeSnoop.Entities.Videos
         public RegionRestriction RegionRestriction { get; set; }
         public IDictionary<string, object> ContentRating { get; set; }
     }
-
-    
 }

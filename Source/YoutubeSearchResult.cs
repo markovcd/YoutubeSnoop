@@ -1,6 +1,6 @@
 ﻿using YoutubeSnoop.Entities.Search;
-using YoutubeSnoop.Interfaces;
 using YoutubeSnoop.Enums;
+using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop
 {
@@ -18,7 +18,7 @@ namespace YoutubeSnoop
         {
             Response = searchResult;
             Kind = searchResult.Id.Kind;
-            Id = searchResult.Id.GetId();       
+            Id = searchResult.Id.GetId();
         }
     }
 }

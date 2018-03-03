@@ -8,7 +8,8 @@ namespace YoutubeSnoop
     {
         private const string _youtubeUrl = @"https://www.youtube.com/playlist?list={0}";
 
-        public YoutubePlaylist(string id) : this(new PlaylistApiRequestSettings { Id = id }) { }
+        public YoutubePlaylist(string id) 
+            : this(new PlaylistApiRequestSettings { Id = id }) { }
 
         public YoutubePlaylist(PlaylistApiRequestSettings settings) : base(settings)
         {

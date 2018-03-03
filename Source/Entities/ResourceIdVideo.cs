@@ -4,7 +4,7 @@ using YoutubeSnoop.Enums;
 using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop.Entities
-{ 
+{
     public class ResourceIdVideo : IResource
     {
         [JsonConverter(typeof(ResourceKindConverter))]

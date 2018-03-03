@@ -22,6 +22,5 @@ namespace YoutubeSnoop.Entities.Channels
         public TopicDetails TopicDetails { get; set; }
         public Status Status { get; set; }
         public BrandingSettings BrandingSettings { get; set; }
-
     }
 }

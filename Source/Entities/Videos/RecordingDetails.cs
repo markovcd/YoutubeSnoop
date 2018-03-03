@@ -8,6 +8,4 @@ namespace YoutubeSnoop.Entities.Videos
         public DateTime? RecordingDate { get; set; }
         public Location Location { get; set; }
     }
-
-    
 }

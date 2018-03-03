@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
 using YoutubeSnoop.Arguments;
+using YoutubeSnoop.Attributes;
 using YoutubeSnoop.Enums;
 using YoutubeSnoop.Interfaces;
-using YoutubeSnoop.Attributes;
 
 namespace YoutubeSnoop.Settings
 {
@@ -24,8 +24,8 @@ namespace YoutubeSnoop.Settings
 
                 var name = property.GetCustomAttribute<ApiRequestArgumentNameAttribute>(true)?.Name ?? property.Name.ToCamelCase();
 
-                var value = converter == null ? 
-                    property.GetValue(this)?.ToString() : 
+                var value = converter == null ?
+                    property.GetValue(this)?.ToString() :
                     converter.Convert(property.GetValue(this));
 
                 if (value != null) yield return new ApiArgument(name, value);

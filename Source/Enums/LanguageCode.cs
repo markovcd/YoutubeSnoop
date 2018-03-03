@@ -143,6 +143,5 @@ namespace YoutubeSnoop.Enums
         [Description("Yoruba")] Yo,
         [Description("Zhuang")] Za,
         [Description("Zulu")] Zu
-
     }
 }

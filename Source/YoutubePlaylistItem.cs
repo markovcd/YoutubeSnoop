@@ -19,7 +19,5 @@ namespace YoutubeSnoop
             Kind = playlistItem.Snippet.ResourceId.Kind;
             Id = playlistItem.Snippet.ResourceId.GetId();
         }
-
-        
     }
 }

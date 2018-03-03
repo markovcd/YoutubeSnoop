@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using YoutubeSnoop.Arguments;
 using YoutubeSnoop.Entities;
@@ -32,32 +33,35 @@ namespace YoutubeSnoop
         public IEnumerable<TItem> TotalItems => _totalItems ?? (_totalItems = TotalResponses.SelectMany(r => r.Items));
 
         public TSettings Settings { get; }
-        public int MaxResults { get; set; }
+        public int ResultsPerPage { get; set; }
         public string PageToken { get; set; }
         public IEnumerable<PartType> PartTypes { get; }
 
         public string RequestUrl { get; protected set; }
 
-        public ApiRequest(TSettings settings, IEnumerable<PartType> partTypes, string pageToken = null, int maxResults = 20)
+        public event EventHandler FirstResponseDownloaded; // TODO
+        public event EventHandler ResponseDownloaded;
+
+        public ApiRequest(TSettings settings, IEnumerable<PartType> partTypes, string pageToken = null, int resultsPerPage = 20)
         {
-            MaxResults = maxResults;
+            ResultsPerPage = resultsPerPage;
             Settings = settings;
             PageToken = pageToken;
             PartTypes = partTypes ?? new[] { PartType.Snippet };
         }
 
-        public ApiRequest(TSettings settings, PartType partType, string pageToken = null, int maxResults = 20)
-            : this(settings, new[] { partType }, pageToken, maxResults) { }
+        public ApiRequest(TSettings settings, PartType partType, string pageToken = null, int resultsPerPage = 20)
+            : this(settings, new[] { partType }, pageToken, resultsPerPage) { }
 
-        public ApiRequest(TSettings settings, string pageToken = null, int maxResults = 20)
-            : this(settings, null, pageToken, maxResults) { }
+        public ApiRequest(TSettings settings, string pageToken = null, int resultsPerPage = 20)
+            : this(settings, null, pageToken, resultsPerPage) { }
 
-        protected static string FormatApiUrl(TSettings settings, IEnumerable<PartType> partTypes, string pageToken, int maxResults)
+        protected static string FormatApiUrl(TSettings settings, IEnumerable<PartType> partTypes, string pageToken, int resultsPerPage)
         {
             var arguments = settings.GetArguments().ToList();
             arguments.Add(new ApiPartArgument(partTypes));
             arguments.Add(new ApiArgument(nameof(pageToken), pageToken));
-            arguments.Add(new ApiArgument<int>(nameof(maxResults), maxResults));
+            arguments.Add(new ApiArgument<int>(nameof(resultsPerPage), resultsPerPage));
             arguments.Add(_prettyPrintArgument);
             arguments.Add(_apiKeyArgument);
 
@@ -70,9 +74,19 @@ namespace YoutubeSnoop
 
         public Response<TItem> Deserialize(string pageToken)
         {
-            RequestUrl = FormatApiUrl(Settings, PartTypes, pageToken, MaxResults);
+            RequestUrl = FormatApiUrl(Settings, PartTypes, pageToken, ResultsPerPage);
             var json = JsonDownloader.Download(RequestUrl);
             return ResourceFactory.DeserializeResponse<TItem>(json);
+        }
+
+        protected void OnFirstResponseDownloaded(EventArgs e)
+        {
+            FirstResponseDownloaded?.Invoke(this, e);
+        }
+
+        protected void OnResponseDownloaded(EventArgs e)
+        {
+            ResponseDownloaded?.Invoke(this, e);
         }
     }
 }

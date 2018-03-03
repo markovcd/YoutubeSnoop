@@ -7,7 +7,7 @@ namespace IntegrationTests
     {
         private static void Main(string[] args)
         {
-            var videoId = "6vpOHq8bkzA";
+            var videoId = "6vpOHq8bkzAinvalid";
             var channelId = "UCTxdujUsyc9TsjW1BnBxivg";
             var playlistId = "PLg-NWZjrm22usa_eVDKCADwbJ29JYOrDI";
             var query = "jestem hardkorem";

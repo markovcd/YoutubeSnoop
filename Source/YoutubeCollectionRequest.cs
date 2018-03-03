@@ -9,13 +9,13 @@ namespace YoutubeSnoop
          where TSettings : IApiRequestSettings
     {
         public TSettings Settings { get; }
-        protected IList<TItem> Responses { get; }
+        protected IEnumerable<TItem> Responses { get; }
 
         protected YoutubeCollectionRequest(TSettings settings)
         {
             Settings = settings;
             var api = new ApiRequest<TItem, TSettings>(settings);
-            Responses = api.TotalItems.ToList(); // TODO: async
+            Responses = api.TotalItems; 
         }
     }
 }

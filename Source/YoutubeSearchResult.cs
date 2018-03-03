@@ -6,7 +6,6 @@ namespace YoutubeSnoop
 {
     public class YoutubeSearchResult : IYoutubeItem
     {
-        public SearchResult Item { get; }
         public ResourceKind Kind { get; }
         public string Id { get; }
         public SearchResult Response { get; }

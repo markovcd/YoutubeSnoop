@@ -8,11 +8,11 @@ namespace YoutubeSnoop
 {
     public class YoutubePlaylistItems : YoutubeCollectionRequest<PlaylistItemsApiRequestSettings, PlaylistItem>, IYoutubeCollection<YoutubePlaylistItem>
     {
-        public IList<YoutubePlaylistItem> Items { get; }
+        public IEnumerable<YoutubePlaylistItem> Items { get; }
 
         public YoutubePlaylistItems(PlaylistItemsApiRequestSettings settings) : base(settings)
         {
-            Items = Responses.Select(i => new YoutubePlaylistItem(i)).ToList();
+            Items = Responses.Select(i => new YoutubePlaylistItem(i));
         }
 
         public YoutubePlaylistItems(string playlistId)

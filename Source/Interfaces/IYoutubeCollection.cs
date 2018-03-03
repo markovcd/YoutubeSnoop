@@ -5,6 +5,6 @@ namespace YoutubeSnoop.Interfaces
     public interface IYoutubeCollection<TItem>
          where TItem : IYoutubeItem
     {
-        IList<TItem> Items { get; }
+        IEnumerable<TItem> Items { get; }
     }
 }

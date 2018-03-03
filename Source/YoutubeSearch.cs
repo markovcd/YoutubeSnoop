@@ -8,14 +8,14 @@ namespace YoutubeSnoop
 {
     public class YoutubeSearch : YoutubeCollectionRequest<SearchApiRequestSettings, SearchResult>, IYoutubeCollection<YoutubeSearchResult>
     {
-        public IList<YoutubeSearchResult> Items { get; }
+        public IEnumerable<YoutubeSearchResult> Items { get; }
 
         public YoutubeSearch(SearchApiRequestSettings settings) : base(settings)
         {
-            Items = Responses.Select(i => new YoutubeSearchResult(i)).ToList();
+            Items = Responses.Select(i => new YoutubeSearchResult(i));
         }
 
         public YoutubeSearch(string query)
-            : base(new SearchApiRequestSettings { Query = query }) { }
+            : this(new SearchApiRequestSettings { Query = query }) { }
     }
 }

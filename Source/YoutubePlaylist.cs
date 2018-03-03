@@ -19,5 +19,8 @@ namespace YoutubeSnoop
 
         public string Url { get; }
         public string Id { get; }
+
+        private YoutubePlaylistItems _items;
+        public YoutubePlaylistItems Items => _items ?? (_items = new YoutubePlaylistItems(Id));
     }
 }

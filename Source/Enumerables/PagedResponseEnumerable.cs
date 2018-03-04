@@ -9,18 +9,16 @@ namespace YoutubeSnoop.Enumerables
     public class PagedResponseEnumerable<TItem> : IEnumerable<Response<TItem>>
         where TItem : IResponse
     {
-        private Response<TItem> _response;
-        private Func<string, Response<TItem>> _getNextResponse;
+        private readonly Func<string, Response<TItem>> _getNextResponse;
 
-        public PagedResponseEnumerable(Response<TItem> firstResponse, Func<string, Response<TItem>> getNextResponse)
+        public PagedResponseEnumerable(Func<string, Response<TItem>> getNextResponse)
         {
-            _response = firstResponse;
             _getNextResponse = getNextResponse;
         }
 
         public IEnumerator<Response<TItem>> GetEnumerator()
         {
-            return new PagedResponseEnumerator<TItem>(_response, _getNextResponse);
+            return new PagedResponseEnumerator<TItem>(_getNextResponse);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

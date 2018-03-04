@@ -8,7 +8,7 @@ using YoutubeSnoop.Enums;
 using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop
-{
+{   
     public class ApiRequest<TItem, TSettings>
         where TItem : IResponse
         where TSettings : IApiRequestSettings
@@ -22,41 +22,33 @@ namespace YoutubeSnoop
         private const string _apiKeyName = "key";
 
         private static readonly ApiArgument _prettyPrintArgument = new ApiArgument<bool>(_prettyPrintName, _prettyPrint);
-        private static readonly ApiArgument _apiKeyArgument = new ApiArgument(_apiKeyName, _apiKey);
+        private static readonly ApiArgument _apiKeyArgument = new ApiArgument(_apiKeyName, _apiKey);       
 
-        private Response<TItem> _response;
-        private IEnumerable<Response<TItem>> _totalResponses;
-        private IEnumerable<TItem> _totalItems;
-
-        public Response<TItem> Response => _response ?? (_response = Deserialize(PageToken));
-        public IEnumerable<Response<TItem>> TotalResponses => _totalResponses ?? (_totalResponses = new PagedResponseEnumerable<TItem>(Response, Deserialize));
-        public IEnumerable<TItem> TotalItems => _totalItems ?? (_totalItems = TotalResponses.SelectMany(r => r.Items));
+        public IEnumerable<Response<TItem>> Responses { get; }
+        public IEnumerable<TItem> Items { get; }
 
         public TSettings Settings { get; }
-        public int ResultsPerPage { get; set; }
-        public string PageToken { get; set; }
+        public int ResultsPerPage { get; }
+
         public IEnumerable<PartType> PartTypes { get; }
-
-        public string RequestUrl { get; protected set; }
-
-        public event EventHandler FirstResponseDownloaded; // TODO
-        public event EventHandler ResponseDownloaded;
-
-        public ApiRequest(TSettings settings, IEnumerable<PartType> partTypes, string pageToken = null, int resultsPerPage = 20)
+          
+        public ApiRequest(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage = 20)
         {
             ResultsPerPage = resultsPerPage;
             Settings = settings;
-            PageToken = pageToken;
-            PartTypes = partTypes ?? new[] { PartType.Snippet };
+            PartTypes = partTypes ?? new[] { PartType.Snippet };         
+
+            Responses = new PagedResponseEnumerable<TItem>(Deserialize);
+            Items = Responses.SelectMany(r => r.Items);
         }
 
-        public ApiRequest(TSettings settings, PartType partType, string pageToken = null, int resultsPerPage = 20)
-            : this(settings, new[] { partType }, pageToken, resultsPerPage) { }
+        public ApiRequest(TSettings settings, PartType partType, int resultsPerPage = 20)
+            : this(settings, new[] { partType }, resultsPerPage) { }
 
-        public ApiRequest(TSettings settings, string pageToken = null, int resultsPerPage = 20)
-            : this(settings, null, pageToken, resultsPerPage) { }
+        public ApiRequest(TSettings settings, int resultsPerPage = 20)
+            : this(settings, null, resultsPerPage) { }
 
-        protected static string FormatApiUrl(TSettings settings, IEnumerable<PartType> partTypes, string pageToken, int resultsPerPage)
+        public static string FormatApiUrl(TSettings settings, IEnumerable<PartType> partTypes, string pageToken, int resultsPerPage)
         {
             var arguments = settings.GetArguments().ToList();
             arguments.Add(new ApiPartArgument(partTypes));
@@ -72,21 +64,16 @@ namespace YoutubeSnoop
             return string.Format(_apiUrl, settings.RequestType.ToCamelCase(), argumentString);
         }
 
-        public Response<TItem> Deserialize(string pageToken)
+        public static Response<TItem> Deserialize(TSettings settings, IEnumerable<PartType> partTypes, string pageToken, int resultsPerPage = 20)
         {
-            RequestUrl = FormatApiUrl(Settings, PartTypes, pageToken, ResultsPerPage);
-            var json = JsonDownloader.Download(RequestUrl);
+            var requestUrl = FormatApiUrl(settings, partTypes, pageToken, resultsPerPage);
+            var json = JsonDownloader.Download(requestUrl);
             return ResourceFactory.DeserializeResponse<TItem>(json);
         }
 
-        protected void OnFirstResponseDownloaded(EventArgs e)
+        public Response<TItem> Deserialize(string pageToken = null)
         {
-            FirstResponseDownloaded?.Invoke(this, e);
-        }
-
-        protected void OnResponseDownloaded(EventArgs e)
-        {
-            ResponseDownloaded?.Invoke(this, e);
-        }
+            return Deserialize(Settings, PartTypes, pageToken, ResultsPerPage);
+        }     
     }
 }

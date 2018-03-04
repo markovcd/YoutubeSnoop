@@ -5,10 +5,11 @@ using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop
 {
-    public class YoutubePlaylist : YoutubeRequest<PlaylistApiRequestSettings, Playlist>, IYoutubeItem
+    public class YoutubePlaylist : IYoutubeItem
     {
-        private YoutubePlaylistItems _items;
-        public YoutubePlaylistItems Items => _items ?? (_items = new YoutubePlaylistItems(Id));
+        public YoutubePlaylistItems Items { get; }
+
+        public ApiRequestSingle<Playlist, PlaylistApiRequestSettings> Request { get; }
 
         public string Url { get; }
         public string Id { get; }
@@ -21,15 +22,33 @@ namespace YoutubeSnoop
         public YoutubePlaylist(string id)
             : this(new PlaylistApiRequestSettings { Id = id }) { }
 
-        public YoutubePlaylist(PlaylistApiRequestSettings settings) : base(settings)
+        public YoutubePlaylist(PlaylistApiRequestSettings settings)
         {
-            Id = Response.Id;
-            Url = Extensions.GetUrl(Response.Kind, Response.Id);
-            PublishedAt = Response.Snippet.PublishedAt;
-            ChannelId = Response.Snippet.ChannelId;
-            Title = Response.Snippet.Title;
-            Description = Response.Snippet.Description;
-            ChannelTitle = Response.Snippet.ChannelTitle;
+            Request = new ApiRequestSingle<Playlist, PlaylistApiRequestSettings>(settings);
+            if (Request.Item == null) return;
+
+            Id = Request.Item.Id;          
+            PublishedAt = Request.Item.Snippet.PublishedAt;
+            ChannelId = Request.Item.Snippet.ChannelId;
+            Title = Request.Item.Snippet.Title;
+            Description = Request.Item.Snippet.Description;
+            ChannelTitle = Request.Item.Snippet.ChannelTitle;
+
+            Items = new YoutubePlaylistItems(Request.Item.Id);
+            Url = Extensions.GetUrl(Request.Item.Kind, Request.Item.Id);
+        }
+
+        public YoutubePlaylist(Playlist playlist)
+        {
+            Id = playlist.Id;
+            PublishedAt = playlist.Snippet.PublishedAt;
+            ChannelId = playlist.Snippet.ChannelId;
+            Title = playlist.Snippet.Title;
+            Description = playlist.Snippet.Description;
+            ChannelTitle = playlist.Snippet.ChannelTitle;
+
+            Items = new YoutubePlaylistItems(playlist.Id);
+            Url = Extensions.GetUrl(playlist.Kind, playlist.Id);
         }
     }
 }

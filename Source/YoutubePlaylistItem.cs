@@ -25,7 +25,6 @@ namespace YoutubeSnoop
         internal YoutubePlaylistItem(PlaylistItem playlistItem)
         {
             Response = playlistItem;
-            Url = Extensions.GetUrl(Kind, Id);
             Kind = playlistItem.Snippet.ResourceId.Kind;
             Id = playlistItem.Snippet.ResourceId.GetId();
             PublishedAt = playlistItem.Snippet.PublishedAt;
@@ -35,6 +34,8 @@ namespace YoutubeSnoop
             ChannelTitle = playlistItem.Snippet.ChannelTitle;
             PlaylistId = playlistItem.Snippet.PlaylistId;
             Position = playlistItem.Snippet.Position;
+
+            Url = Extensions.GetUrl(Kind, Id);
         }
     }
 }

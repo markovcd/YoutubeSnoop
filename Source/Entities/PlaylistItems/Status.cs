@@ -1,7 +1,9 @@
-﻿namespace YoutubeSnoop.Entities.PlaylistItems
+﻿using YoutubeSnoop.Enums;
+
+namespace YoutubeSnoop.Entities.PlaylistItems
 {
     public class Status
     {
-        public string PrivacyStatus { get; set; }
+        public PrivacyStatus PrivacyStatus { get; set; }
     }
 }

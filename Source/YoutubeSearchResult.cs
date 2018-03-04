@@ -20,17 +20,18 @@ namespace YoutubeSnoop
         public string Description { get; }
         public string ChannelTitle { get; }
 
-        internal YoutubeSearchResult(SearchResult searchResult)
+        public YoutubeSearchResult(SearchResult searchResult)
         {
             Response = searchResult;
             Kind = searchResult.Id.Kind;
-            Id = searchResult.Id.GetId();
-            Url = Extensions.GetUrl(Kind, Id);
+            Id = searchResult.Id.GetId();           
             PublishedAt = searchResult.Snippet.PublishedAt;
             ChannelId = searchResult.Snippet.ChannelId;
             Title = searchResult.Snippet.Title;
             Description = searchResult.Snippet.Description;
             ChannelTitle = searchResult.Snippet.ChannelTitle;
+
+            Url = Extensions.GetUrl(Kind, Id);
         }
     }
 }

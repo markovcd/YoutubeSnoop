@@ -1,15 +1,16 @@
 ﻿using System;
+using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Entities.Videos
 {
     public class Status
     {
-        public string UploadStatus { get; set; }
-        public string FailureStatus { get; set; }
-        public string RejectionReason { get; set; }
-        public string PrivacyStatus { get; set; }
+        public UploadStatus UploadStatus { get; set; }
+        public FailureStatus FailureStatus { get; set; }
+        public RejectionReason RejectionReason { get; set; }
+        public PrivacyStatus PrivacyStatus { get; set; }
         public DateTime? PublishedAt { get; set; }
-        public string License { get; set; }
+        public License License { get; set; }
         public bool? Embeddable { get; set; }
         public bool? PublicStatsViewable { get; set; }
     }

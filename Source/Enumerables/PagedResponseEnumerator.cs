@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using YoutubeSnoop.Entities;
 using YoutubeSnoop.Interfaces;
 
@@ -16,10 +17,10 @@ namespace YoutubeSnoop.Enumerables
         public Response<TItem> Current => _responses[_index];
         object IEnumerator.Current => Current;
 
-        public PagedResponseEnumerator(Response<TItem> firstResponse, Func<string, Response<TItem>> getNextResponse)
+        public PagedResponseEnumerator(Func<string, Response<TItem>> getNextResponse)
         {
             _index = -1;
-            _responses = new List<Response<TItem>> { firstResponse };
+            _responses = new List<Response<TItem>>();
             _getNextResponse = getNextResponse;
         }
 
@@ -31,7 +32,11 @@ namespace YoutubeSnoop.Enumerables
         {
             _index++;
 
-            if (_index == _responses.Count)
+            if (!_responses.Any())
+            {
+                _responses.Add(_getNextResponse(null));
+            }
+            else if (_index == _responses.Count)
             {
                 if (string.IsNullOrWhiteSpace(_responses[_index - 1].NextPageToken)) return false;
                 _responses.Add(_getNextResponse(_responses[_index - 1].NextPageToken));

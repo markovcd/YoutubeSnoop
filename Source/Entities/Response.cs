@@ -18,8 +18,5 @@ namespace YoutubeSnoop.Entities
         public ResourceKind Kind { get; set; }
 
         public string Etag { get; set; }
-
-        [JsonIgnore]
-        public string Json { get; set; }
     }
 }

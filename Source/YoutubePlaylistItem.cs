@@ -8,12 +8,12 @@ namespace YoutubeSnoop
     public class YoutubePlaylistItem : IYoutubeItem
     {
         private IYoutubeItem _details;
-        public IYoutubeItem Details => _details ?? (_details = Response.Snippet.ResourceId.GetYoutubeItem());
+        public IYoutubeItem Details => _details ?? (_details = Item.Snippet.ResourceId.GetYoutubeItem());
 
         public ResourceKind Kind { get; }
         public string Id { get; }
         public string Url { get; }
-        public PlaylistItem Response { get; }
+        public PlaylistItem Item { get; }
         public DateTime PublishedAt { get; }
         public string ChannelId { get; }
         public string Title { get; }
@@ -22,20 +22,22 @@ namespace YoutubeSnoop
         public string PlaylistId { get; }
         public int? Position { get; }
 
-        internal YoutubePlaylistItem(PlaylistItem playlistItem)
+        public YoutubePlaylistItem(PlaylistItem playlistItem)
         {
-            Response = playlistItem;
-            Kind = playlistItem.Snippet.ResourceId.Kind;
-            Id = playlistItem.Snippet.ResourceId.GetId();
-            PublishedAt = playlistItem.Snippet.PublishedAt;
-            ChannelId = playlistItem.Snippet.ChannelId;
-            Title = playlistItem.Snippet.Title;
-            Description = playlistItem.Snippet.Description;
-            ChannelTitle = playlistItem.Snippet.ChannelTitle;
-            PlaylistId = playlistItem.Snippet.PlaylistId;
-            Position = playlistItem.Snippet.Position;
+            Item = playlistItem;
+            if (Item == null) return;
 
-            Url = Extensions.GetUrl(Kind, Id);
+            Kind = Item.Snippet.ResourceId.Kind;
+            Id = Item.Snippet.ResourceId.GetId();
+            PublishedAt = Item.Snippet.PublishedAt;
+            ChannelId = Item.Snippet.ChannelId;
+            Title = Item.Snippet.Title;
+            Description = Item.Snippet.Description;
+            ChannelTitle = Item.Snippet.ChannelTitle;
+            PlaylistId = Item.Snippet.PlaylistId;
+            Position = Item.Snippet.Position;
+
+            Url = Extensions.GetUrl(Item.Kind, Item.Id);
         }
     }
 }

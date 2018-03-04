@@ -2,25 +2,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using YoutubeSnoop.Entities;
 using YoutubeSnoop.Interfaces;
 
-namespace YoutubeSnoop.Enumerables
+namespace YoutubeSnoop
 {
-    public class PagedResponseEnumerator<TItem> : IEnumerator<Response<TItem>>
+    public class PagedResponseEnumerator<TItem> : IEnumerator<IPagedResponse<TItem>>
         where TItem : IResponse
     {
-        private readonly IList<Response<TItem>> _responses;
+        private readonly IList<IPagedResponse<TItem>> _responses;
         private int _index;
-        private Func<string, Response<TItem>> _getNextResponse;
+        private Func<string, IPagedResponse<TItem>> _getNextResponse;
 
-        public Response<TItem> Current => _responses[_index];
+        public IPagedResponse<TItem> Current => _responses[_index];
         object IEnumerator.Current => Current;
 
-        public PagedResponseEnumerator(Func<string, Response<TItem>> getNextResponse)
+        public PagedResponseEnumerator(Func<string, IPagedResponse<TItem>> getNextResponse)
         {
             _index = -1;
-            _responses = new List<Response<TItem>>();
+            _responses = new List<IPagedResponse<TItem>>();
             _getNextResponse = getNextResponse;
         }
 

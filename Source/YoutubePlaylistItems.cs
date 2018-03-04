@@ -10,7 +10,7 @@ namespace YoutubeSnoop
 {
     public class YoutubePlaylistItems : IYoutubeCollection<YoutubePlaylistItem>
     {
-        public ApiRequest<PlaylistItem, PlaylistItemsApiRequestSettings> Request { get; }
+        public IApiRequest<PlaylistItem> Request { get; }
         public IEnumerable<YoutubeVideo> Videos { get; }
 
         public YoutubePlaylistItems(PlaylistItemsApiRequestSettings settings, int resultsPerPage = 20)

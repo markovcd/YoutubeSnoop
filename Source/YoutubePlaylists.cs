@@ -9,7 +9,7 @@ namespace YoutubeSnoop
 {
     public class YoutubePlaylists : IYoutubeCollection<YoutubePlaylist>
     {
-        public ApiRequest<Playlist, PlaylistApiRequestSettings> Request { get; }
+        public IApiRequest<Playlist> Request { get; }
 
         public YoutubePlaylists(string channelId) 
             : this(new PlaylistApiRequestSettings { ChannelId = channelId }) { }

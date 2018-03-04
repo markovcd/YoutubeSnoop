@@ -8,12 +8,12 @@ namespace YoutubeSnoop
     public class YoutubeSearchResult : IYoutubeItem
     {
         private IYoutubeItem _details;
-        public IYoutubeItem Details => _details ?? (_details = Response.Id.GetYoutubeItem());
+        public IYoutubeItem Details => _details ?? (_details = Item.Id.GetYoutubeItem());
 
         public ResourceKind Kind { get; }
         public string Id { get; }
         public string Url { get; }
-        public SearchResult Response { get; }
+        public SearchResult Item { get; }
         public DateTime PublishedAt { get; }
         public string ChannelId { get; }
         public string Title { get; }
@@ -22,16 +22,17 @@ namespace YoutubeSnoop
 
         public YoutubeSearchResult(SearchResult searchResult)
         {
-            Response = searchResult;
-            Kind = searchResult.Id.Kind;
-            Id = searchResult.Id.GetId();           
-            PublishedAt = searchResult.Snippet.PublishedAt;
-            ChannelId = searchResult.Snippet.ChannelId;
-            Title = searchResult.Snippet.Title;
-            Description = searchResult.Snippet.Description;
-            ChannelTitle = searchResult.Snippet.ChannelTitle;
+            Item = searchResult;
 
-            Url = Extensions.GetUrl(Kind, Id);
+            Kind = Item.Id.Kind;
+            Id = Item.Id.GetId();           
+            PublishedAt = Item.Snippet.PublishedAt;
+            ChannelId = Item.Snippet.ChannelId;
+            Title = Item.Snippet.Title;
+            Description = Item.Snippet.Description;
+            ChannelTitle = Item.Snippet.ChannelTitle;
+
+            Url = Extensions.GetUrl(Item.Kind, Id);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace YoutubeSnoop
 {
     public class YoutubeSearch : IYoutubeCollection<YoutubeSearchResult>
     {
-        public ApiRequest<SearchResult, SearchApiRequestSettings> Request { get; }
+        public IApiRequest<SearchResult> Request { get; }
         public IEnumerable<YoutubeVideo> Videos { get; }
         public IEnumerable<YoutubePlaylist> Playlists { get; }
         public IEnumerable<YoutubeChannel> Channels { get; }

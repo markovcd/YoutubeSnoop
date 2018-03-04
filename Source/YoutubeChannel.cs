@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using YoutubeSnoop.Entities.Channels;
 using YoutubeSnoop.Enums;
 using YoutubeSnoop.Interfaces;
@@ -8,7 +9,8 @@ namespace YoutubeSnoop
 {
     public class YoutubeChannel : IYoutubeItem
     {
-        public ApiRequestSingle<Channel, ChannelApiRequestSettings> Request { get; }
+        public IApiRequest<Channel> Request { get; }
+        public Channel Item { get; }
 
         public string Url { get; }
         public string Id { get; }
@@ -25,31 +27,36 @@ namespace YoutubeSnoop
 
         public YoutubeChannel(ChannelApiRequestSettings settings) 
         {
-            Request = new ApiRequestSingle<Channel, ChannelApiRequestSettings>(settings, new[] { PartType.Snippet, PartType.ContentDetails, PartType.Status });
-            if (Request.Item == null) return;
+            Request = new ApiRequest<Channel, ChannelApiRequestSettings>(settings, new[] { PartType.Snippet, PartType.ContentDetails, PartType.Status });
+            Item = Request.Items.FirstOrDefault();
+            if (Item == null) return;
 
-            Id = Request.Item.Id;          
-            Title = Request.Item.Snippet.Title;
-            Description = Request.Item.Snippet.Description;
-            CustomUrl = Request.Item.Snippet.CustomUrl;
-            PublishedAt = Request.Item.Snippet.PublishedAt;
 
-            Uploads = new YoutubePlaylistItems(Request.Item.ContentDetails.RelatedPlaylists.Uploads);
-            Playlists = new YoutubePlaylists(Request.Item.Id);
-            Url = Extensions.GetUrl(Request.Item.Kind, Request.Item.Id);
+            Id = Item.Id;          
+            Title = Item.Snippet.Title;
+            Description = Item.Snippet.Description;
+            CustomUrl = Item.Snippet.CustomUrl;
+            PublishedAt = Item.Snippet.PublishedAt;
+
+            Uploads = new YoutubePlaylistItems(Item.ContentDetails.RelatedPlaylists.Uploads);
+            Playlists = new YoutubePlaylists(Item.Id);
+            Url = Extensions.GetUrl(Item.Kind, Item.Id);
         }
 
         public YoutubeChannel(Channel channel)
-        {         
-            Id = channel.Id;
-            Title = channel.Snippet.Title;
-            Description = channel.Snippet.Description;
-            CustomUrl = channel.Snippet.CustomUrl;
-            PublishedAt = channel.Snippet.PublishedAt;
+        {
+            Item = channel;
+            if (Item == null) return;
 
-            Uploads = new YoutubePlaylistItems(channel.ContentDetails.RelatedPlaylists.Uploads);
-            Playlists = new YoutubePlaylists(channel.Id);
-            Url = Extensions.GetUrl(channel.Kind, channel.Id);
+            Id = Item.Id;
+            Title = Item.Snippet.Title;
+            Description = Item.Snippet.Description;
+            CustomUrl = Item.Snippet.CustomUrl;
+            PublishedAt = Item.Snippet.PublishedAt;
+
+            Uploads = new YoutubePlaylistItems(Item.ContentDetails.RelatedPlaylists.Uploads);
+            Playlists = new YoutubePlaylists(Item.Id);
+            Url = Extensions.GetUrl(Item.Kind, Item.Id);
         }
     }
 }

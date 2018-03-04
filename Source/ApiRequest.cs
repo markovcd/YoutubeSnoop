@@ -1,79 +1,66 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using YoutubeSnoop.Arguments;
-using YoutubeSnoop.Entities;
-using YoutubeSnoop.Enumerables;
 using YoutubeSnoop.Enums;
 using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop
-{   
-    public class ApiRequest<TItem, TSettings>
+{
+    public interface IApiRequest<TItem> : IEnumerable<IPagedResponse<TItem>>
+        where TItem : IResponse
+    {
+        IEnumerable<TItem> Items { get; }
+    }
+
+    public class ApiRequest<TItem, TSettings> : IApiRequest<TItem>
         where TItem : IResponse
         where TSettings : IApiRequestSettings
     {
-        private const string _apiUrl = "https://www.googleapis.com/youtube/v3/{0}?{1}";
+        private readonly IJsonDownloader _jsonDownloader;
+        private readonly IResponseDeserializer<TItem> _responseDeserializer;
+        private readonly IApiUrlFormatter<TSettings> _apiUrlFormatter;
 
-        private const string _apiKey = "AIzaSyAHVb6LDoO5aARmDlUe9PIeU_U1et1bWd8"; // project Api key, do not touch!
-        private const bool _prettyPrint = false;
-
-        private const string _prettyPrintName = "prettyPrint";
-        private const string _apiKeyName = "key";
-
-        private static readonly ApiArgument _prettyPrintArgument = new ApiArgument<bool>(_prettyPrintName, _prettyPrint);
-        private static readonly ApiArgument _apiKeyArgument = new ApiArgument(_apiKeyName, _apiKey);       
-
-        public IEnumerable<Response<TItem>> Responses { get; }
         public IEnumerable<TItem> Items { get; }
-
         public TSettings Settings { get; }
         public int ResultsPerPage { get; }
 
         public IEnumerable<PartType> PartTypes { get; }
           
-        public ApiRequest(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage = 20)
+        public ApiRequest(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, IJsonDownloader jsonDownloader, IResponseDeserializer<TItem> responseDeserializer, IApiUrlFormatter<TSettings> apiUrlFormatter)
         {
+            _jsonDownloader = jsonDownloader;
+            _responseDeserializer = responseDeserializer;
+            _apiUrlFormatter = apiUrlFormatter;
+
             ResultsPerPage = resultsPerPage;
             Settings = settings;
             PartTypes = partTypes ?? new[] { PartType.Snippet };         
 
-            Responses = new PagedResponseEnumerable<TItem>(Deserialize);
-            Items = Responses.SelectMany(r => r.Items);
+            Items = this.SelectMany(r => r.Items);
         }
 
-        public ApiRequest(TSettings settings, PartType partType, int resultsPerPage = 20)
-            : this(settings, new[] { partType }, resultsPerPage) { }
+        public ApiRequest(TSettings settings, PartType partType, int resultsPerPage, IJsonDownloader jsonDownloader, IResponseDeserializer<TItem> responseDeserializer, IApiUrlFormatter<TSettings> apiUrlFormatter)
+            : this(settings, new[] { partType }, resultsPerPage, jsonDownloader, responseDeserializer, apiUrlFormatter) { }
 
-        public ApiRequest(TSettings settings, int resultsPerPage = 20)
-            : this(settings, null, resultsPerPage) { }
-
-        public static string FormatApiUrl(TSettings settings, IEnumerable<PartType> partTypes, string pageToken, int resultsPerPage)
+        public ApiRequest(TSettings settings, int resultsPerPage, IJsonDownloader jsonDownloader, IResponseDeserializer<TItem> responseDeserializer, IApiUrlFormatter<TSettings> apiUrlFormatter)
+            : this(settings, null, resultsPerPage, jsonDownloader, responseDeserializer, apiUrlFormatter) { }
+      
+        public IPagedResponse<TItem> Deserialize(string pageToken = null)
         {
-            var arguments = settings.GetArguments().ToList();
-            arguments.Add(new ApiPartArgument(partTypes));
-            arguments.Add(new ApiArgument(nameof(pageToken), pageToken));
-            arguments.Add(new ApiArgument<int>(nameof(resultsPerPage), resultsPerPage));
-            arguments.Add(_prettyPrintArgument);
-            arguments.Add(_apiKeyArgument);
-
-            var argumentString = arguments.Select(a => a.ToString())
-                                          .Where(s => !string.IsNullOrEmpty(s))
-                                          .Aggregate((s1, s2) => $"{s1}&{s2}");
-
-            return string.Format(_apiUrl, settings.RequestType.ToCamelCase(), argumentString);
+            var requestUrl = _apiUrlFormatter.Format(Settings, PartTypes, pageToken, ResultsPerPage);
+            var json = _jsonDownloader.Download(requestUrl);
+            return _responseDeserializer.Deserialize(json);
         }
 
-        public static Response<TItem> Deserialize(TSettings settings, IEnumerable<PartType> partTypes, string pageToken, int resultsPerPage = 20)
+        public IEnumerator<IPagedResponse<TItem>> GetEnumerator()
         {
-            var requestUrl = FormatApiUrl(settings, partTypes, pageToken, resultsPerPage);
-            var json = JsonDownloader.Download(requestUrl);
-            return ResourceFactory.DeserializeResponse<TItem>(json);
+            return new PagedResponseEnumerator<TItem>(Deserialize);
         }
 
-        public Response<TItem> Deserialize(string pageToken = null)
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            return Deserialize(Settings, PartTypes, pageToken, ResultsPerPage);
-        }     
+            return GetEnumerator();
+        }
     }
 }

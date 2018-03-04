@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using YoutubeSnoop.Entities.Videos;
 using YoutubeSnoop.Interfaces;
 using YoutubeSnoop.Settings;
@@ -7,7 +8,8 @@ namespace YoutubeSnoop
 {
     public class YoutubeVideo : IYoutubeItem
     {
-        public ApiRequestSingle<Video, VideoApiRequestSettings> Request { get; }
+        public IApiRequest<Video> Request { get; }
+        public Video Item { get; }
 
         public string Url { get; }
         public string Id { get; }
@@ -24,30 +26,34 @@ namespace YoutubeSnoop
         public YoutubeVideo(VideoApiRequestSettings settings)
         {
             Request = new ApiRequestSingle<Video, VideoApiRequestSettings>(settings);
-            if (Request.Item == null) return;
+            Item = Request.Items.FirstOrDefault();
+            if (Item == null) return;
 
-            Id = Request.Item.Id;
-            PublishedAt = Request.Item.Snippet.PublishedAt;
-            ChannelId = Request.Item.Snippet.ChannelId;
-            ChannelTitle = Request.Item.Snippet.ChannelTitle;
-            Description = Request.Item.Snippet.Description;
-            Title = Request.Item.Snippet.Title;
+            Id = Item.Id;
+            PublishedAt = Item.Snippet.PublishedAt;
+            ChannelId = Item.Snippet.ChannelId;
+            ChannelTitle = Item.Snippet.ChannelTitle;
+            Description = Item.Snippet.Description;
+            Title = Item.Snippet.Title;
 
-            Url = Extensions.GetUrl(Request.Item.Kind, Request.Item.Id);
-            if (int.TryParse(Request.Item.Snippet.CategoryId, out int categoryId)) CategoryId = categoryId;
+            Url = Extensions.GetUrl(Item.Kind, Item.Id);
+            if (int.TryParse(Item.Snippet.CategoryId, out int categoryId)) CategoryId = categoryId;
         }
 
         public YoutubeVideo(Video video)
-        {           
-            Id = video.Id;
-            PublishedAt = video.Snippet.PublishedAt;
-            ChannelId = video.Snippet.ChannelId;
-            ChannelTitle = video.Snippet.ChannelTitle;
-            Description = video.Snippet.Description;
-            Title = video.Snippet.Title;
+        {
+            Item = video;
+            if (Item == null) return;
 
-            Url = Extensions.GetUrl(video.Kind, video.Id);
-            if (int.TryParse(video.Snippet.CategoryId, out int categoryId)) CategoryId = categoryId;
+            Id = Item.Id;
+            PublishedAt = Item.Snippet.PublishedAt;
+            ChannelId = Item.Snippet.ChannelId;
+            ChannelTitle = Item.Snippet.ChannelTitle;
+            Description = Item.Snippet.Description;
+            Title = Item.Snippet.Title;
+
+            Url = Extensions.GetUrl(Item.Kind, Item.Id);
+            if (int.TryParse(Item.Snippet.CategoryId, out int categoryId)) CategoryId = categoryId;
         }
     }
 }

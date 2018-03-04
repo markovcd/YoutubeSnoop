@@ -10,7 +10,7 @@ namespace YoutubeSnoop
 {
     public class YoutubeChannels : IYoutubeCollection<YoutubeChannel>
     {
-        public ApiRequest<Channel, ChannelApiRequestSettings> Request { get; }
+        public IApiRequest<Channel> Request { get; }
  
         public YoutubeChannels(ChannelApiRequestSettings settings, int resultsPerPage = 20)
         {

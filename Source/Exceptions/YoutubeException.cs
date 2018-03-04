@@ -10,7 +10,7 @@ namespace YoutubeSnoop.Exceptions
     class YoutubeException : Exception
     {
         public IList<Error> Errors { get; set; }
-        public int Code { get; set; }
+        public HttpStatusCode Code { get; set; }
         public new string Message { get; set; }
 
         public static YoutubeException FromJson(string json)

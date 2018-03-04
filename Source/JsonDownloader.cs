@@ -3,8 +3,13 @@ using YoutubeSnoop.Exceptions;
 
 namespace YoutubeSnoop
 {
-    public static class JsonDownloader
+    public interface IJsonDownloader
     {
+        string Download(string url);
+    }
+
+    public class JsonDownloader : IJsonDownloader
+    {      
         public static string Download(string url)
         {
             var http = new WebClient();
@@ -15,9 +20,12 @@ namespace YoutubeSnoop
             catch (WebException ex)
             {
                 throw YoutubeException.FromWebException(ex);
-            }
-           
-            
+            }  
+        }
+
+        string IJsonDownloader.Download(string url)
+        {
+            return Download(url);
         }
     }
 }

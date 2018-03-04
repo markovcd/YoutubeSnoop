@@ -47,6 +47,8 @@ namespace YoutubeSnoop
             CustomUrl = channel.Snippet.CustomUrl;
             PublishedAt = channel.Snippet.PublishedAt;
 
+            Uploads = new YoutubePlaylistItems(channel.ContentDetails.RelatedPlaylists.Uploads);
+            Playlists = new YoutubePlaylists(channel.Id);
             Url = Extensions.GetUrl(channel.Kind, channel.Id);
         }
     }

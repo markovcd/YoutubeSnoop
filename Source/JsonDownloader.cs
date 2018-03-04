@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using YoutubeSnoop.Exceptions;
 
 namespace YoutubeSnoop
 {
@@ -7,7 +8,16 @@ namespace YoutubeSnoop
         public static string Download(string url)
         {
             var http = new WebClient();
-            return http.DownloadString(url); // TODO - error handling
+            try
+            {
+                return http.DownloadString(url); 
+            }
+            catch (WebException ex)
+            {
+                throw YoutubeException.FromWebException(ex);
+            }
+           
+            
         }
     }
 }

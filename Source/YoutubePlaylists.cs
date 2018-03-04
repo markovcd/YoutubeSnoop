@@ -9,15 +9,12 @@ namespace YoutubeSnoop
 {
     public class YoutubePlaylists : IYoutubeCollection<YoutubePlaylist>
     {
-        public IApiRequest<Playlist> Request { get; }
-
-        public YoutubePlaylists(string channelId) 
-            : this(new PlaylistApiRequestSettings { ChannelId = channelId }) { }
-
-        public YoutubePlaylists(PlaylistApiRequestSettings settings, int resultsPerPage = 20)
+        public IApiRequest<Playlist> Request { get; }  
+      
+        public YoutubePlaylists(IApiRequest<Playlist> request)
         {
-            Request = new ApiRequest<Playlist, PlaylistApiRequestSettings>(settings, resultsPerPage);
-        }            
+            Request = request;
+        }
 
         public IEnumerator<YoutubePlaylist> GetEnumerator()
         {

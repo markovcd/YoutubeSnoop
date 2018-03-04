@@ -32,7 +32,7 @@ namespace YoutubeSnoop.Settings
         public string TopicId { get; set; }
         public string VideoCategoryId { get; set; }
         public Duration? VideoDuration { get; set; }
-        public string Type { get; set; }
+        public ResourceKind? Type { get; set; }
         public Caption? VideoCaption { get; set; }
         public Definition? VideoDefinition { get; set; }
 

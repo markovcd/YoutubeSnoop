@@ -10,11 +10,11 @@ namespace YoutubeSnoop
     public class YoutubeVideos : IYoutubeCollection<YoutubeVideo>
     {
         public IApiRequest<Video> Request { get; }
-        
-        public YoutubeVideos(VideoApiRequestSettings settings, int resultsPerPage = 20)
+               
+        public YoutubeVideos(IApiRequest<Video> request)
         {
-            Request = new ApiRequest<Video, VideoApiRequestSettings>(settings, resultsPerPage);
-        }            
+            Request = request;
+        }
 
         public IEnumerator<YoutubeVideo> GetEnumerator()
         {

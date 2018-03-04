@@ -11,15 +11,19 @@ namespace YoutubeSnoop
         where TItem : IResponse
     {
         IEnumerable<TItem> Items { get; }
+        TItem FirstItem { get; }
     }
 
     public class ApiRequest<TItem, TSettings> : IApiRequest<TItem>
-        where TItem : IResponse
+        where TItem : class, IResponse
         where TSettings : IApiRequestSettings
     {
         private readonly IJsonDownloader _jsonDownloader;
         private readonly IResponseDeserializer<TItem> _responseDeserializer;
         private readonly IApiUrlFormatter<TSettings> _apiUrlFormatter;
+
+        private TItem _firstItem;
+        public TItem FirstItem => _firstItem ?? (_firstItem = Items.FirstOrDefault());
 
         public IEnumerable<TItem> Items { get; }
         public TSettings Settings { get; }
@@ -35,17 +39,11 @@ namespace YoutubeSnoop
 
             ResultsPerPage = resultsPerPage;
             Settings = settings;
-            PartTypes = partTypes ?? new[] { PartType.Snippet };         
+            PartTypes = partTypes ?? new[] { PartType.Snippet };
 
-            Items = this.SelectMany(r => r.Items);
+            Items = this.SelectMany(i => i.Items);
         }
 
-        public ApiRequest(TSettings settings, PartType partType, int resultsPerPage, IJsonDownloader jsonDownloader, IResponseDeserializer<TItem> responseDeserializer, IApiUrlFormatter<TSettings> apiUrlFormatter)
-            : this(settings, new[] { partType }, resultsPerPage, jsonDownloader, responseDeserializer, apiUrlFormatter) { }
-
-        public ApiRequest(TSettings settings, int resultsPerPage, IJsonDownloader jsonDownloader, IResponseDeserializer<TItem> responseDeserializer, IApiUrlFormatter<TSettings> apiUrlFormatter)
-            : this(settings, null, resultsPerPage, jsonDownloader, responseDeserializer, apiUrlFormatter) { }
-      
         public IPagedResponse<TItem> Deserialize(string pageToken = null)
         {
             var requestUrl = _apiUrlFormatter.Format(Settings, PartTypes, pageToken, ResultsPerPage);

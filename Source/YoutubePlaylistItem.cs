@@ -6,13 +6,9 @@ using YoutubeSnoop.Interfaces;
 namespace YoutubeSnoop
 {
     public class YoutubePlaylistItem : IYoutubeItem
-    {
-        private IYoutubeItem _details;
-        public IYoutubeItem Details => _details ?? (_details = Item.Snippet.ResourceId.GetYoutubeItem());
-
+    {     
         public ResourceKind Kind { get; }
         public string Id { get; }
-        public string Url { get; }
         public PlaylistItem Item { get; }
         public DateTime PublishedAt { get; }
         public string ChannelId { get; }
@@ -28,7 +24,7 @@ namespace YoutubeSnoop
             if (Item == null) return;
 
             Kind = Item.Snippet.ResourceId.Kind;
-            Id = Item.Snippet.ResourceId.GetId();
+            Id = Item.Snippet.ResourceId.Id();
             PublishedAt = Item.Snippet.PublishedAt;
             ChannelId = Item.Snippet.ChannelId;
             Title = Item.Snippet.Title;
@@ -36,8 +32,6 @@ namespace YoutubeSnoop
             ChannelTitle = Item.Snippet.ChannelTitle;
             PlaylistId = Item.Snippet.PlaylistId;
             Position = Item.Snippet.Position;
-
-            Url = Extensions.GetUrl(Item.Kind, Item.Id);
         }
     }
 }

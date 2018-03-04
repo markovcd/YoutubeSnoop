@@ -11,16 +11,11 @@ namespace YoutubeSnoop
     public class YoutubePlaylistItems : IYoutubeCollection<YoutubePlaylistItem>
     {
         public IApiRequest<PlaylistItem> Request { get; }
-        public IEnumerable<YoutubeVideo> Videos { get; }
 
-        public YoutubePlaylistItems(PlaylistItemsApiRequestSettings settings, int resultsPerPage = 20)
+        public YoutubePlaylistItems(IApiRequest<PlaylistItem> request)
         {
-            Request = new ApiRequest<PlaylistItem, PlaylistItemsApiRequestSettings>(settings, resultsPerPage);
-            Videos = this.Where(i => i.Kind == ResourceKind.Video).Select(i => (YoutubeVideo)i.Details);
+            Request = request;
         }
-
-        public YoutubePlaylistItems(string playlistId)
-            : this(new PlaylistItemsApiRequestSettings { PlaylistId = playlistId }) { }
 
         public IEnumerator<YoutubePlaylistItem> GetEnumerator()
         {

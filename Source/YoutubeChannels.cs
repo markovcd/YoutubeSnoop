@@ -11,11 +11,11 @@ namespace YoutubeSnoop
     public class YoutubeChannels : IYoutubeCollection<YoutubeChannel>
     {
         public IApiRequest<Channel> Request { get; }
- 
-        public YoutubeChannels(ChannelApiRequestSettings settings, int resultsPerPage = 20)
+        
+        public YoutubeChannels(IApiRequest<Channel> request)
         {
-            Request = new ApiRequest<Channel, ChannelApiRequestSettings>(settings, new[] { PartType.Snippet, PartType.ContentDetails }, resultsPerPage);
-        }            
+            Request = request;
+        }
 
         public IEnumerator<YoutubeChannel> GetEnumerator()
         {

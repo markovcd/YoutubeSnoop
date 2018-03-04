@@ -9,6 +9,10 @@ namespace YoutubeSnoop
 {
     public static class Extensions
     {
+        const string _playlistUrl = @"https://www.youtube.com/playlist?list={0}";
+        const string _channelUrl = @"https://www.youtube.com/channel/{0}";
+        const string _videoUrl = @"https://www.youtube.com/watch?v={0}";
+
         public static string GetDescription(this Enum value)
         {
             FieldInfo fieldInfo = value.GetType().GetField(value.ToString());
@@ -28,7 +32,7 @@ namespace YoutubeSnoop
             return ToCamelCase(value.ToString());
         }
 
-        public static string GetId(this IResource resourceId)
+        public static string Id(this IResource resourceId)
         {
             switch (resourceId.Kind)
             {
@@ -39,32 +43,41 @@ namespace YoutubeSnoop
             }
         }
 
-        public static IYoutubeItem GetYoutubeItem(this IResource resourceId)
+        public static IYoutubeItem ToYoutubeItem(this IResource resourceId)
         {
-            var id = resourceId.GetId();
+            var id = resourceId.Id();
 
             switch (resourceId.Kind)
             {
-                case ResourceKind.Video: return new YoutubeVideo(id);
-                case ResourceKind.Playlist: return new YoutubePlaylist(id);
-                case ResourceKind.Channel: return new YoutubeChannel(id);
+                case ResourceKind.Video: return Youtube.Video(id);
+                case ResourceKind.Playlist: return Youtube.Playlist(id);
+                case ResourceKind.Channel: return Youtube.Channel(id);
                 default: throw new InvalidOperationException();
             }
         }
 
-        public static string GetUrl(ResourceKind kind, string id)
+        public static string Url(this IResource resourceId)
         {
-            const string _playlistUrl = @"https://www.youtube.com/playlist?list={0}";
-            const string _channelUrl = @"https://www.youtube.com/channel/{0}";
-            const string _videoUrl = @"https://www.youtube.com/watch?v={0}";
+            var id = resourceId.Id();
 
-            switch (kind)
+            switch (resourceId.Kind)
             {
                 case ResourceKind.Video: return string.Format(_videoUrl, id);
                 case ResourceKind.Playlist: return string.Format(_playlistUrl, id);
                 case ResourceKind.Channel: return string.Format(_channelUrl, id);
                 default: throw new InvalidOperationException();
             }
+        }
+
+        public static string Url(this IYoutubeItem youtubeItem)
+        {
+            if (youtubeItem is YoutubeVideo) return string.Format(_videoUrl, youtubeItem.Id);
+            if (youtubeItem is YoutubePlaylist) return string.Format(_playlistUrl, youtubeItem.Id);
+            if (youtubeItem is YoutubeChannel) return string.Format(_channelUrl, youtubeItem.Id);
+            if (youtubeItem is YoutubeSearchResult) return (youtubeItem as YoutubeSearchResult).Item.Id.Url();
+            if (youtubeItem is YoutubePlaylistItem) return (youtubeItem as YoutubePlaylistItem).Item.Snippet.ResourceId.Url();
+        
+            throw new InvalidOperationException();
         }
     }
 }

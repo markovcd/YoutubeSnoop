@@ -2,7 +2,7 @@
 
 namespace YoutubeSnoop.Settings
 {
-    public class PlaylistApiRequestSettings : ApiRequestSettings
+    public sealed class PlaylistApiRequestSettings : ApiRequestSettings
     {
         public override RequestType RequestType => RequestType.Playlists;
 

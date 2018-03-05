@@ -10,8 +10,9 @@ using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeChannel : IYoutubeItem
+    public class YoutubeChannel : YoutubeItem<Channel, ChannelApiRequestSettings>, IYoutubeItem
     {
+        private Channel _item;
         private string _id;
         private ResourceKind _kind;
         private string _title;
@@ -20,50 +21,40 @@ namespace YoutubeSnoop
         private DateTime _publishedAt;
         private IReadOnlyDictionary<string, Thumbnail> _thumbnails;
 
-        public IApiRequest<Channel, ChannelApiRequestSettings> Request { get; }
-        public Channel Item { get; }
+        public Channel Item => S(_item);
+        public string Id => S(_id);
+        public ResourceKind Kind => S(_kind);
+        public string Title => S(_title);
+        public string Description => S(_description);
+        public string CustomUrl => S(_customUrl);
+        public DateTime PublishedAt => S(_publishedAt);
+        public IReadOnlyDictionary<string, Thumbnail> Thumbnails => S(_thumbnails);
 
-        public string Id
+        public YoutubeChannel(IApiRequest<Channel, ChannelApiRequestSettings> request) : base(request) { }
+
+        protected YoutubeChannel() { }
+
+        protected override void SetProperties(Channel response)
         {
-            get
-            {
-                return _id;
-            }
+            _item = response;
+            _id = response.Id;
+            _kind = response.Kind;
+            _title = response.Snippet.Title;
+            _description = response.Snippet.Description;
+            _customUrl = response.Snippet.CustomUrl;
+            _publishedAt = response.Snippet.PublishedAt;
+
+            var d = response.Snippet.Thumbnails.ToDictionary(kv => kv.Key, kv => kv.Value);
+            _thumbnails = new ReadOnlyDictionary<string, Thumbnail>(d);
+
+            PropertiesSet = true;
         }
 
-        public ResourceKind Kind => _kind;
-        public string Title => _title;
-        public string Description => _description;
-        public string CustomUrl => _customUrl;
-        public DateTime PublishedAt => _publishedAt;
-        public IReadOnlyDictionary<string, Thumbnail> Thumbnails => _thumbnails;
-
-
-        public YoutubeChannel(IApiRequest<Channel, ChannelApiRequestSettings> request) : this(request.FirstItem)
+        public static YoutubeChannel FromResponse(Channel response)
         {
-            Request = request;
-            Request.FirstItemDownloaded += Request_FirstItemDownloaded;
-        }
-
-        private void Request_FirstItemDownloaded(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        public YoutubeChannel(Channel channel)
-        {
-            Item = channel;
-            if (Item == null) return;
-
-            Id = Item.Id;
-            Kind = Item.Kind;
-            Title = Item.Snippet.Title;
-            Description = Item.Snippet.Description;
-            CustomUrl = Item.Snippet.CustomUrl;
-            PublishedAt = Item.Snippet.PublishedAt;
-
-            var d = Item.Snippet.Thumbnails.ToDictionary(kv => kv.Key, kv => kv.Value);
-            Thumbnails = new ReadOnlyDictionary<string, Thumbnail>(d);
+            var ch = new YoutubeChannel();
+            ch.SetProperties(response);
+            return ch;
         }
     }
 }

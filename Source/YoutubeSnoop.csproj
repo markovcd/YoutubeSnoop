@@ -21,11 +21,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
+    <Compile Remove="Enumerables\**" />
+    <EmbeddedResource Remove="Enumerables\**" />
+    <None Remove="Enumerables\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Enumerables\" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
   </ItemGroup>
 
 </Project>

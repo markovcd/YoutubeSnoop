@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using YoutubeSnoop.Entities;
 using YoutubeSnoop.Entities.Channels;
 using YoutubeSnoop.Enums;
 using YoutubeSnoop.Interfaces;
@@ -17,7 +20,9 @@ namespace YoutubeSnoop
         public string Description { get; }
         public string CustomUrl { get; }
         public DateTime PublishedAt { get; }
-      
+        public IReadOnlyDictionary<string, Thumbnail> Thumbnails { get; }
+
+
         public YoutubeChannel(IApiRequest<Channel> request) : this(request.FirstItem)
         {
             Request = request;
@@ -33,6 +38,9 @@ namespace YoutubeSnoop
             Description = Item.Snippet.Description;
             CustomUrl = Item.Snippet.CustomUrl;
             PublishedAt = Item.Snippet.PublishedAt;
+
+            var d = Item.Snippet.Thumbnails.ToDictionary(kv => kv.Key, kv => kv.Value);
+            Thumbnails = new ReadOnlyDictionary<string, Thumbnail>(d);
         }
     }
 }

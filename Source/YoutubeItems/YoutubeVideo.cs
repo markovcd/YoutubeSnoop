@@ -3,6 +3,9 @@ using System.Linq;
 using YoutubeSnoop.Entities.Videos;
 using YoutubeSnoop.Interfaces;
 using YoutubeSnoop.Settings;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using YoutubeSnoop.Entities;
 
 namespace YoutubeSnoop
 {
@@ -18,6 +21,7 @@ namespace YoutubeSnoop
         public string ChannelTitle { get; }
         public string Title { get; }
         public string Description { get; }
+        public IReadOnlyDictionary<string, Thumbnail> Thumbnails { get; }
 
         public YoutubeVideo(IApiRequest<Video> request) : this(request.FirstItem)
         {
@@ -36,6 +40,9 @@ namespace YoutubeSnoop
             Description = Item.Snippet.Description;
             Title = Item.Snippet.Title;
             if (int.TryParse(Item.Snippet.CategoryId, out int categoryId)) CategoryId = categoryId;
+
+            var d = Item.Snippet.Thumbnails.ToDictionary(kv => kv.Key, kv => kv.Value);
+            Thumbnails = new ReadOnlyDictionary<string, Thumbnail>(d);
         }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 using YoutubeSnoop.Entities;
 using YoutubeSnoop.Enums;
@@ -78,6 +81,13 @@ namespace YoutubeSnoop
             if (youtubeItem is YoutubePlaylistItem) return (youtubeItem as YoutubePlaylistItem).Item.Snippet.ResourceId.Url();
         
             throw new InvalidOperationException();
+        }
+
+        public static IReadOnlyDictionary<string, Thumbnail> Clone(this IDictionary<string, Thumbnail> thumbnails)
+        {
+            var t = thumbnails?.ToDictionary(kv => kv.Key, kv => kv.Value);
+            if (t == null) return null;
+            return new ReadOnlyDictionary<string, Thumbnail>(t);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace YoutubeSnoop
 
         protected override YoutubePlaylist CreateItem(Playlist response)
         {
-            return new YoutubePlaylist(response);
+            return YoutubePlaylist.FromResponse(response);
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using YoutubeSnoop;
 using YoutubeSnoop.Entities.Videos;
+using YoutubeSnoop.Enums;
 using YoutubeSnoop.Settings;
 
 namespace IntegrationTests
@@ -9,9 +11,13 @@ namespace IntegrationTests
     {
         private static void Main(string[] args)
         {
-            var l = Youtube.Languages("pl").ToList();
-            var c = Youtube.Countries().ToList();
-            
+            var l = Youtube.Search("test")
+                           .RequestPart(PartType.Snippet)
+                           
+                           .Type(ResourceKind.Playlist)
+                           .OrderBy(SearchOrder.Title)
+                           .Take(20)
+                           .Select(i => $"{i.PublishedAt}: {i.Title}").ToList();
         }
     }
 }

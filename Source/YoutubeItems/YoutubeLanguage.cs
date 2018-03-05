@@ -14,12 +14,13 @@ namespace YoutubeSnoop
 
         public YoutubeLanguage(I18nLanguage language)
         {
-            Item = language;
+            if (language == null) return;
 
-            Kind = Item.Kind;
-            Id = Item.Id;
-            LanguageCode = Item.Snippet.Hl;
-            LanguageName = Item.Snippet.Name;
+            Item = language;
+            Kind = language.Kind;
+            Id = language.Id;
+            LanguageCode = language.Snippet.Hl;
+            LanguageName = language.Snippet.Name;
         }
 
         public YoutubeLanguage(string languageCode, string languageName)

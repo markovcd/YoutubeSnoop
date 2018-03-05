@@ -14,8 +14,8 @@ namespace YoutubeSnoop
         IEnumerable<TItem> Items { get; }
         TItem FirstItem { get; }
         TSettings Settings { get; }
-
-        IApiRequest<TItem, TSettings> DeepClone();
+        IEnumerable<PartType> PartTypes { get; }
+        IApiRequest<TItem, TSettings> DeepClone(IEnumerable<PartType> partTypes = null);
 
         event EventHandler FirstItemDownloaded;
     }
@@ -58,7 +58,7 @@ namespace YoutubeSnoop
 
             ResultsPerPage = resultsPerPage;
             Settings = settings;
-            PartTypes = partTypes ?? new[] { PartType.Snippet };
+            PartTypes = partTypes == null || !partTypes.Any() ? new[] { PartType.Snippet } : partTypes;
 
             Items = this.SelectMany(i => i.Items);
         }
@@ -80,9 +80,9 @@ namespace YoutubeSnoop
             return GetEnumerator();
 
         }
-        public IApiRequest<TItem, TSettings> DeepClone()
+        public IApiRequest<TItem, TSettings> DeepClone(IEnumerable<PartType> partTypes = null)
         {
-            return new ApiRequest<TItem, TSettings>((TSettings)Settings.DeepClone(), PartTypes.ToList(), ResultsPerPage, _jsonDownloader, _responseDeserializer, _apiUrlFormatter);
+            return new ApiRequest<TItem, TSettings>((TSettings)Settings.DeepClone(), partTypes ?? PartTypes.ToList(), ResultsPerPage, _jsonDownloader, _responseDeserializer, _apiUrlFormatter);
         }
 
         protected void OnFirstItemDownloaded(EventArgs a)

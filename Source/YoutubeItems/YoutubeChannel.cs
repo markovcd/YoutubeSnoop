@@ -36,6 +36,8 @@ namespace YoutubeSnoop
 
         protected override void SetProperties(Channel response)
         {
+            if (response == null) return;
+
             _item = response;
             _id = response.Id;
             _kind = response.Kind;
@@ -43,9 +45,7 @@ namespace YoutubeSnoop
             _description = response.Snippet.Description;
             _customUrl = response.Snippet.CustomUrl;
             _publishedAt = response.Snippet.PublishedAt;
-
-            var d = response.Snippet.Thumbnails.ToDictionary(kv => kv.Key, kv => kv.Value);
-            _thumbnails = new ReadOnlyDictionary<string, Thumbnail>(d);
+            _thumbnails = response.Snippet.Thumbnails?.Clone();
 
             PropertiesSet = true;
         }

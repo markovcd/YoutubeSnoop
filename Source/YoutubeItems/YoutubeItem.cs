@@ -6,11 +6,9 @@ namespace YoutubeSnoop
         where TResponse : IResponse
         where TSettings : IApiRequestSettings
     {
-
         protected bool PropertiesSet { get; set; }
 
         public IApiRequest<TResponse, TSettings> Request { get; }
-
 
         protected YoutubeItem(IApiRequest<TResponse, TSettings> request)
         {

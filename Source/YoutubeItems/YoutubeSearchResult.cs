@@ -23,18 +23,17 @@ namespace YoutubeSnoop
 
         public YoutubeSearchResult(SearchResult searchResult)
         {
+            if (searchResult == null) return;
+
             Item = searchResult;
-
-            Kind = Item.Id.Kind;
-            Id = Item.Id.Id();           
-            PublishedAt = Item.Snippet.PublishedAt;
-            ChannelId = Item.Snippet.ChannelId;
-            Title = Item.Snippet.Title;
-            Description = Item.Snippet.Description;
-            ChannelTitle = Item.Snippet.ChannelTitle;
-
-            var d = Item.Snippet.Thumbnails.ToDictionary(kv => kv.Key, kv => kv.Value);
-            Thumbnails = new ReadOnlyDictionary<string, Thumbnail>(d);
-        }
+            Kind = searchResult.Id.Kind;
+            Id = searchResult.Id.Id();           
+            PublishedAt = searchResult.Snippet.PublishedAt;
+            ChannelId = searchResult.Snippet.ChannelId;
+            Title = searchResult.Snippet.Title;
+            Description = searchResult.Snippet.Description;
+            ChannelTitle = searchResult.Snippet.ChannelTitle;
+            Thumbnails = searchResult.Snippet.Thumbnails?.Clone();
+        }       
     }
 }

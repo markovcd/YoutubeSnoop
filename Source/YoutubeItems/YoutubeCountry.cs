@@ -14,12 +14,13 @@ namespace YoutubeSnoop
 
         public YoutubeCountry(I18nRegion region)
         {
-            Item = region;
+            if (region == null) return;
 
-            Kind = Item.Kind;
-            Id = Item.Id;
-            CountryCode = Item.Snippet.Gl;
-            CountryName = Item.Snippet.Name;
+            Item = region;
+            Kind = region.Kind;
+            Id = region.Id;
+            CountryCode = region.Snippet.Gl;
+            CountryName = region.Snippet.Name;
         }
 
         public YoutubeCountry(string countryCode, string countryName)

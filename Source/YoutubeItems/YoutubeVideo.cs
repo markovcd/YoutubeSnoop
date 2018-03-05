@@ -10,41 +10,56 @@ using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeVideo : IYoutubeItem
+    public class YoutubeVideo : YoutubeItem<Video, VideoApiRequestSettings>, IYoutubeItem
     {
-        public IApiRequest<Video, VideoApiRequestSettings> Request { get; }
-        public Video Item { get; }
-        public string Id { get; }
-        public ResourceKind Kind { get; }
-        public int? CategoryId { get; }
-        public DateTime PublishedAt { get; }
-        public string ChannelId { get; }
-        public string ChannelTitle { get; }
-        public string Title { get; }
-        public string Description { get; }
-        public IReadOnlyDictionary<string, Thumbnail> Thumbnails { get; }
+        private string _id;
+        private Video _item;
+        private ResourceKind _kind;
+        private string _channelId;
+        private DateTime _publishedAt;
+        private string _title;
+        private string _description;
+        private string _channelTitle;
+        private IReadOnlyDictionary<string, Thumbnail> _thumbnails;
+        private int _categoryId;
 
-        public YoutubeVideo(IApiRequest<Video, VideoApiRequestSettings> request) : this(request.FirstItem)
+        public Video Item => S(_item);
+        public string Id => S(_id);
+        public ResourceKind Kind => S(_kind);
+        public DateTime PublishedAt => S(_publishedAt);
+        public string ChannelId => S(_channelId);
+        public string Title => S(_title);
+        public string Description => S(_description);
+        public string ChannelTitle => S(_channelTitle);
+        public IReadOnlyDictionary<string, Thumbnail> Thumbnails => S(_thumbnails);
+
+        public YoutubeVideo(IApiRequest<Video, VideoApiRequestSettings> request) { }
+
+        protected YoutubeVideo() { }
+
+        protected override void SetProperties(Video response)
         {
-            Request = request;
+            if (response == null) return;
+
+            _item = response;
+            _id = response.Id;
+            _kind = response.Kind;
+            _publishedAt = response.Snippet.PublishedAt;
+            _channelId = response.Snippet.ChannelId;
+            _title = response.Snippet.Title;
+            _description = response.Snippet.Description;
+            _channelTitle = response.Snippet.ChannelTitle;
+            int.TryParse(response.Snippet.CategoryId, out _categoryId);
+            _thumbnails = response.Snippet.Thumbnails?.Clone();
+
+            PropertiesSet = true;
         }
 
-        public YoutubeVideo(Video video)
+        public static YoutubeVideo FromResponse(Video response)
         {
-            Item = video;
-            if (Item == null) return;
-
-            Id = Item.Id;
-            Kind = Item.Kind;
-            PublishedAt = Item.Snippet.PublishedAt;
-            ChannelId = Item.Snippet.ChannelId;
-            ChannelTitle = Item.Snippet.ChannelTitle;
-            Description = Item.Snippet.Description;
-            Title = Item.Snippet.Title;
-            if (int.TryParse(Item.Snippet.CategoryId, out int categoryId)) CategoryId = categoryId;
-
-            var d = Item.Snippet.Thumbnails.ToDictionary(kv => kv.Key, kv => kv.Value);
-            Thumbnails = new ReadOnlyDictionary<string, Thumbnail>(d);
+            var ch = new YoutubeVideo();
+            ch.SetProperties(response);
+            return ch;
         }
     }
 }

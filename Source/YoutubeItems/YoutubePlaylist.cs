@@ -10,40 +10,54 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public class YoutubePlaylist : IYoutubeItem
+    public class YoutubePlaylist : YoutubeItem<Playlist, PlaylistApiRequestSettings>, IYoutubeItem
     {
-        public IApiRequest<Playlist, PlaylistApiRequestSettings> Request { get; }
-        public Playlist Item { get; }
+        private string _id;
+        private Playlist _item;
+        private ResourceKind _kind;
+        private string _channelId;
+        private DateTime _publishedAt;
+        private string _title;
+        private string _description;
+        private string _channelTitle;
+        private IReadOnlyDictionary<string, Thumbnail> _thumbnails;
 
-        public string Id { get; }
-        public ResourceKind Kind { get; }
-        public DateTime PublishedAt { get; }
-        public string ChannelId { get; }
-        public string Title { get; }
-        public string Description { get; }
-        public string ChannelTitle { get; }
-        public IReadOnlyDictionary<string, Thumbnail> Thumbnails { get; }
+        public Playlist Item => S(_item);
+        public string Id => S(_id);
+        public ResourceKind Kind => S(_kind);
+        public DateTime PublishedAt => S(_publishedAt);
+        public string ChannelId => S(_channelId);
+        public string Title => S(_title);
+        public string Description => S(_description);
+        public string ChannelTitle => S(_channelTitle);
+        public IReadOnlyDictionary<string, Thumbnail> Thumbnails => S(_thumbnails);
 
-        public YoutubePlaylist(IApiRequest<Playlist, PlaylistApiRequestSettings> request) : this(request.FirstItem)
+        public YoutubePlaylist(IApiRequest<Playlist, PlaylistApiRequestSettings> request) { }
+
+        protected YoutubePlaylist() { }
+
+        protected override void SetProperties(Playlist response)
         {
-            Request = request;
+            if (response == null) return;
+
+            _item = response;
+            _id = response.Id;
+            _kind = response.Kind;
+            _publishedAt = response.Snippet.PublishedAt;
+            _channelId = response.Snippet.ChannelId;
+            _title = response.Snippet.Title;
+            _description = response.Snippet.Description;
+            _channelTitle = response.Snippet.ChannelTitle;
+            _thumbnails = response.Snippet.Thumbnails?.Clone();     
+
+            PropertiesSet = true;
         }
 
-        public YoutubePlaylist(Playlist playlist)
+        public static YoutubePlaylist FromResponse(Playlist response)
         {
-            Item = playlist;
-            if (Item == null) return;
-
-            Id = Item.Id;
-            Kind = Item.Kind;
-            PublishedAt = Item.Snippet.PublishedAt;
-            ChannelId = Item.Snippet.ChannelId;
-            Title = Item.Snippet.Title;
-            Description = Item.Snippet.Description;
-            ChannelTitle = Item.Snippet.ChannelTitle;
-
-            var d = Item.Snippet.Thumbnails.ToDictionary(kv => kv.Key, kv => kv.Value);
-            Thumbnails = new ReadOnlyDictionary<string, Thumbnail>(d);
+            var ch = new YoutubePlaylist();
+            ch.SetProperties(response);
+            return ch;
         }
     }
 }

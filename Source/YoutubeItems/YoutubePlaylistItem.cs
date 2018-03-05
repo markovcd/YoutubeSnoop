@@ -25,21 +25,19 @@ namespace YoutubeSnoop
 
         public YoutubePlaylistItem(PlaylistItem playlistItem)
         {
+            if (playlistItem == null) return;
+
             Item = playlistItem;
-            if (Item == null) return;
-
-            Kind = Item.Snippet.ResourceId.Kind;
-            Id = Item.Snippet.ResourceId.Id();
-            PublishedAt = Item.Snippet.PublishedAt;
-            ChannelId = Item.Snippet.ChannelId;
-            Title = Item.Snippet.Title;
-            Description = Item.Snippet.Description;
-            ChannelTitle = Item.Snippet.ChannelTitle;
-            PlaylistId = Item.Snippet.PlaylistId;
-            Position = Item.Snippet.Position;
-
-            var d = Item.Snippet.Thumbnails.ToDictionary(kv => kv.Key, kv => kv.Value);
-            Thumbnails = new ReadOnlyDictionary<string, Thumbnail>(d);
+            Kind = playlistItem.Snippet.ResourceId.Kind;
+            Id = playlistItem.Snippet.ResourceId?.Id();
+            PublishedAt = playlistItem.Snippet.PublishedAt;
+            ChannelId = playlistItem.Snippet.ChannelId;
+            Title = playlistItem.Snippet.Title;
+            Description = playlistItem.Snippet.Description;
+            ChannelTitle = playlistItem.Snippet.ChannelTitle;
+            PlaylistId = playlistItem.Snippet.PlaylistId;
+            Position = playlistItem.Snippet.Position;
+            Thumbnails = playlistItem.Snippet.Thumbnails?.Clone();
         }
     }
 }

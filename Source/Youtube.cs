@@ -194,6 +194,12 @@ namespace YoutubeSnoop
 
         #region Search
 
+        public static YoutubeSearch RequestPart(this YoutubeSearch search, PartType partType)
+        {
+            var request = search.Request.DeepClone(search.Request.PartTypes.Concat(new[] { partType }).Distinct());
+            return new YoutubeSearch(request);
+        }
+
         public static YoutubeSearch Search(SearchApiRequestSettings settings, params PartType[] partTypes)
         {
             var request = DefaultRequest<SearchResult, SearchApiRequestSettings>(settings, partTypes);
@@ -210,6 +216,48 @@ namespace YoutubeSnoop
         {
             var request = search.Request.DeepClone();
             request.Settings.RegionCode = country.CountryCode;
+            return new YoutubeSearch(request);
+        }
+
+        public static YoutubeSearch ForChannelId(this YoutubeSearch search, string id)
+        {
+            var request = search.Request.DeepClone();
+            request.Settings.ChannelId = id;
+            return new YoutubeSearch(request);
+        }
+
+        public static YoutubeSearch OrderBy(this YoutubeSearch search, SearchOrder order)
+        {
+            var request = search.Request.DeepClone();
+            request.Settings.Order = order;
+            return new YoutubeSearch(request);
+        }
+
+        public static YoutubeSearch PublishedAfter(this YoutubeSearch search, DateTime d)
+        {
+            var request = search.Request.DeepClone();
+            request.Settings.PublishedAfter = d;
+            return new YoutubeSearch(request);
+        }
+
+        public static YoutubeSearch PublishedBefore(this YoutubeSearch search, DateTime d)
+        {
+            var request = search.Request.DeepClone();
+            request.Settings.PublishedBefore = d;
+            return new YoutubeSearch(request);
+        }
+
+        public static YoutubeSearch Type(this YoutubeSearch search, ResourceKind t)
+        {
+            var request = search.Request.DeepClone();
+            request.Settings.Type = t;
+            return new YoutubeSearch(request);
+        }
+
+        public static YoutubeSearch SafeSearch(this YoutubeSearch search, SafeSearch s)
+        {
+            var request = search.Request.DeepClone();
+            request.Settings.SafeSearch = s;
             return new YoutubeSearch(request);
         }
 

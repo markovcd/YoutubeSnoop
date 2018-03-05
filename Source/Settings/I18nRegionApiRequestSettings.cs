@@ -6,6 +6,6 @@ namespace YoutubeSnoop.Settings
     {
         public override RequestType RequestType => RequestType.I18nRegions;
 
-        public LanguageCode Hl { get; set; }
+        public string Hl { get; set; }
     }
 }

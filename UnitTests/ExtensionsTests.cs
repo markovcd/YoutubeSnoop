@@ -54,14 +54,14 @@ namespace UnitTests
             Assert.IsNull(actual);
         }
 
-        [TestMethod]
-        public void GetDescription_ReturnsString()
-        {
-            var actual = Extensions.GetDescription(LanguageCode.Pl);
-            var expected = "Polish";
+        //[TestMethod]
+        //public void GetDescription_ReturnsString()
+        //{
+        //    var actual = Extensions.GetDescription(LanguageCode.Pl);
+        //    var expected = "Polish";
 
-            Assert.AreEqual(expected, actual);
-        }
+        //    Assert.AreEqual(expected, actual);
+        //}
 
         [TestMethod]
         public void ToCamelCase_Simple()

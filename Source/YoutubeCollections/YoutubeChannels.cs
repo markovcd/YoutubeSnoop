@@ -8,23 +8,14 @@ using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeChannels : IYoutubeCollection<YoutubeChannel>
+    public class YoutubeChannels : YoutubeCollection<YoutubeChannel, Channel, ChannelApiRequestSettings>
     {
-        public IApiRequest<Channel> Request { get; }
         
-        public YoutubeChannels(IApiRequest<Channel> request)
-        {
-            Request = request;
-        }
+        public YoutubeChannels(IApiRequest<Channel, ChannelApiRequestSettings> request) : base(request) {  }
 
-        public IEnumerator<YoutubeChannel> GetEnumerator()
+        protected override YoutubeChannel CreateItem(Channel response)
         {
-            return Request.Items.Select(i => new YoutubeChannel(i)).GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
+            return new YoutubeChannel(response);
         }
     }
 }

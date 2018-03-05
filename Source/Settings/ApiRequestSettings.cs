@@ -14,6 +14,24 @@ namespace YoutubeSnoop.Settings
         [ApiRequestIgnore]
         public abstract RequestType RequestType { get; }
 
+        public IApiRequestSettings DeepClone()
+        {
+            var type = GetType();
+
+            var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                                 .Where(p => !p.IsDefined(typeof(ApiRequestIgnoreAttribute)));
+
+            var cloned = Activator.CreateInstance(type);
+
+            foreach (var property in properties)
+            {
+                var value = property.GetValue(this);
+                property.SetValue(cloned, value);
+            }
+
+            return (IApiRequestSettings)cloned;
+        }
+
         public IEnumerable<ApiArgument> GetArguments()
         {
             var properties = GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
@@ -33,7 +51,7 @@ namespace YoutubeSnoop.Settings
 
                 if (valueObject is Enum) value = value.ToCamelCase();
 
-                 if (value != null) yield return new ApiArgument(name, value);
+                if (value != null) yield return new ApiArgument(name, value);
             }
         }
     }

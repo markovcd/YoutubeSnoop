@@ -8,7 +8,7 @@ namespace YoutubeSnoop.Settings
 
         public string CategoryId { get; set; }
         public string ForUsername { get; set; }
-        public LanguageCode Hl { get; set; }
+        public string Hl { get; set; }
         public string Id { get; set; }
     }
 }

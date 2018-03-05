@@ -2,7 +2,7 @@
 
 namespace YoutubeSnoop.Enums
 {
-    public enum LanguageCode
+    public enum LanguageCodeDELETE_ME
     {
         [Description("(Afan) Oromo")] Om,
         [Description("Abkhazian")] Ab,
@@ -21,6 +21,7 @@ namespace YoutubeSnoop.Enums
         [Description("Bhutani")] Dz,
         [Description("Bihari")] Bh,
         [Description("Bislama")] Bi,
+        [Description("Bosnian")] Bs,
         [Description("Breton")] Br,
         [Description("Bulgarian")] Bg,
         [Description("Burmese")] My,

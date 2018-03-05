@@ -7,14 +7,20 @@ using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop
 {
-    public interface IApiRequest<TItem> : IEnumerable<IPagedResponse<TItem>>
+    public interface IApiRequest<TItem, TSettings> : IEnumerable<IPagedResponse<TItem>>
         where TItem : IResponse
+        where TSettings : IApiRequestSettings
     {
         IEnumerable<TItem> Items { get; }
         TItem FirstItem { get; }
+        TSettings Settings { get; }
+
+        IApiRequest<TItem, TSettings> DeepClone();
+
+        event EventHandler FirstItemDownloaded;
     }
 
-    public class ApiRequest<TItem, TSettings> : IApiRequest<TItem>
+    public class ApiRequest<TItem, TSettings> : IApiRequest<TItem, TSettings>
         where TItem : class, IResponse
         where TSettings : IApiRequestSettings
     {
@@ -23,14 +29,27 @@ namespace YoutubeSnoop
         private readonly IApiUrlFormatter<TSettings> _apiUrlFormatter;
 
         private TItem _firstItem;
-        public TItem FirstItem => _firstItem ?? (_firstItem = Items.FirstOrDefault());
+        public TItem FirstItem
+        {
+            get
+            {
+                if (_firstItem == null)
+                {
+                    _firstItem = Items.FirstOrDefault();
+                    OnFirstItemDownloaded(new EventArgs());
+                }
+                return _firstItem;
+            }
+        }
 
         public IEnumerable<TItem> Items { get; }
         public TSettings Settings { get; }
         public int ResultsPerPage { get; }
 
         public IEnumerable<PartType> PartTypes { get; }
-          
+
+        public event EventHandler FirstItemDownloaded;
+
         public ApiRequest(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, IJsonDownloader jsonDownloader, IResponseDeserializer<TItem> responseDeserializer, IApiUrlFormatter<TSettings> apiUrlFormatter)
         {
             _jsonDownloader = jsonDownloader;
@@ -59,6 +78,16 @@ namespace YoutubeSnoop
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+
+        }
+        public IApiRequest<TItem, TSettings> DeepClone()
+        {
+            return new ApiRequest<TItem, TSettings>((TSettings)Settings.DeepClone(), PartTypes.ToList(), ResultsPerPage, _jsonDownloader, _responseDeserializer, _apiUrlFormatter);
+        }
+
+        protected void OnFirstItemDownloaded(EventArgs a)
+        {
+            FirstItemDownloaded?.Invoke(this, a);
         }
     }
 }

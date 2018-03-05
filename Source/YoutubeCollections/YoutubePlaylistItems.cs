@@ -1,30 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using YoutubeSnoop.Entities.PlaylistItems;
-using YoutubeSnoop.Enums;
-using YoutubeSnoop.Interfaces;
+﻿using YoutubeSnoop.Entities.PlaylistItems;
 using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop
 {
-    public class YoutubePlaylistItems : IYoutubeCollection<YoutubePlaylistItem>
+    public class YoutubePlaylistItems : YoutubeCollection<YoutubePlaylistItem, PlaylistItem, PlaylistItemsApiRequestSettings>
     {
-        public IApiRequest<PlaylistItem> Request { get; }
+        public YoutubePlaylistItems(IApiRequest<PlaylistItem, PlaylistItemsApiRequestSettings> request) : base(request) { }
 
-        public YoutubePlaylistItems(IApiRequest<PlaylistItem> request)
+        protected override YoutubePlaylistItem CreateItem(PlaylistItem response)
         {
-            Request = request;
-        }
-
-        public IEnumerator<YoutubePlaylistItem> GetEnumerator()
-        {
-            return Request.Items.Select(i => new YoutubePlaylistItem(i)).GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
+            return new YoutubePlaylistItem(response);
         }
     }
 }

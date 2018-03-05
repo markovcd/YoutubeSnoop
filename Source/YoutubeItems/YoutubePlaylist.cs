@@ -6,15 +6,17 @@ using YoutubeSnoop.Settings;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using YoutubeSnoop.Entities;
+using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
     public class YoutubePlaylist : IYoutubeItem
     {
-        public IApiRequest<Playlist> Request { get; }
+        public IApiRequest<Playlist, PlaylistApiRequestSettings> Request { get; }
         public Playlist Item { get; }
 
         public string Id { get; }
+        public ResourceKind Kind { get; }
         public DateTime PublishedAt { get; }
         public string ChannelId { get; }
         public string Title { get; }
@@ -22,7 +24,7 @@ namespace YoutubeSnoop
         public string ChannelTitle { get; }
         public IReadOnlyDictionary<string, Thumbnail> Thumbnails { get; }
 
-        public YoutubePlaylist(IApiRequest<Playlist> request) : this(request.FirstItem)
+        public YoutubePlaylist(IApiRequest<Playlist, PlaylistApiRequestSettings> request) : this(request.FirstItem)
         {
             Request = request;
         }
@@ -33,6 +35,7 @@ namespace YoutubeSnoop
             if (Item == null) return;
 
             Id = Item.Id;
+            Kind = Item.Kind;
             PublishedAt = Item.Snippet.PublishedAt;
             ChannelId = Item.Snippet.ChannelId;
             Title = Item.Snippet.Title;

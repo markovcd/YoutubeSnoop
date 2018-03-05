@@ -1,29 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using YoutubeSnoop.Entities.Videos;
-using YoutubeSnoop.Interfaces;
+﻿using YoutubeSnoop.Entities.Videos;
 using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeVideos : IYoutubeCollection<YoutubeVideo>
+    public class YoutubeVideos : YoutubeCollection<YoutubeVideo, Video, VideoApiRequestSettings>
     {
-        public IApiRequest<Video> Request { get; }
-               
-        public YoutubeVideos(IApiRequest<Video> request)
-        {
-            Request = request;
-        }
+        public YoutubeVideos(IApiRequest<Video, VideoApiRequestSettings> request) : base(request) { }
 
-        public IEnumerator<YoutubeVideo> GetEnumerator()
+        protected override YoutubeVideo CreateItem(Video response)
         {
-            return Request.Items.Select(i => new YoutubeVideo(i)).GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
+            return new YoutubeVideo(response);
         }
     }
 }

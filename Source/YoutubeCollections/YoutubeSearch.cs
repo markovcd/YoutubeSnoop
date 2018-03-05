@@ -1,30 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using YoutubeSnoop.Entities.Search;
-using YoutubeSnoop.Enums;
-using YoutubeSnoop.Interfaces;
+﻿using YoutubeSnoop.Entities.Search;
 using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeSearch : IYoutubeCollection<YoutubeSearchResult>
+    public class YoutubeSearch : YoutubeCollection<YoutubeSearchResult, SearchResult, SearchApiRequestSettings>
     {
-        public IApiRequest<SearchResult> Request { get; }        
+        public YoutubeSearch(IApiRequest<SearchResult, SearchApiRequestSettings> request) : base(request) { }
 
-        public YoutubeSearch(IApiRequest<SearchResult> request)
+        protected override YoutubeSearchResult CreateItem(SearchResult response)
         {
-            Request = request;
-        }
-
-        public IEnumerator<YoutubeSearchResult> GetEnumerator()
-        {
-            return Request.Items.Select(i => new YoutubeSearchResult(i)).GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
+            return new YoutubeSearchResult(response);
         }
     }
 }

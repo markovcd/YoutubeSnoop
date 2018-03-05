@@ -9,5 +9,7 @@ namespace YoutubeSnoop.Interfaces
         RequestType RequestType { get; }
 
         IEnumerable<ApiArgument> GetArguments();
+
+        IApiRequestSettings DeepClone();
     }
 }

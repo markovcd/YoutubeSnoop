@@ -2,19 +2,20 @@
 using System.Linq;
 using YoutubeSnoop.Entities.Videos;
 using YoutubeSnoop.Interfaces;
-using YoutubeSnoop.Settings;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using YoutubeSnoop.Entities;
+using YoutubeSnoop.Enums;
+using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop
 {
     public class YoutubeVideo : IYoutubeItem
     {
-        public IApiRequest<Video> Request { get; }
+        public IApiRequest<Video, VideoApiRequestSettings> Request { get; }
         public Video Item { get; }
-
         public string Id { get; }
+        public ResourceKind Kind { get; }
         public int? CategoryId { get; }
         public DateTime PublishedAt { get; }
         public string ChannelId { get; }
@@ -23,7 +24,7 @@ namespace YoutubeSnoop
         public string Description { get; }
         public IReadOnlyDictionary<string, Thumbnail> Thumbnails { get; }
 
-        public YoutubeVideo(IApiRequest<Video> request) : this(request.FirstItem)
+        public YoutubeVideo(IApiRequest<Video, VideoApiRequestSettings> request) : this(request.FirstItem)
         {
             Request = request;
         }
@@ -34,6 +35,7 @@ namespace YoutubeSnoop
             if (Item == null) return;
 
             Id = Item.Id;
+            Kind = Item.Kind;
             PublishedAt = Item.Snippet.PublishedAt;
             ChannelId = Item.Snippet.ChannelId;
             ChannelTitle = Item.Snippet.ChannelTitle;

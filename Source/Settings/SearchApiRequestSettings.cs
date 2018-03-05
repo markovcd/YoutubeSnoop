@@ -25,9 +25,9 @@ namespace YoutubeSnoop.Settings
         [ApiRequestConverter(typeof(DateTimeConverter))]
         public DateTime? PublishedBefore { get; set; }
 
-        public CountryCode? RegionCode { get; set; }
+        public string RegionCode { get; set; }
         public string RelatedToVideoId { get; set; }
-        public LanguageCode? RelevanceLanguage { get; set; }
+        public string RelevanceLanguage { get; set; }
         public SafeSearch? SafeSearch { get; set; }
         public string TopicId { get; set; }
         public string VideoCategoryId { get; set; }

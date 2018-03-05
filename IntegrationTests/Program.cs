@@ -9,9 +9,8 @@ namespace IntegrationTests
     {
         private static void Main(string[] args)
         {
-            var vid = Youtube.Video("IK6wJUNirbs");
-            var rel = vid.Related().Take(20).ToList();
-            //var api = Youtube.DefaultRequest<Video, VideoApiRequestSettings>(new VideoApiRequestSettings { Id = "IK6wJUNirbs" }, null).ToList();
+            var l = Youtube.Languages("pl").ToList();
+            var c = Youtube.Countries().ToList();
             
         }
     }

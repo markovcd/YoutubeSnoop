@@ -1,5 +1,7 @@
 ﻿using YoutubeSnoop.Attributes;
 using YoutubeSnoop.Entities.Channels;
+using YoutubeSnoop.Entities.I18nLanguages;
+using YoutubeSnoop.Entities.I18nRegions;
 using YoutubeSnoop.Entities.PlaylistItems;
 using YoutubeSnoop.Entities.Playlists;
 using YoutubeSnoop.Entities.Search;
@@ -31,11 +33,11 @@ namespace YoutubeSnoop.Enums
         /*[ApiResourceMapping(typeof(GuideCategory))]*/GuideCategory,
         /*[ApiResponseMapping(typeof(GuideCategory))]*/GuideCategoryListResponse,
 
-        /*[ApiResourceMapping(typeof(I18nLanguage))]*/ I18nLanguage,
-        /*[ApiResponseMapping(typeof(I18nLanguage))]*/ I18nLanguageListResponse,
+        [ApiResourceMapping(typeof(I18nLanguage))]     I18nLanguage,
+        [ApiResponseMapping(typeof(I18nLanguage))]     I18nLanguageListResponse,
 
-        /*[ApiResourceMapping(typeof(I18nRegion))]*/   I18nRegion,
-        /*[ApiResponseMapping(typeof(I18nRegion))]*/   I18nRegionListResponse,
+        [ApiResourceMapping(typeof(I18nRegion))]       I18nRegion,
+        [ApiResponseMapping(typeof(I18nRegion))]       I18nRegionListResponse,
 
         [ApiResourceMapping(typeof(Playlist))]         Playlist,
         [ApiResponseMapping(typeof(PlaylistItem))]     PlaylistListResponse,

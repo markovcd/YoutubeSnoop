@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using YoutubeSnoop.Entities.Channels;
+using YoutubeSnoop.Entities.I18nLanguages;
+using YoutubeSnoop.Entities.I18nRegions;
 using YoutubeSnoop.Entities.PlaylistItems;
 using YoutubeSnoop.Entities.Playlists;
 using YoutubeSnoop.Entities.Search;
@@ -32,18 +34,36 @@ namespace YoutubeSnoop
             return new ApiUrlFormatter<TSettings>();
         }
 
-        public static IApiRequest<TItem> DefaultRequest<TItem, TSettings>(TSettings settings, IEnumerable<PartType> partTypes)
+        public static IApiRequest<TItem, TSettings> DefaultRequest<TItem, TSettings>(TSettings settings, IEnumerable<PartType> partTypes)
             where TItem : class, IResponse
             where TSettings : IApiRequestSettings
         {
             return new ApiRequest<TItem, TSettings>(settings, partTypes, ResultsPerPage, GetDefaultJsonDownloader(), DefaultDeserializer<TItem>(), DefaultUrlFormatter<TSettings>());
         }
 
+        #region Country & Language
+
+        public static YoutubeLanguages Languages(string languageCode = "")
+        {
+            var settings = new I18nLanguageApiRequestSettings { Hl = languageCode };
+            var request = DefaultRequest<I18nLanguage, I18nLanguageApiRequestSettings>(settings, new[] { PartType.Snippet });
+            return new YoutubeLanguages(request);
+        }
+
+        public static YoutubeCountries Countries(string languageCode = "")
+        {
+            var settings = new I18nRegionApiRequestSettings { Hl = languageCode };
+            var request = DefaultRequest<I18nRegion, I18nRegionApiRequestSettings>(settings, new[] { PartType.Snippet });
+            return new YoutubeCountries(request);
+        }
+
+        #endregion
+
         #region Channel
 
         public static YoutubeChannel Channel(ChannelApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = DefaultRequest<Channel, ChannelApiRequestSettings>(settings, partTypes);
+            var request = DefaultRequest<Channel, ChannelApiRequestSettings>(settings, partTypes);         
             return new YoutubeChannel(request);
         }
 
@@ -52,9 +72,25 @@ namespace YoutubeSnoop
             return Channel(settings, PartType.Snippet, PartType.ContentDetails);
         }
 
+        public static YoutubeChannels Channels(ChannelApiRequestSettings settings, params PartType[] partTypes)
+        {
+            var request = DefaultRequest<Channel, ChannelApiRequestSettings>(settings, partTypes);
+            return new YoutubeChannels(request);
+        }
+
+        public static YoutubeChannels Channels(ChannelApiRequestSettings settings)
+        {
+            return Channels(settings, PartType.Snippet);
+        }
+
         public static YoutubeChannel Channel(string id)
         {
             return Channel(new ChannelApiRequestSettings { Id = id });
+        }
+
+        public static YoutubeChannels Channels(IEnumerable<string> ids)
+        {
+            return Channels(new ChannelApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
         }
 
         public static YoutubeChannel ChannelFromUsername(string username)
@@ -139,6 +175,11 @@ namespace YoutubeSnoop
             return Playlist(new PlaylistApiRequestSettings { Id = id });
         }
 
+        public static YoutubePlaylists Playlists(IEnumerable<string> ids)
+        {
+            return Playlists(new PlaylistApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
+        }
+
         public static YoutubePlaylists PlaylistsFromChannelId(string id)
         {
             return Playlists(new PlaylistApiRequestSettings { ChannelId = id });
@@ -159,14 +200,22 @@ namespace YoutubeSnoop
             return new YoutubeSearch(request);
         }
 
+        public static YoutubeSearch Search(string query = null, params PartType[] partTypes)
+        {
+            var request = DefaultRequest<SearchResult, SearchApiRequestSettings>(new SearchApiRequestSettings { Query = query }, partTypes);
+            return new YoutubeSearch(request);
+        }
+
+        public static YoutubeSearch ForCountry(this YoutubeSearch search, YoutubeCountry country)
+        {
+            var request = search.Request.DeepClone();
+            request.Settings.RegionCode = country.CountryCode;
+            return new YoutubeSearch(request);
+        }
+
         public static YoutubeSearch Search(SearchApiRequestSettings settings)
         {
             return Search(settings, PartType.Snippet);
-        }
-
-        public static YoutubeSearch Search(string query)
-        {
-            return Search(new SearchApiRequestSettings { Query = query });
         }
 
         #endregion

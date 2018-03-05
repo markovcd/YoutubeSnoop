@@ -8,6 +8,6 @@ namespace YoutubeSnoop.Settings
 
         public string ChannelId { get; set; }
         public string Id { get; set; }
-        public LanguageCode Hl { get; set; }
+        public string Hl { get; set; }
     }
 }

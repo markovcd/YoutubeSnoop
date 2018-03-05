@@ -9,7 +9,7 @@ namespace YoutubeSnoop
         public ResourceKind Kind { get; }
         public string Id { get; }
         public I18nLanguage Item { get; }
-        public LanguageCode LanguageCode { get; }
+        public string LanguageCode { get; }
         public string LanguageName { get; }
 
         public YoutubeLanguage(I18nLanguage language)
@@ -20,6 +20,13 @@ namespace YoutubeSnoop
             Id = Item.Id;
             LanguageCode = Item.Snippet.Hl;
             LanguageName = Item.Snippet.Name;
+        }
+
+        public YoutubeLanguage(string languageCode, string languageName)
+        {
+            Kind = ResourceKind.I18nLanguage;
+            Id = LanguageCode = languageCode;
+            LanguageName = languageName;
         }
     }
 }

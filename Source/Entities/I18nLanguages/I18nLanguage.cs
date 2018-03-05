@@ -1,4 +1,6 @@
-﻿using YoutubeSnoop.Enums;
+﻿using Newtonsoft.Json;
+using YoutubeSnoop.Converters;
+using YoutubeSnoop.Enums;
 using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop.Entities.I18nLanguages
@@ -7,6 +9,7 @@ namespace YoutubeSnoop.Entities.I18nLanguages
     {
         public string Etag { get; set; }
 
+        [JsonConverter(typeof(ResourceKindConverter))]
         public ResourceKind Kind { get; set; }
 
         public string Id { get; set; }

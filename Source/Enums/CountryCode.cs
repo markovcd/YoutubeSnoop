@@ -2,7 +2,7 @@
 
 namespace YoutubeSnoop.Enums
 {
-    public enum CountryCode
+    public enum CountryCodeDELETE_ME
     {
         [Description("Andorra")] Ad,
         [Description("United Arab Emirates")] Ae,

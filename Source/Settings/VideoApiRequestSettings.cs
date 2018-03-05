@@ -8,10 +8,10 @@ namespace YoutubeSnoop.Settings
 
         public string Id { get; set; }
         public Chart? Chart { get; set; }
-        public LanguageCode Hl { get; set; }
+        public string Hl { get; set; }
         public int? MaxHeight { get; set; }
         public int? MaxWidth { get; set; }
-        public CountryCode? RegionCode { get; set; }
+        public string RegionCode { get; set; }
         public string VideoCategoryId { get; set; }
     }
 }

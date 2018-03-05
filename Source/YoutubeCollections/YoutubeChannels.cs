@@ -14,7 +14,7 @@ namespace YoutubeSnoop
 
         protected override YoutubeChannel CreateItem(Channel response)
         {
-            return YoutubeChannel.FromResponse(response);
+            return new YoutubeChannel(response);
         }
     }
 }

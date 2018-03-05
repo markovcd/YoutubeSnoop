@@ -7,9 +7,6 @@ namespace YoutubeSnoop.Interfaces
     public interface IApiRequestSettings
     {
         RequestType RequestType { get; }
-
         IEnumerable<ApiArgument> GetArguments();
-
-        IApiRequestSettings DeepClone();
     }
 }

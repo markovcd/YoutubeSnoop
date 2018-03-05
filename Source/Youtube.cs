@@ -41,6 +41,20 @@ namespace YoutubeSnoop
             return new ApiRequest<TItem, TSettings>(settings, partTypes, ResultsPerPage, GetDefaultJsonDownloader(), DefaultDeserializer<TItem>(), DefaultUrlFormatter<TSettings>());
         }
 
+        public static IApiRequest<TItem, TSettings> Clone<TItem, TSettings>(this IApiRequest<TItem, TSettings> request, IEnumerable<PartType> partTypes)
+            where TItem : class, IResponse
+            where TSettings : IApiRequestSettings
+        {
+            return new ApiRequest<TItem, TSettings>((TSettings)request.Settings.Clone(), partTypes, ResultsPerPage, GetDefaultJsonDownloader(), DefaultDeserializer<TItem>(), DefaultUrlFormatter<TSettings>());
+        }
+
+        public static IApiRequest<TItem, TSettings> Clone<TItem, TSettings>(this IApiRequest<TItem, TSettings> request)
+            where TItem : class, IResponse
+            where TSettings : IApiRequestSettings
+        {
+            return request.Clone(request.PartTypes);
+        }
+
         #region Country & Language
 
         public static YoutubeLanguages Languages(string languageCode = "")
@@ -196,7 +210,7 @@ namespace YoutubeSnoop
 
         public static YoutubeSearch RequestPart(this YoutubeSearch search, PartType partType)
         {
-            var request = search.Request.DeepClone(search.Request.PartTypes.Concat(new[] { partType }).Distinct());
+            var request = search.Request.Clone(search.Request.PartTypes.Concat(new[] { partType }).Distinct());
             return new YoutubeSearch(request);
         }
 
@@ -214,49 +228,49 @@ namespace YoutubeSnoop
 
         public static YoutubeSearch ForCountry(this YoutubeSearch search, YoutubeCountry country)
         {
-            var request = search.Request.DeepClone();
+            var request = search.Request.Clone();
             request.Settings.RegionCode = country.CountryCode;
             return new YoutubeSearch(request);
         }
 
         public static YoutubeSearch ForChannelId(this YoutubeSearch search, string id)
         {
-            var request = search.Request.DeepClone();
+            var request = search.Request.Clone();
             request.Settings.ChannelId = id;
             return new YoutubeSearch(request);
         }
 
         public static YoutubeSearch OrderBy(this YoutubeSearch search, SearchOrder order)
         {
-            var request = search.Request.DeepClone();
+            var request = search.Request.Clone();
             request.Settings.Order = order;
             return new YoutubeSearch(request);
         }
 
         public static YoutubeSearch PublishedAfter(this YoutubeSearch search, DateTime d)
         {
-            var request = search.Request.DeepClone();
+            var request = search.Request.Clone();
             request.Settings.PublishedAfter = d;
             return new YoutubeSearch(request);
         }
 
         public static YoutubeSearch PublishedBefore(this YoutubeSearch search, DateTime d)
         {
-            var request = search.Request.DeepClone();
+            var request = search.Request.Clone();
             request.Settings.PublishedBefore = d;
             return new YoutubeSearch(request);
         }
 
         public static YoutubeSearch Type(this YoutubeSearch search, ResourceKind t)
         {
-            var request = search.Request.DeepClone();
+            var request = search.Request.Clone();
             request.Settings.Type = t;
             return new YoutubeSearch(request);
         }
 
         public static YoutubeSearch SafeSearch(this YoutubeSearch search, SafeSearch s)
         {
-            var request = search.Request.DeepClone();
+            var request = search.Request.Clone();
             request.Settings.SafeSearch = s;
             return new YoutubeSearch(request);
         }

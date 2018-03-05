@@ -33,9 +33,9 @@ namespace YoutubeSnoop
         public string ChannelTitle => S(_channelTitle);
         public IReadOnlyDictionary<string, Thumbnail> Thumbnails => S(_thumbnails);
 
-        public YoutubeVideo(IApiRequest<Video, VideoApiRequestSettings> request) { }
+        public YoutubeVideo(IApiRequest<Video, VideoApiRequestSettings> request) : base(request) { }
 
-        protected YoutubeVideo() { }
+        public YoutubeVideo(Video response) : base(response) { }
 
         protected override void SetProperties(Video response)
         {
@@ -51,15 +51,6 @@ namespace YoutubeSnoop
             _channelTitle = response.Snippet.ChannelTitle;
             int.TryParse(response.Snippet.CategoryId, out _categoryId);
             _thumbnails = response.Snippet.Thumbnails?.Clone();
-
-            PropertiesSet = true;
-        }
-
-        public static YoutubeVideo FromResponse(Video response)
-        {
-            var ch = new YoutubeVideo();
-            ch.SetProperties(response);
-            return ch;
         }
     }
 }

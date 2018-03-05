@@ -15,9 +15,6 @@ namespace YoutubeSnoop
         TItem FirstItem { get; }
         TSettings Settings { get; }
         IEnumerable<PartType> PartTypes { get; }
-        IApiRequest<TItem, TSettings> DeepClone(IEnumerable<PartType> partTypes = null);
-
-        event EventHandler FirstItemDownloaded;
     }
 
     public class ApiRequest<TItem, TSettings> : IApiRequest<TItem, TSettings>
@@ -29,26 +26,13 @@ namespace YoutubeSnoop
         private readonly IApiUrlFormatter<TSettings> _apiUrlFormatter;
 
         private TItem _firstItem;
-        public TItem FirstItem
-        {
-            get
-            {
-                if (_firstItem == null)
-                {
-                    _firstItem = Items.FirstOrDefault();
-                    OnFirstItemDownloaded(new EventArgs());
-                }
-                return _firstItem;
-            }
-        }
+        public TItem FirstItem => _firstItem ?? (_firstItem = Items.FirstOrDefault());
 
         public IEnumerable<TItem> Items { get; }
         public TSettings Settings { get; }
         public int ResultsPerPage { get; }
 
         public IEnumerable<PartType> PartTypes { get; }
-
-        public event EventHandler FirstItemDownloaded;
 
         public ApiRequest(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, IJsonDownloader jsonDownloader, IResponseDeserializer<TItem> responseDeserializer, IApiUrlFormatter<TSettings> apiUrlFormatter)
         {
@@ -78,16 +62,11 @@ namespace YoutubeSnoop
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
-
         }
+
         public IApiRequest<TItem, TSettings> DeepClone(IEnumerable<PartType> partTypes = null)
         {
-            return new ApiRequest<TItem, TSettings>((TSettings)Settings.DeepClone(), partTypes ?? PartTypes.ToList(), ResultsPerPage, _jsonDownloader, _responseDeserializer, _apiUrlFormatter);
-        }
-
-        protected void OnFirstItemDownloaded(EventArgs a)
-        {
-            FirstItemDownloaded?.Invoke(this, a);
+            return new ApiRequest<TItem, TSettings>((TSettings)Settings.Clone(), partTypes ?? PartTypes.ToList(), ResultsPerPage, _jsonDownloader, _responseDeserializer, _apiUrlFormatter);
         }
     }
 }

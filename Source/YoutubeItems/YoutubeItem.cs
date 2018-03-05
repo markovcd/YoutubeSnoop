@@ -6,23 +6,27 @@ namespace YoutubeSnoop
         where TResponse : IResponse
         where TSettings : IApiRequestSettings
     {
-        protected bool PropertiesSet { get; set; }
+        private bool _propertiesSet;
 
         public IApiRequest<TResponse, TSettings> Request { get; }
 
         protected YoutubeItem(IApiRequest<TResponse, TSettings> request)
         {
             Request = request;
-            Request.FirstItemDownloaded += (s, e) => SetProperties(Request.FirstItem);
         }
 
-        protected YoutubeItem() { }
+        protected YoutubeItem(TResponse response)
+        {
+            SetProperties(response);
+            _propertiesSet = true;
+        }
 
         protected abstract void SetProperties(TResponse response);
 
         protected T S<T>(T field)
         {
-            if (!PropertiesSet) SetProperties(Request.FirstItem);
+            if (!_propertiesSet) SetProperties(Request.FirstItem);
+            _propertiesSet = true;
             return field;
         }
 

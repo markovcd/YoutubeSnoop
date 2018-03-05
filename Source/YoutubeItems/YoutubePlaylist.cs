@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Linq;
 using YoutubeSnoop.Entities.Playlists;
 using YoutubeSnoop.Interfaces;
 using YoutubeSnoop.Settings;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using YoutubeSnoop.Entities;
 using YoutubeSnoop.Enums;
@@ -32,9 +30,9 @@ namespace YoutubeSnoop
         public string ChannelTitle => S(_channelTitle);
         public IReadOnlyDictionary<string, Thumbnail> Thumbnails => S(_thumbnails);
 
-        public YoutubePlaylist(IApiRequest<Playlist, PlaylistApiRequestSettings> request) { }
+        public YoutubePlaylist(IApiRequest<Playlist, PlaylistApiRequestSettings> request) : base(request) { }
 
-        protected YoutubePlaylist() { }
+        public YoutubePlaylist(Playlist response) : base(response) { }
 
         protected override void SetProperties(Playlist response)
         {
@@ -49,15 +47,6 @@ namespace YoutubeSnoop
             _description = response.Snippet.Description;
             _channelTitle = response.Snippet.ChannelTitle;
             _thumbnails = response.Snippet.Thumbnails?.Clone();     
-
-            PropertiesSet = true;
-        }
-
-        public static YoutubePlaylist FromResponse(Playlist response)
-        {
-            var ch = new YoutubePlaylist();
-            ch.SetProperties(response);
-            return ch;
         }
     }
 }

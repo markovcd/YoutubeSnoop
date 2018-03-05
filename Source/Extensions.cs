@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using YoutubeSnoop.Attributes;
 using YoutubeSnoop.Entities;
 using YoutubeSnoop.Enums;
 using YoutubeSnoop.Interfaces;
@@ -88,6 +89,24 @@ namespace YoutubeSnoop
             var t = thumbnails?.ToDictionary(kv => kv.Key, kv => kv.Value);
             if (t == null) return null;
             return new ReadOnlyDictionary<string, Thumbnail>(t);
+        }
+
+        public static IApiRequestSettings Clone(this IApiRequestSettings settings)
+        {
+            var type = settings.GetType();
+
+            var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                                 .Where(p => !p.IsDefined(typeof(ApiRequestIgnoreAttribute)));
+
+            var cloned = Activator.CreateInstance(type);
+
+            foreach (var property in properties)
+            {
+                var value = property.GetValue(settings);
+                property.SetValue(cloned, value);
+            }
+
+            return (IApiRequestSettings)cloned;
         }
     }
 }

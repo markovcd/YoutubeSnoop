@@ -32,7 +32,7 @@ namespace YoutubeSnoop
 
         public YoutubeChannel(IApiRequest<Channel, ChannelApiRequestSettings> request) : base(request) { }
 
-        protected YoutubeChannel() { }
+        public YoutubeChannel(Channel response) : base(response) { }
 
         protected override void SetProperties(Channel response)
         {
@@ -46,15 +46,6 @@ namespace YoutubeSnoop
             _customUrl = response.Snippet.CustomUrl;
             _publishedAt = response.Snippet.PublishedAt;
             _thumbnails = response.Snippet.Thumbnails?.Clone();
-
-            PropertiesSet = true;
-        }
-
-        public static YoutubeChannel FromResponse(Channel response)
-        {
-            var ch = new YoutubeChannel();
-            ch.SetProperties(response);
-            return ch;
         }
     }
 }

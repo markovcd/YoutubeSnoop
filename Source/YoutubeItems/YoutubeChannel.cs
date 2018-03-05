@@ -21,14 +21,14 @@ namespace YoutubeSnoop
         private DateTime _publishedAt;
         private IReadOnlyDictionary<string, Thumbnail> _thumbnails;
 
-        public Channel Item => S(_item);
-        public string Id => S(_id);
-        public ResourceKind Kind => S(_kind);
-        public string Title => S(_title);
-        public string Description => S(_description);
-        public string CustomUrl => S(_customUrl);
-        public DateTime PublishedAt => S(_publishedAt);
-        public IReadOnlyDictionary<string, Thumbnail> Thumbnails => S(_thumbnails);
+        public Channel Item => S(ref _item);
+        public string Id => S(ref _id);
+        public ResourceKind Kind => S(ref _kind);
+        public string Title => S(ref _title);
+        public string Description => S(ref _description);
+        public string CustomUrl => S(ref _customUrl);
+        public DateTime PublishedAt => S(ref _publishedAt);
+        public IReadOnlyDictionary<string, Thumbnail> Thumbnails => S(ref _thumbnails);
 
         public YoutubeChannel(IApiRequest<Channel, ChannelApiRequestSettings> request) : base(request) { }
 

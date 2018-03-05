@@ -23,7 +23,7 @@ namespace YoutubeSnoop
 
         protected abstract void SetProperties(TResponse response);
 
-        protected T S<T>(T field)
+        protected T S<T>(ref T field)
         {
             if (!_propertiesSet) SetProperties(Request.FirstItem);
             _propertiesSet = true;

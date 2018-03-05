@@ -20,15 +20,15 @@ namespace YoutubeSnoop
         private string _channelTitle;
         private IReadOnlyDictionary<string, Thumbnail> _thumbnails;
 
-        public Playlist Item => S(_item);
-        public string Id => S(_id);
-        public ResourceKind Kind => S(_kind);
-        public DateTime PublishedAt => S(_publishedAt);
-        public string ChannelId => S(_channelId);
-        public string Title => S(_title);
-        public string Description => S(_description);
-        public string ChannelTitle => S(_channelTitle);
-        public IReadOnlyDictionary<string, Thumbnail> Thumbnails => S(_thumbnails);
+        public Playlist Item => S(ref _item);
+        public string Id => S(ref _id);
+        public ResourceKind Kind => S(ref _kind);
+        public DateTime PublishedAt => S(ref _publishedAt);
+        public string ChannelId => S(ref _channelId);
+        public string Title => S(ref _title);
+        public string Description => S(ref _description);
+        public string ChannelTitle => S(ref _channelTitle);
+        public IReadOnlyDictionary<string, Thumbnail> Thumbnails => S(ref _thumbnails);
 
         public YoutubePlaylist(IApiRequest<Playlist, PlaylistApiRequestSettings> request) : base(request) { }
 

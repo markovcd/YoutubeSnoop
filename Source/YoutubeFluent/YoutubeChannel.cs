@@ -15,45 +15,9 @@ using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop
 {
-    public static class Youtube
+    public static partial class Youtube
     {
-        public static int ResultsPerPage { get; set; } = 20;
-
-        private static IJsonDownloader GetDefaultJsonDownloader()
-        {
-            return new JsonDownloader();
-        }
-
-        private static IResponseDeserializer<TItem> DefaultDeserializer<TItem>() where TItem : IResponse
-        {
-            return new ResponseDeserializer<TItem>();
-        }
-
-        private static IApiUrlFormatter<TSettings> DefaultUrlFormatter<TSettings>() where TSettings : IApiRequestSettings
-        {
-            return new ApiUrlFormatter<TSettings>();
-        }
-
-        public static IApiRequest<TItem, TSettings> DefaultRequest<TItem, TSettings>(TSettings settings, IEnumerable<PartType> partTypes)
-            where TItem : class, IResponse
-            where TSettings : IApiRequestSettings
-        {
-            return new ApiRequest<TItem, TSettings>(settings, partTypes, ResultsPerPage, GetDefaultJsonDownloader(), DefaultDeserializer<TItem>(), DefaultUrlFormatter<TSettings>());
-        }
-
-        public static IApiRequest<TItem, TSettings> Clone<TItem, TSettings>(this IApiRequest<TItem, TSettings> request, IEnumerable<PartType> partTypes)
-            where TItem : class, IResponse
-            where TSettings : IApiRequestSettings
-        {
-            return new ApiRequest<TItem, TSettings>((TSettings)request.Settings.Clone(), partTypes, ResultsPerPage, GetDefaultJsonDownloader(), DefaultDeserializer<TItem>(), DefaultUrlFormatter<TSettings>());
-        }
-
-        public static IApiRequest<TItem, TSettings> Clone<TItem, TSettings>(this IApiRequest<TItem, TSettings> request)
-            where TItem : class, IResponse
-            where TSettings : IApiRequestSettings
-        {
-            return request.Clone(request.PartTypes);
-        }
+        
 
         #region Country & Language
 
@@ -102,13 +66,19 @@ namespace YoutubeSnoop
             return Channel(new ChannelApiRequestSettings { Id = id });
         }
 
+        public static YoutubeChannel Channel()
+        {
+            return Channel(new ChannelApiRequestSettings());
+        }
+
         public static YoutubeChannels Channels(IEnumerable<string> ids)
         {
             return Channels(new ChannelApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
         }
 
-        public static YoutubeChannel ForUsername(string username)
+        public static YoutubeChannel ForUsername(this YoutubeChannel channel, string username)
         {
+            var request = channel.Request.Clone();
             return Channel(new ChannelApiRequestSettings { ForUsername = username });
         }
 

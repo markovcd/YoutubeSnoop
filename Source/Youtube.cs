@@ -107,18 +107,20 @@ namespace YoutubeSnoop
             return Channels(new ChannelApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
         }
 
-        public static YoutubeChannel ChannelFromUsername(string username)
+        public static YoutubeChannel ForUsername(string username)
         {
             return Channel(new ChannelApiRequestSettings { ForUsername = username });
         }
 
+        public static YoutubeChannel RequestPart(this YoutubeChannel channel, PartType partType)
+        {
+            var request = channel.Request.Clone(channel.Request.PartTypes.Concat(new[] { partType }).Distinct());
+            return new YoutubeChannel(request);
+        }
+
         public static YoutubePlaylistItems Uploads(this YoutubeChannel channel)
         {
-            if (channel.Item.ContentDetails == null)
-            {
-                throw new InvalidOperationException("To get uploads first instantiate Channel with ContentDetails PartType.");
-            }
-
+            if (channel.Item.ContentDetails == null) channel = channel.RequestPart(PartType.ContentDetails);
             var id = channel.Item.ContentDetails.RelatedPlaylists.Uploads;
             return PlaylistItemsFromId(id);
         }

@@ -1,7 +1,7 @@
 ﻿using YoutubeSnoop.Enums;
 using YoutubeSnoop.Interfaces;
 
-namespace YoutubeSnoop.Entities.I18Languages
+namespace YoutubeSnoop.Entities.I18nLanguages
 {
     public class I18nLanguage : IResponse
     {

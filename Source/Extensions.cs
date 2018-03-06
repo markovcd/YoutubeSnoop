@@ -47,18 +47,7 @@ namespace YoutubeSnoop
             }
         }
 
-        public static IYoutubeItem ToYoutubeItem(this IResource resourceId)
-        {
-            var id = resourceId.Id();
-
-            switch (resourceId.Kind)
-            {
-                case ResourceKind.Video: return Youtube.Video(id);
-                case ResourceKind.Playlist: return Youtube.Playlist(id);
-                case ResourceKind.Channel: return Youtube.Channel(id);
-                default: throw new InvalidOperationException();
-            }
-        }
+        
 
         public static string Url(this IResource resourceId)
         {

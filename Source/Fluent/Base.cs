@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using YoutubeSnoop.Enums;
 using YoutubeSnoop.Interfaces;
 
-namespace YoutubeSnoop
+namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
@@ -42,6 +43,19 @@ namespace YoutubeSnoop
             where TSettings : IApiRequestSettings
         {
             return request.Clone(request.PartTypes);
+        }
+
+        public static IYoutubeItem Details(this IResource resourceId)
+        {
+            var id = resourceId.Id();
+
+            switch (resourceId.Kind)
+            {
+                case ResourceKind.Video: return Video(id);
+                case ResourceKind.Playlist: return Playlist(id);
+                case ResourceKind.Channel: return Channel(id);
+                default: throw new InvalidOperationException();
+            }
         }
     }
 }

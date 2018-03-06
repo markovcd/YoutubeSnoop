@@ -13,7 +13,7 @@ using YoutubeSnoop.Enums;
 using YoutubeSnoop.Interfaces;
 using YoutubeSnoop.Settings;
 
-namespace YoutubeSnoop
+namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
@@ -39,96 +39,13 @@ namespace YoutubeSnoop
 
         #region Channel
 
-        public static YoutubeChannel Channel(ChannelApiRequestSettings settings, params PartType[] partTypes)
-        {
-            var request = DefaultRequest<Channel, ChannelApiRequestSettings>(settings, partTypes);         
-            return new YoutubeChannel(request);
-        }
-
-        public static YoutubeChannel Channel(ChannelApiRequestSettings settings)
-        {
-            return Channel(settings, PartType.Snippet, PartType.ContentDetails);
-        }
-
-        public static YoutubeChannels Channels(ChannelApiRequestSettings settings, params PartType[] partTypes)
-        {
-            var request = DefaultRequest<Channel, ChannelApiRequestSettings>(settings, partTypes);
-            return new YoutubeChannels(request);
-        }
-
-        public static YoutubeChannels Channels(ChannelApiRequestSettings settings)
-        {
-            return Channels(settings, PartType.Snippet);
-        }
-
-        public static YoutubeChannel Channel(string id)
-        {
-            return Channel(new ChannelApiRequestSettings { Id = id });
-        }
-
-        public static YoutubeChannel Channel()
-        {
-            return Channel(new ChannelApiRequestSettings());
-        }
-
-        public static YoutubeChannels Channels(IEnumerable<string> ids)
-        {
-            return Channels(new ChannelApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
-        }
-
-        public static YoutubeChannel ForUsername(this YoutubeChannel channel, string username)
-        {
-            var request = channel.Request.Clone();
-            return Channel(new ChannelApiRequestSettings { ForUsername = username });
-        }
-
-        public static YoutubeChannel RequestPart(this YoutubeChannel channel, PartType partType)
-        {
-            var request = channel.Request.Clone(channel.Request.PartTypes.Concat(new[] { partType }).Distinct());
-            return new YoutubeChannel(request);
-        }
-
-        public static YoutubePlaylistItems Uploads(this YoutubeChannel channel)
-        {
-            if (channel.Item.ContentDetails == null) channel = channel.RequestPart(PartType.ContentDetails);
-            var id = channel.Item.ContentDetails.RelatedPlaylists.Uploads;
-            return PlaylistItemsFromId(id);
-        }
-
-        public static YoutubePlaylists Playlists(this YoutubeChannel channel)
-        {
-            return PlaylistsFromChannelId(channel.Id);
-        }
+        
 
         #endregion
 
         #region PlaylistItems
 
-        public static YoutubePlaylistItems PlaylistItems(PlaylistItemsApiRequestSettings settings, params PartType[] partTypes)
-        {
-            var request = DefaultRequest<PlaylistItem, PlaylistItemsApiRequestSettings>(settings, partTypes);
-            return new YoutubePlaylistItems(request);
-        }
-
-        public static YoutubePlaylistItems PlaylistItems(PlaylistItemsApiRequestSettings settings)
-        {
-            return PlaylistItems(settings, PartType.Snippet);
-        }
-
-        public static YoutubePlaylistItems PlaylistItemsFromId(string id)
-        {
-            return PlaylistItems(new PlaylistItemsApiRequestSettings {  PlaylistId = id });
-        }
-
-        public static IYoutubeItem Details(this YoutubePlaylistItem playlistItem)
-        {
-            return playlistItem.Item.Snippet.ResourceId.ToYoutubeItem();
-        }
-
-        public static YoutubeVideos Videos(this YoutubePlaylistItems playlistItems)
-        {
-            return Videos(playlistItems.Select(i => i.Id));
-        }
+        
 
         #endregion
 
@@ -151,9 +68,9 @@ namespace YoutubeSnoop
             return new YoutubePlaylists(request);
         }
 
-        public static YoutubePlaylists Playlists(PlaylistApiRequestSettings settings)
+        public static YoutubePlaylists Playlists(PlaylistApiRequestSettings settings = null)
         {
-            return Playlists(settings, PartType.Snippet);
+            return Playlists(settings ?? new PlaylistApiRequestSettings(), PartType.Snippet);
         }
 
         public static YoutubePlaylist Playlist(string id)
@@ -166,9 +83,11 @@ namespace YoutubeSnoop
             return Playlists(new PlaylistApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
         }
 
-        public static YoutubePlaylists PlaylistsFromChannelId(string id)
+        public static YoutubePlaylists ChannelId(this YoutubePlaylists playlists, string id)
         {
-            return Playlists(new PlaylistApiRequestSettings { ChannelId = id });
+            var request = playlists.Request.Clone();
+            request.Settings.ChannelId = id;
+            return new YoutubePlaylists(request);
         }
 
         public static YoutubePlaylistItems Items(this YoutubePlaylist playlist)

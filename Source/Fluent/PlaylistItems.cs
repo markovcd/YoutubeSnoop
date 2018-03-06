@@ -18,14 +18,14 @@ namespace YoutubeSnoop.Fluent
             return new YoutubePlaylistItems(request);
         }
 
-        public static YoutubePlaylistItems PlaylistItems(PlaylistItemsApiRequestSettings settings)
+        public static YoutubePlaylistItems PlaylistItems(PlaylistItemsApiRequestSettings settings = null)
         {
-            return PlaylistItems(settings, PartType.Snippet);
+            return PlaylistItems(settings ?? new PlaylistItemsApiRequestSettings(), PartType.Snippet);
         }
 
-        public static YoutubePlaylistItems PlaylistItems()
+        public static YoutubePlaylistItems PlaylistItems(string playlistId)
         {
-            return PlaylistItems(new PlaylistItemsApiRequestSettings(), PartType.Snippet);
+            return PlaylistItems(new PlaylistItemsApiRequestSettings { PlaylistId = playlistId });
         }
 
         public static YoutubePlaylistItems PlaylistId(this YoutubePlaylistItems playlistItems, string id)
@@ -35,14 +35,26 @@ namespace YoutubeSnoop.Fluent
             return new YoutubePlaylistItems(request);
         }
 
+        public static YoutubePlaylistItems RequestPart(this YoutubePlaylistItems playlistItems, PartType partType)
+        {
+            var request = playlistItems.Request.RequestPart(partType);
+            return new YoutubePlaylistItems(request);
+        }
+
         public static IYoutubeItem Details(this YoutubePlaylistItem playlistItem)
         {
             return playlistItem.Item.Snippet.ResourceId.Details();
         }
 
+        public static TItem Details<TItem>(this YoutubePlaylistItem playlistItem) where TItem : class, IYoutubeItem
+        {
+            return Details(playlistItem) as TItem;
+        }
+
         public static YoutubeVideos Videos(this YoutubePlaylistItems playlistItems)
         {
-            return Videos(playlistItems.Select(i => i.Id));
+            return Videos(playlistItems.Where(i => i.Kind == ResourceKind.Video)
+                                       .Select(i => i.Id));
         }
     }
 }

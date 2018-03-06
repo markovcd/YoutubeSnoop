@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using YoutubeSnoop.Entities.I18nLanguages;
+using YoutubeSnoop.Entities.I18nRegions;
 using YoutubeSnoop.Enums;
 using YoutubeSnoop.Interfaces;
+using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop.Fluent
 {
@@ -45,6 +49,13 @@ namespace YoutubeSnoop.Fluent
             return request.Clone(request.PartTypes);
         }
 
+        public static IApiRequest<TItem, TSettings> RequestPart<TItem, TSettings>(this IApiRequest<TItem, TSettings> request, PartType partType)
+            where TItem : class, IResponse
+            where TSettings : IApiRequestSettings
+        {
+            return request.Clone(request.PartTypes.Concat(new[] { partType }).Distinct());
+        }
+
         public static IYoutubeItem Details(this IResource resourceId)
         {
             var id = resourceId.Id();
@@ -56,6 +67,20 @@ namespace YoutubeSnoop.Fluent
                 case ResourceKind.Channel: return Channel(id);
                 default: throw new InvalidOperationException();
             }
+        }
+
+        public static YoutubeLanguages Languages(string languageCode = "")
+        {
+            var settings = new I18nLanguageApiRequestSettings { Hl = languageCode };
+            var request = DefaultRequest<I18nLanguage, I18nLanguageApiRequestSettings>(settings, new[] { PartType.Snippet });
+            return new YoutubeLanguages(request);
+        }
+
+        public static YoutubeCountries Countries(string languageCode = "")
+        {
+            var settings = new I18nRegionApiRequestSettings { Hl = languageCode };
+            var request = DefaultRequest<I18nRegion, I18nRegionApiRequestSettings>(settings, new[] { PartType.Snippet });
+            return new YoutubeCountries(request);
         }
     }
 }

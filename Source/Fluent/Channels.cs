@@ -24,7 +24,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeChannels Channels(ChannelApiRequestSettings settings = null)
         {
-            return Channels(settings ?? new ChannelApiRequestSettings(), PartType.Snippet);
+            return Channels(settings ?? new ChannelApiRequestSettings(), PartType.Snippet, PartType.ContentDetails);
         }
 
         public static YoutubeChannel Channel(ChannelApiRequestSettings settings = null)
@@ -50,8 +50,23 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeChannel RequestPart(this YoutubeChannel channel, PartType partType)
         {
-            var request = channel.Request.Clone(channel.Request.PartTypes.Concat(new[] { partType }).Distinct());
+            var request = channel.Request.RequestPart(partType);
             return new YoutubeChannel(request);
+        }
+
+        public static YoutubeChannels RequestId(this YoutubeChannels channels, string id)
+        {
+            var request = channels.Request.Clone();
+            if (request.Settings.Id == null) request.Settings.Id = "";
+            var ids = request.Settings.Id.Split(',').Append(id).Distinct();
+            request.Settings.Id = ids.Aggregate((s1, s2) => $"{s1},{s2}");
+            return new YoutubeChannels(request);
+        }
+
+        public static YoutubeChannels RequestPart(this YoutubeChannels channels, PartType partType)
+        {
+            var request = channels.Request.RequestPart(partType);
+            return new YoutubeChannels(request);
         }
 
         public static YoutubePlaylistItems Uploads(this YoutubeChannel channel)

@@ -1,17 +1,9 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using YoutubeSnoop.Converters;
-using YoutubeSnoop.Enums;
-using YoutubeSnoop.Interfaces;
+﻿using System.Collections.Generic;
 
 namespace YoutubeSnoop.Entities.Videos
 {
-    public class Video : IResponse
+    public class Video : Response
     {
-        [JsonConverter(typeof(ResourceKindConverter))]
-        public ResourceKind Kind { get; set; }
-
-        public string Etag { get; set; }
         public string Id { get; set; }
         public Snippet Snippet { get; set; }
         public ContentDetails ContentDetails { get; set; }

@@ -7,16 +7,6 @@ using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop
 {
-    public interface IApiRequest<TItem, TSettings> : IEnumerable<IPagedResponse<TItem>>
-        where TItem : IResponse
-        where TSettings : IApiRequestSettings
-    {
-        IEnumerable<TItem> Items { get; }
-        TItem FirstItem { get; }
-        TSettings Settings { get; }
-        IEnumerable<PartType> PartTypes { get; }
-    }
-
     public class ApiRequest<TItem, TSettings> : IApiRequest<TItem, TSettings>
         where TItem : class, IResponse
         where TSettings : IApiRequestSettings
@@ -62,11 +52,6 @@ namespace YoutubeSnoop
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
-        }
-
-        public IApiRequest<TItem, TSettings> DeepClone(IEnumerable<PartType> partTypes = null)
-        {
-            return new ApiRequest<TItem, TSettings>((TSettings)Settings.Clone(), partTypes ?? PartTypes.ToList(), ResultsPerPage, _jsonDownloader, _responseDeserializer, _apiUrlFormatter);
         }
     }
 }

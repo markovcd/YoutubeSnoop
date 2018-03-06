@@ -1,4 +1,6 @@
-﻿using YoutubeSnoop.Attributes;
+﻿using Newtonsoft.Json;
+using YoutubeSnoop.Attributes;
+using YoutubeSnoop.Converters;
 using YoutubeSnoop.Entities.Channels;
 using YoutubeSnoop.Entities.I18nLanguages;
 using YoutubeSnoop.Entities.I18nRegions;
@@ -9,6 +11,7 @@ using YoutubeSnoop.Entities.Videos;
 
 namespace YoutubeSnoop.Enums
 {
+    [JsonConverter(typeof(ResourceKindConverter))]
     public enum ResourceKind
     {
         None,

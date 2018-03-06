@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Linq;
 using YoutubeSnoop.Entities.Videos;
 using YoutubeSnoop.Interfaces;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using YoutubeSnoop.Entities;
 using YoutubeSnoop.Enums;

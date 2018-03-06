@@ -6,12 +6,6 @@ using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop
 {
-    public interface IApiUrlFormatter<TSettings>
-        where TSettings : IApiRequestSettings
-    {
-        string Format(TSettings settings, IEnumerable<PartType> partTypes, string pageToken, int resultsPerPage);
-    }
-
     public class ApiUrlFormatter<TSettings> : IApiUrlFormatter<TSettings>
         where TSettings : IApiRequestSettings
     {

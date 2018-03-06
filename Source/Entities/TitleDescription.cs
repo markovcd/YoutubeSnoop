@@ -1,8 +1,6 @@
-﻿using YoutubeSnoop.Interfaces;
-
-namespace YoutubeSnoop.Entities
+﻿namespace YoutubeSnoop.Entities
 {
-    public class TitleDescription : ITitleDescription
+    public class TitleDescription
     {
         public string Title { get; set; }
         public string Description { get; set; }

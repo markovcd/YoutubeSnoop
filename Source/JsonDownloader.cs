@@ -1,13 +1,9 @@
 ﻿using System.Net;
 using YoutubeSnoop.Exceptions;
+using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop
 {
-    public interface IJsonDownloader
-    {
-        string Download(string url);
-    }
-
     public class JsonDownloader : IJsonDownloader
     {      
         public static string Download(string url)

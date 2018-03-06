@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using YoutubeSnoop.Entities.Channels;
-using YoutubeSnoop.Enums;
-using YoutubeSnoop.Interfaces;
+﻿using YoutubeSnoop.Entities.Channels;
 using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop

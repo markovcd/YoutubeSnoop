@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace YoutubeSnoop.Entities.Search
+namespace YoutubeSnoop.Entities.Activities
 {
     public class Snippet
     {
@@ -9,8 +9,9 @@ namespace YoutubeSnoop.Entities.Search
         public string ChannelId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public string ChannelTitle { get; set; }
-        public string LiveBroadcastContent { get; set; }
         public IDictionary<string, Thumbnail> Thumbnails { get; set; }
+        public string ChannelTitle { get; set; }
+        public string Type { get; set; }
+        public string GroupId { get; set; }
     }
 }

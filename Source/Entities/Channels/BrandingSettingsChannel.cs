@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop.Entities.Channels
 {
-    public class BrandingSettingsChannel : ITitleDescription
+    public class BrandingSettingsChannel
     {
         public string Title { get; set; }
         public string Description { get; set; }

@@ -1,6 +1,4 @@
-﻿using YoutubeSnoop.Enums;
-
-namespace YoutubeSnoop.Entities.I18nRegions
+﻿namespace YoutubeSnoop.Entities.I18nRegions
 {
     public class Snippet
     {

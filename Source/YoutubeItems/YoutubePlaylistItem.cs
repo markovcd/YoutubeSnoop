@@ -2,10 +2,8 @@
 using YoutubeSnoop.Entities.PlaylistItems;
 using YoutubeSnoop.Enums;
 using YoutubeSnoop.Interfaces;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using YoutubeSnoop.Entities;
-using System.Linq;
 
 namespace YoutubeSnoop
 {

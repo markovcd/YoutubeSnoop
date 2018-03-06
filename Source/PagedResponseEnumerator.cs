@@ -22,11 +22,6 @@ namespace YoutubeSnoop
             _responses = new List<IPagedResponse<TItem>>();
             _getNextResponse = getNextResponse;
         }
-
-        public void Dispose()
-        {
-        }
-
         public bool MoveNext()
         {
             _index++;
@@ -47,6 +42,10 @@ namespace YoutubeSnoop
         public void Reset()
         {
             _index = -1;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

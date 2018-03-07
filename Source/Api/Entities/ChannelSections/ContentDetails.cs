@@ -1,0 +1,6 @@
+﻿namespace YoutubeSnoop.Api.Entities.ChannelSections
+{
+    public class ContentDetails
+    {
+    }
+}

@@ -30,14 +30,4 @@
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Api\Entities\GuideCategories\" />
-    <Folder Include="Api\Entities\Comments\" />
-    <Folder Include="Api\Entities\CommentThreads\" />
-    <Folder Include="Api\Entities\ChannelSections\" />
-    <Folder Include="Api\Entities\Captions\" />
-    <Folder Include="Api\Entities\Subscriptions\" />
-    <Folder Include="Api\Entities\VideoCategories\" />
-  </ItemGroup>
-
 </Project>

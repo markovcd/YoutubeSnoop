@@ -4,10 +4,10 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using YoutubeSnoop.Attributes;
-using YoutubeSnoop.Entities;
+using YoutubeSnoop.Api.Attributes;
+using YoutubeSnoop.Api.Entities;
+using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
-using YoutubeSnoop.Interfaces;
 
 namespace YoutubeSnoop
 {
@@ -46,8 +46,6 @@ namespace YoutubeSnoop
                 default: throw new InvalidOperationException();
             }
         }
-
-        
 
         public static string Url(this IResource resourceId)
         {

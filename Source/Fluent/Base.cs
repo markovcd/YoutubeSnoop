@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using YoutubeSnoop.Entities.I18nLanguages;
-using YoutubeSnoop.Entities.I18nRegions;
+using YoutubeSnoop.Api;
+using YoutubeSnoop.Api.Entities;
+using YoutubeSnoop.Api.Entities.I18nLanguages;
+using YoutubeSnoop.Api.Entities.I18nRegions;
+using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
-using YoutubeSnoop.Interfaces;
-using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop.Fluent
 {

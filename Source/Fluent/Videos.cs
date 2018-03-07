@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using YoutubeSnoop.Entities.Videos;
+using YoutubeSnoop.Api.Entities.Videos;
+using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
-using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop.Fluent
 {

@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json;
-using YoutubeSnoop.Attributes;
-using YoutubeSnoop.Converters;
-using YoutubeSnoop.Entities.Channels;
-using YoutubeSnoop.Entities.I18nLanguages;
-using YoutubeSnoop.Entities.I18nRegions;
-using YoutubeSnoop.Entities.PlaylistItems;
-using YoutubeSnoop.Entities.Playlists;
-using YoutubeSnoop.Entities.Search;
-using YoutubeSnoop.Entities.Videos;
+using YoutubeSnoop.Api.Attributes;
+using YoutubeSnoop.Api.Converters;
+using YoutubeSnoop.Api.Entities.Channels;
+using YoutubeSnoop.Api.Entities.I18nLanguages;
+using YoutubeSnoop.Api.Entities.I18nRegions;
+using YoutubeSnoop.Api.Entities.PlaylistItems;
+using YoutubeSnoop.Api.Entities.Playlists;
+using YoutubeSnoop.Api.Entities.Search;
+using YoutubeSnoop.Api.Entities.Videos;
 
 namespace YoutubeSnoop.Enums
 {

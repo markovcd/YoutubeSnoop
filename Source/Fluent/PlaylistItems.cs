@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YoutubeSnoop.Entities.PlaylistItems;
+﻿using System.Linq;
+using YoutubeSnoop.Api.Entities.PlaylistItems;
+using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
-using YoutubeSnoop.Interfaces;
-using YoutubeSnoop.Settings;
 
 namespace YoutubeSnoop.Fluent
 {

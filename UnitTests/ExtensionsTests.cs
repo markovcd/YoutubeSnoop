@@ -1,9 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Linq;
 using YoutubeSnoop;
-using YoutubeSnoop.Arguments;
-using YoutubeSnoop.Entities;
+using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Enums;
 
 namespace UnitTests

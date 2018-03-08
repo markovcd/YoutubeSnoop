@@ -2,7 +2,6 @@
 {
     public enum RejectionReason
     {
-        None,
         Claim,
         Copyright,
         Duplicate,

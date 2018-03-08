@@ -4,6 +4,6 @@ namespace YoutubeSnoop.Api.Entities.PlaylistItems
 {
     public class Status
     {
-        public PrivacyStatus PrivacyStatus { get; set; }
+        public PrivacyStatus? PrivacyStatus { get; set; }
     }
 }

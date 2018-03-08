@@ -2,10 +2,8 @@
 
 namespace YoutubeSnoop.Api.Entities.Channels
 {
-    public class BrandingSettingsChannel
+    public class BrandingSettingsChannel : TitleDescription
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
         public string Keywords { get; set; }
         public string DefaultTab { get; set; }
         public string TrackingAnalyticsAccountId { get; set; }

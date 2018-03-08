@@ -5,7 +5,7 @@ namespace YoutubeSnoop.Api.Entities.Activities
 {
     public class Snippet
     {
-        public DateTime PublishedAt { get; set; }
+        public DateTime? PublishedAt { get; set; }
         public string ChannelId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

@@ -6,6 +6,6 @@ namespace YoutubeSnoop.Api.Entities.Channels
     {
         public BrandingSettingsChannel Channel { get; set; }
         public BrandingSettingsImage Image { get; set; }
-        public IList<Hint> Hints { get; set; }
+        public IList<PropertyValue> Hints { get; set; }
     }
 }

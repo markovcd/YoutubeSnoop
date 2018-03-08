@@ -2,6 +2,6 @@
 {
     public enum PrivacyStatus
     {
-        None, Private, Public, Unlisted
+        Private, Public, Unlisted
     }
 }

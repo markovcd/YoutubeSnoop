@@ -2,6 +2,6 @@
 {
     public enum UploadStatus
     {
-        None, Deleted, Failed, Processed, Rejected, Uploaded
+        Deleted, Failed, Processed, Rejected, Uploaded
     }
 }

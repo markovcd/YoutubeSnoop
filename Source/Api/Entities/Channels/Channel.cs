@@ -5,7 +5,6 @@ namespace YoutubeSnoop.Api.Entities.Channels
     public class Channel : Response
     {
         public string Id { get; set; }
-
         public IDictionary<string, TitleDescription> Localizations { get; set; }
         public Snippet Snippet { get; set; }
         public ContentDetails ContentDetails { get; set; }

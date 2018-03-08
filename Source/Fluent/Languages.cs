@@ -14,7 +14,5 @@ namespace YoutubeSnoop.Fluent
             var request = DefaultRequest<I18nLanguage, I18nLanguageApiRequestSettings>(settings, new[] { PartType.Snippet });
             return new YoutubeLanguages(request);
         }
-
-
     }
 }

@@ -39,11 +39,11 @@ namespace YoutubeSnoop
             _item = response;
             _id = response.Id;
             _kind = response.Kind;
-            _title = response.Snippet.Title;
-            _description = response.Snippet.Description;
-            _customUrl = response.Snippet.CustomUrl;
-            _publishedAt = response.Snippet.PublishedAt;
-            _thumbnails = response.Snippet.Thumbnails?.Clone();
+            _title = response.Snippet?.Title;
+            _description = response.Snippet?.Description;
+            _customUrl = response.Snippet?.CustomUrl;
+            _publishedAt = (response.Snippet?.PublishedAt).GetValueOrDefault();
+            _thumbnails = response.Snippet?.Thumbnails?.Clone();
         }
     }
 }

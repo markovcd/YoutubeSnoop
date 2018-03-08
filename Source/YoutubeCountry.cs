@@ -18,8 +18,8 @@ namespace YoutubeSnoop
             Item = region;
             Kind = region.Kind;
             Id = region.Id;
-            CountryCode = region.Snippet.Gl;
-            CountryName = region.Snippet.Name;
+            CountryCode = region.Snippet?.Gl;
+            CountryName = region.Snippet?.Name;
         }
 
         public YoutubeCountry(string countryCode, string countryName)

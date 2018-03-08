@@ -23,14 +23,14 @@ namespace YoutubeSnoop
             if (searchResult == null) return;
 
             Item = searchResult;
-            Kind = searchResult.Id.Kind;
-            Id = searchResult.Id.Id();           
-            PublishedAt = searchResult.Snippet.PublishedAt;
-            ChannelId = searchResult.Snippet.ChannelId;
-            Title = searchResult.Snippet.Title;
-            Description = searchResult.Snippet.Description;
-            ChannelTitle = searchResult.Snippet.ChannelTitle;
-            Thumbnails = searchResult.Snippet.Thumbnails?.Clone();
+            Kind = (searchResult.Id?.Kind).GetValueOrDefault();
+            Id = searchResult.Id?.Id();           
+            PublishedAt = (searchResult.Snippet?.PublishedAt).GetValueOrDefault();
+            ChannelId = searchResult.Snippet?.ChannelId;
+            Title = searchResult.Snippet?.Title;
+            Description = searchResult.Snippet?.Description;
+            ChannelTitle = searchResult.Snippet?.ChannelTitle;
+            Thumbnails = searchResult.Snippet?.Thumbnails?.Clone();
         }       
     }
 }

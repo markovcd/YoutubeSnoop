@@ -11,12 +11,8 @@ namespace YoutubeSnoop.Api.Entities.Comments
         public string ChannelId { get; set; }
         public string VideoId { get; set; }
         public string TextDisplay { get; set; }
-        public string TextOriginal { get; set; }
         public string ParentId { get; set; }
-        public bool? CanRate { get; set; }
-        public string ViewerRating { get; set; }
         public int? LikeCount { get; set; }
-        public string ModerationStatus { get; set; }
         public DateTime? PublishedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }

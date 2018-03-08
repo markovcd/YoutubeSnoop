@@ -7,8 +7,6 @@ namespace YoutubeSnoop.Api.Entities.CommentThreads
         public string ChannelId { get; set; }
         public string VideoId { get; set; }
         public Comment TopLevelComment { get; set; }
-        public bool? CanReply { get; set; }
         public int? TotalReplyCount { get; set; }
-        public bool? IsPublic { get; set; }
     }
 }

@@ -18,8 +18,8 @@ namespace YoutubeSnoop
             Item = language;
             Kind = language.Kind;
             Id = language.Id;
-            LanguageCode = language.Snippet.Hl;
-            LanguageName = language.Snippet.Name;
+            LanguageCode = language.Snippet?.Hl;
+            LanguageName = language.Snippet?.Name;
         }
 
         public YoutubeLanguage(string languageCode, string languageName)

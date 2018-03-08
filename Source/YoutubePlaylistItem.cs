@@ -25,16 +25,16 @@ namespace YoutubeSnoop
             if (playlistItem == null) return;
 
             Item = playlistItem;
-            Kind = playlistItem.Snippet.ResourceId.Kind;
-            Id = playlistItem.Snippet.ResourceId?.Id();
-            PublishedAt = playlistItem.Snippet.PublishedAt;
-            ChannelId = playlistItem.Snippet.ChannelId;
-            Title = playlistItem.Snippet.Title;
-            Description = playlistItem.Snippet.Description;
-            ChannelTitle = playlistItem.Snippet.ChannelTitle;
-            PlaylistId = playlistItem.Snippet.PlaylistId;
-            Position = playlistItem.Snippet.Position;
-            Thumbnails = playlistItem.Snippet.Thumbnails?.Clone();
+            Kind = (playlistItem.Snippet?.ResourceId?.Kind).GetValueOrDefault();
+            Id = playlistItem.Snippet?.ResourceId?.Id();
+            PublishedAt = (playlistItem.Snippet?.PublishedAt).GetValueOrDefault();
+            ChannelId = playlistItem.Snippet?.ChannelId;
+            Title = playlistItem.Snippet?.Title;
+            Description = playlistItem.Snippet?.Description;
+            ChannelTitle = playlistItem.Snippet?.ChannelTitle;
+            PlaylistId = playlistItem.Snippet?.PlaylistId;
+            Position = playlistItem.Snippet?.Position;
+            Thumbnails = playlistItem.Snippet?.Thumbnails?.Clone();
         }
     }
 }

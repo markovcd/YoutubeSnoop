@@ -1,5 +1,4 @@
-﻿
-using YoutubeSnoop.Api;
+﻿using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.Channels;
 using YoutubeSnoop.Api.Settings;
 

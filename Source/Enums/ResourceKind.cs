@@ -1,12 +1,19 @@
 ﻿using Newtonsoft.Json;
 using YoutubeSnoop.Api.Attributes;
 using YoutubeSnoop.Api.Converters;
+using YoutubeSnoop.Api.Entities.Activities;
 using YoutubeSnoop.Api.Entities.Channels;
+using YoutubeSnoop.Api.Entities.ChannelSections;
+using YoutubeSnoop.Api.Entities.Comments;
+using YoutubeSnoop.Api.Entities.CommentThreads;
+using YoutubeSnoop.Api.Entities.GuideCategories;
 using YoutubeSnoop.Api.Entities.I18nLanguages;
 using YoutubeSnoop.Api.Entities.I18nRegions;
 using YoutubeSnoop.Api.Entities.PlaylistItems;
 using YoutubeSnoop.Api.Entities.Playlists;
 using YoutubeSnoop.Api.Entities.Search;
+using YoutubeSnoop.Api.Entities.Subscriptions;
+using YoutubeSnoop.Api.Entities.VideoCategories;
 using YoutubeSnoop.Api.Entities.Videos;
 
 namespace YoutubeSnoop.Enums
@@ -15,50 +22,50 @@ namespace YoutubeSnoop.Enums
     public enum ResourceKind
     {
         None,
-        /*[ApiResourceMapping(typeof(Activity))]*/     Activity,
-        /*[ApiResponseMapping(typeof(Activity))]*/     ActivityListResponse,
+        [EntityMapping(typeof(Activity))]       Activity,
+        [ApiMapping(typeof(Activity))]          ActivityListResponse,
 
-        /*[ApiResourceMapping(typeof(Caption))]*/      Caption,
-        /*[ApiResponseMapping(typeof(Caption))]*/      CaptionListResponse,
+        [EntityMapping(typeof(Api.Entities.Captions.Caption))]      Caption,
+        [ApiMapping(typeof(Api.Entities.Captions.Caption))]      CaptionListResponse,
 
-        [ApiResourceMapping(typeof(Channel))]          Channel,
-        [ApiResponseMapping(typeof(Channel))]          ChannelListResponse,
+        [EntityMapping(typeof(Channel))]        Channel,
+        [ApiMapping(typeof(Channel))]           ChannelListResponse,
 
-        /*[ApiResourceMapping(typeof(ChannelSection))]*/ChannelSection,
-        /*[ApiResponseMapping(typeof(ChannelSection))]*/ChannelSectionListResponse,
+        [EntityMapping(typeof(ChannelSection))] ChannelSection,
+        [ApiMapping(typeof(ChannelSection))]    ChannelSectionListResponse,
 
-        /*[ApiResourceMapping(typeof(Comment))]*/      Comment,
-        /*[ApiResponseMapping(typeof(Comment))]*/      CommentListResponse,
+        [EntityMapping(typeof(Comment))]        Comment,
+        [ApiMapping(typeof(Comment))]           CommentListResponse,
 
-        /*[ApiResourceMapping(typeof(CommentThread))]*/CommentThread,
-        /*[ApiResponseMapping(typeof(CommentThread))]*/CommentThreadListResponse,
+        [EntityMapping(typeof(CommentThread))]  CommentThread,
+        [ApiMapping(typeof(CommentThread))]     CommentThreadListResponse,
 
-        /*[ApiResourceMapping(typeof(GuideCategory))]*/GuideCategory,
-        /*[ApiResponseMapping(typeof(GuideCategory))]*/GuideCategoryListResponse,
+        [EntityMapping(typeof(GuideCategory))]  GuideCategory,
+        [ApiMapping(typeof(GuideCategory))]     GuideCategoryListResponse,
 
-        [ApiResourceMapping(typeof(I18nLanguage))]     I18nLanguage,
-        [ApiResponseMapping(typeof(I18nLanguage))]     I18nLanguageListResponse,
+        [EntityMapping(typeof(I18nLanguage))]   I18nLanguage,
+        [ApiMapping(typeof(I18nLanguage))]      I18nLanguageListResponse,
 
-        [ApiResourceMapping(typeof(I18nRegion))]       I18nRegion,
-        [ApiResponseMapping(typeof(I18nRegion))]       I18nRegionListResponse,
+        [EntityMapping(typeof(I18nRegion))]     I18nRegion,
+        [ApiMapping(typeof(I18nRegion))]        I18nRegionListResponse,
 
-        [ApiResourceMapping(typeof(Playlist))]         Playlist,
-        [ApiResponseMapping(typeof(PlaylistItem))]     PlaylistListResponse,
+        [EntityMapping(typeof(Playlist))]       Playlist,
+        [ApiMapping(typeof(PlaylistItem))]      PlaylistListResponse,
 
-        [ApiResourceMapping(typeof(PlaylistItem))]     PlaylistItem,
-        [ApiResponseMapping(typeof(PlaylistItem))]     PlaylistItemListResponse,
+        [EntityMapping(typeof(PlaylistItem))]   PlaylistItem,
+        [ApiMapping(typeof(PlaylistItem))]      PlaylistItemListResponse,
 
-        [ApiResourceMapping(typeof(SearchResult))]     SearchResult,
-        [ApiResponseMapping(typeof(SearchResult))]     SearchListResponse,
+        [EntityMapping(typeof(SearchResult))]   SearchResult,
+        [ApiMapping(typeof(SearchResult))]      SearchListResponse,
 
-        /*[ApiResourceMapping(typeof(Subscription))]*/ Subscription,
-        /*[ApiResponseMapping(typeof(Subscription))]*/ SubscriptionListResponse,
+        [EntityMapping(typeof(Subscription))]   Subscription,
+        [ApiMapping(typeof(Subscription))]      SubscriptionListResponse,
 
-        [ApiResourceMapping(typeof(Video))]            Video,
-        [ApiResponseMapping(typeof(Video))]            VideoListResponse,
+        [EntityMapping(typeof(Video))]          Video,
+        [ApiMapping(typeof(Video))]             VideoListResponse,
 
-        /*[ApiResourceMapping(typeof(VideoCategory))]*/VideoCategory,
-        /*[ApiResponseMapping(typeof(VideoCategory))]*/VideoCategoryListResponse,
+        [EntityMapping(typeof(VideoCategory))]  VideoCategory,
+        [ApiMapping(typeof(VideoCategory))]     VideoCategoryListResponse,
     
     }
 }

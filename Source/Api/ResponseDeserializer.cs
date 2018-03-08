@@ -3,7 +3,7 @@ using YoutubeSnoop.Api.Entities;
 
 namespace YoutubeSnoop.Api
 {
-    public class ResponseDeserializer<TItem> : IResponseDeserializer<TItem>
+    public class PagedResponseDeserializer<TItem> : IPagedResponseDeserializer<TItem>
         where TItem : IResponse
     {
         public IPagedResponse<TItem> Deserialize(string json)

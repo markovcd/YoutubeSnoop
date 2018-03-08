@@ -2,7 +2,7 @@
 
 namespace YoutubeSnoop.Api
 {
-    public interface IResponseDeserializer<TItem>
+    public interface IPagedResponseDeserializer<TItem>
         where TItem : IResponse
     {
         IPagedResponse<TItem> Deserialize(string json);

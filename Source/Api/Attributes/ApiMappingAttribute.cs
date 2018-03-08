@@ -3,11 +3,11 @@
 namespace YoutubeSnoop.Api.Attributes
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
-    public sealed class ApiResourceMappingAttribute : Attribute
+    public sealed class ApiMappingAttribute : Attribute
     {
         public Type EntityType { get; }
 
-        public ApiResourceMappingAttribute(Type entityType)
+        public ApiMappingAttribute(Type entityType)
         {
             EntityType = entityType;
         }

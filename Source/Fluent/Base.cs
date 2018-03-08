@@ -19,9 +19,9 @@ namespace YoutubeSnoop.Fluent
             return new JsonDownloader();
         }
 
-        private static IResponseDeserializer<TItem> DefaultDeserializer<TItem>() where TItem : IResponse
+        private static IPagedResponseDeserializer<TItem> DefaultDeserializer<TItem>() where TItem : IResponse
         {
-            return new ResponseDeserializer<TItem>();
+            return new PagedResponseDeserializer<TItem>();
         }
 
         private static IApiUrlFormatter<TSettings> DefaultUrlFormatter<TSettings>() where TSettings : IApiRequestSettings
@@ -68,10 +68,6 @@ namespace YoutubeSnoop.Fluent
                 case ResourceKind.Channel: return Channel(id);
                 default: throw new InvalidOperationException();
             }
-        }
-
-        
-
-        
+        }  
     }
 }

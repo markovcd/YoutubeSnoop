@@ -4,7 +4,7 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Api.Entities
 {
-    [JsonConverter(typeof(ResourceIdConverter))]
+    [JsonConverter(typeof(ResourceConverter))]
     public interface IResource
     {
         ResourceKind Kind { get; }

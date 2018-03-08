@@ -25,6 +25,33 @@ namespace YoutubeSnoop
             return attribute?.Description;
         }
 
+        /// <summary>
+        /// Gets an attribute on an enum field value
+        /// </summary>
+        /// <typeparam name="T">The type of the attribute you want to retrieve</typeparam>
+        /// <param name="enumVal">The enum value</param>
+        /// <returns>The attribute of type T that exists on the enum value</returns>
+        /// <example>string desc = myEnumVariable.GetAttributeOfType<DescriptionAttribute>().Description;</example>
+        public static T GetAttributeOfType<T>(this Enum enumVal) where T : Attribute
+        {
+            var type = enumVal.GetType();
+            var memInfo = type.GetMember(enumVal.ToString());
+            var attributes = memInfo[0].GetCustomAttributes(typeof(T), false);
+            
+            return (attributes.Length > 0) ? (T)attributes[0] : null;
+        }
+
+        public static Type GetMappedResponse(this Enum kind)
+        {
+            var entityAttr = kind.GetAttributeOfType<EntityMappingAttribute>();
+            if (entityAttr != null) return entityAttr.EntityType;
+
+            var apiAttr = kind.GetAttributeOfType<ApiMappingAttribute>();
+            if (apiAttr == null) return null;
+
+            return typeof(PagedResponse<>).MakeGenericType(apiAttr.EntityType);
+        }
+
         public static string ToCamelCase(this string value)
         {
             if (string.IsNullOrEmpty(value)) return null;
@@ -40,9 +67,9 @@ namespace YoutubeSnoop
         {
             switch (resourceId.Kind)
             {
-                case ResourceKind.Video: return ((ResourceIdVideo)resourceId).VideoId;
-                case ResourceKind.Playlist: return ((ResourceIdPlaylist)resourceId).PlaylistId;
-                case ResourceKind.Channel: return ((ResourceIdChannel)resourceId).ChannelId;
+                case ResourceKind.Video: return ((ResourceVideo)resourceId).VideoId;
+                case ResourceKind.Playlist: return ((ResourcePlaylist)resourceId).PlaylistId;
+                case ResourceKind.Channel: return ((ResourceChannel)resourceId).ChannelId;
                 default: throw new InvalidOperationException();
             }
         }
@@ -94,6 +121,17 @@ namespace YoutubeSnoop
             }
 
             return (IApiRequestSettings)cloned;
+        }
+
+        public static ResourceKind ParseResourceKind(string s)
+        {
+            if (string.IsNullOrWhiteSpace(s)) return ResourceKind.None;
+            
+            s = s.Split('#')[1];
+
+            if (!Enum.TryParse<ResourceKind>(s, true, out var result)) return ResourceKind.None;
+
+            return result;
         }
     }
 }

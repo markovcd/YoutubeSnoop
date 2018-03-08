@@ -12,7 +12,7 @@ namespace YoutubeSnoop.Api
         where TSettings : IApiRequestSettings
     {
         private readonly IJsonDownloader _jsonDownloader;
-        private readonly IResponseDeserializer<TItem> _responseDeserializer;
+        private readonly IPagedResponseDeserializer<TItem> _responseDeserializer;
         private readonly IApiUrlFormatter<TSettings> _apiUrlFormatter;
 
         private TItem _firstItem;
@@ -24,7 +24,7 @@ namespace YoutubeSnoop.Api
 
         public IEnumerable<PartType> PartTypes { get; }
 
-        public ApiRequest(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, IJsonDownloader jsonDownloader, IResponseDeserializer<TItem> responseDeserializer, IApiUrlFormatter<TSettings> apiUrlFormatter)
+        public ApiRequest(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TItem> responseDeserializer, IApiUrlFormatter<TSettings> apiUrlFormatter)
         {
             _jsonDownloader = jsonDownloader;
             _responseDeserializer = responseDeserializer;

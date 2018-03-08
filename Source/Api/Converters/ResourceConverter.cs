@@ -6,21 +6,21 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Api.Converters
 {
-    public class ResourceIdConverter : OneWayJsonConverter<IResource>
+    public class ResourceConverter : OneWayJsonConverter<IResource>
     {
         public override IResource ReadJson(JsonReader reader, Type objectType, IResource existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.StartObject)
             {
                 var item = JObject.Load(reader);
-                var kind = ResourceKindConverter.Parse(item["kind"].Value<string>());
+                var kind = Extensions.ParseResourceKind(item["kind"].Value<string>());
                 var s = item.ToString();
 
                 switch (kind)
                 {
-                    case ResourceKind.Video: return JsonConvert.DeserializeObject<ResourceIdVideo>(s);
-                    case ResourceKind.Playlist: return JsonConvert.DeserializeObject<ResourceIdPlaylist>(s);
-                    case ResourceKind.Channel: return JsonConvert.DeserializeObject<ResourceIdChannel>(s);
+                    case ResourceKind.Video: return JsonConvert.DeserializeObject<ResourceVideo>(s);
+                    case ResourceKind.Playlist: return JsonConvert.DeserializeObject<ResourcePlaylist>(s);
+                    case ResourceKind.Channel: return JsonConvert.DeserializeObject<ResourceChannel>(s);
                     default: throw new InvalidOperationException();
                 }
             }
@@ -28,4 +28,6 @@ namespace YoutubeSnoop.Api.Converters
             return null;
         }
     }
+
+   
 }

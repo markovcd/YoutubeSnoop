@@ -1,6 +1,6 @@
 ﻿namespace YoutubeSnoop.Api.Entities
 {
-    public class ResourceIdPlaylist : Resource
+    public class ResourcePlaylist : Resource
     {
         public string PlaylistId { get; set; }
     }

@@ -1,6 +1,6 @@
 ﻿namespace YoutubeSnoop.Enums
 {
-    public enum Caption
+    public enum VideoCaption
     {
         Any, ClosedCaption, None
     }

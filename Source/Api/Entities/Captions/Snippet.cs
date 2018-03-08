@@ -2,7 +2,7 @@
 
 namespace YoutubeSnoop.Api.Entities.Captions
 {
-    class Snippet
+    public class Snippet
     {
         public string VideoId { get; set; }
         public DateTime? LastUpdated { get; set; }

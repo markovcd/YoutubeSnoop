@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using YoutubeSnoop.Enums;
 using YoutubeSnoop.Api.Settings;
-using YoutubeSnoop.Api.Entities.Videos;
+using YoutubeSnoop.Api.Entities.Subscriptions;
 using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Api;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeVideo : YoutubeItem<Video, VideoApiRequestSettings>, IYoutubeItem
+    public class YoutubeSubscription : YoutubeItem<Subscription, SubscriptionApiRequestSettings>, IYoutubeItem
     {
         private string _id;
-        private Video _item;
+        private Subscription _item;
         private ResourceKind _kind;
         private string _channelId;
         private DateTime _publishedAt;
@@ -19,9 +19,8 @@ namespace YoutubeSnoop
         private string _description;
         private string _channelTitle;
         private IReadOnlyDictionary<string, Thumbnail> _thumbnails;
-        private int _categoryId;
 
-        public Video Item => S(ref _item);
+        public Subscription Item => S(ref _item);
         public string Id => S(ref _id);
         public ResourceKind Kind => S(ref _kind);
         public DateTime PublishedAt => S(ref _publishedAt);
@@ -30,13 +29,12 @@ namespace YoutubeSnoop
         public string Description => S(ref _description);
         public string ChannelTitle => S(ref _channelTitle);
         public IReadOnlyDictionary<string, Thumbnail> Thumbnails => S(ref _thumbnails);
-        public int CategoryId => S(ref _categoryId);
 
-        public YoutubeVideo(IApiRequest<Video, VideoApiRequestSettings> request) : base(request) { }
+        public YoutubeSubscription(IApiRequest<Subscription, SubscriptionApiRequestSettings> request) : base(request) { }
 
-        public YoutubeVideo(Video response) : base(response) { }
+        public YoutubeSubscription(Subscription response) : base(response) { }
 
-        protected override void SetProperties(Video response)
+        protected override void SetProperties(Subscription response)
         {
             if (response == null) return;
 
@@ -48,7 +46,7 @@ namespace YoutubeSnoop
             _title = response.Snippet?.Title;
             _description = response.Snippet?.Description;
             _channelTitle = response.Snippet?.ChannelTitle;
-            int.TryParse(response.Snippet?.CategoryId, out _categoryId);
+            // todo
             _thumbnails = response.Snippet?.Thumbnails?.Clone();
         }
     }

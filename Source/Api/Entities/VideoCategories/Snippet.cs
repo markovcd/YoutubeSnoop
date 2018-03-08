@@ -4,6 +4,6 @@
     {
         public string ChannelId { get; set; }
         public string Title { get; set; }
-        public string Assignable { get; set; }
+        public bool? Assignable { get; set; }
     }
 }

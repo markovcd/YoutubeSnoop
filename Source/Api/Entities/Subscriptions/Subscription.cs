@@ -1,6 +1,6 @@
 ﻿namespace YoutubeSnoop.Api.Entities.Subscriptions
 {
-    class Subscription : Response
+    public class Subscription : Response
     {
         public string Id { get; set; }
         public Snippet Snippet { get; set; }

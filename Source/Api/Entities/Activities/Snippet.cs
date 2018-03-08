@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Api.Entities.Activities
 {
@@ -11,7 +12,7 @@ namespace YoutubeSnoop.Api.Entities.Activities
         public string Description { get; set; }
         public IDictionary<string, Thumbnail> Thumbnails { get; set; }
         public string ChannelTitle { get; set; }
-        public string Type { get; set; }
+        public ActivityType? Type { get; set; }
         public string GroupId { get; set; }
     }
 }

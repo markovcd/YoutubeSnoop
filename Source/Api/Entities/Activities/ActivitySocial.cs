@@ -1,6 +1,6 @@
 ﻿namespace YoutubeSnoop.Api.Entities.Activities
 {
-    public class Social : ActivityItem
+    public class ActivitySocial : ActivityItem
     {
         public string Type { get; set; }
         public string Author { get; set; }

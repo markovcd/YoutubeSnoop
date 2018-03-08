@@ -2,7 +2,7 @@
 
 namespace YoutubeSnoop.Api.Entities.ChannelSections
 {
-    class ChannelSection : Response
+    public class ChannelSection : Response
     {
         public string Id { get; set; }
         public Snippet Snippet { get; set; }

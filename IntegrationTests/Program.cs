@@ -9,7 +9,7 @@ namespace IntegrationTests
     {
         private static void Main(string[] args)
         {
-            var api = new ApiRequest<>
+            
         }
     }
 }

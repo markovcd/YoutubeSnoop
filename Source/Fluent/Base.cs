@@ -70,18 +70,8 @@ namespace YoutubeSnoop.Fluent
             }
         }
 
-        public static YoutubeLanguages Languages(string languageCode = "")
-        {
-            var settings = new I18nLanguageApiRequestSettings { Hl = languageCode };
-            var request = DefaultRequest<I18nLanguage, I18nLanguageApiRequestSettings>(settings, new[] { PartType.Snippet });
-            return new YoutubeLanguages(request);
-        }
+        
 
-        public static YoutubeCountries Countries(string languageCode = "")
-        {
-            var settings = new I18nRegionApiRequestSettings { Hl = languageCode };
-            var request = DefaultRequest<I18nRegion, I18nRegionApiRequestSettings>(settings, new[] { PartType.Snippet });
-            return new YoutubeCountries(request);
-        }
+        
     }
 }

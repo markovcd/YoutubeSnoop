@@ -1,7 +1,10 @@
-﻿using System.ComponentModel;
+﻿using Newtonsoft.Json;
+using System.ComponentModel;
+using YoutubeSnoop.Api.Converters;
 
 namespace YoutubeSnoop.Enums
 {
+    [JsonConverter(typeof(EnumDescriptionConverter))]
     public enum Dimension
     {
         [Description("any")]

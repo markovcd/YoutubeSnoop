@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using YoutubeSnoop.Api.Converters;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Api.Entities.Videos
@@ -9,7 +11,8 @@ namespace YoutubeSnoop.Api.Entities.Videos
         /// <summary>
         /// The length of the video. 
         /// </summary>
-        public TimeSpan? Duration { get; set; } //  ISO 8601  check if Json automatically converts
+        [JsonConverter(typeof(TimeSpanConverter))]
+        public TimeSpan? Duration { get; set; }
 
         /// <summary>
         /// Indicates whether the video is available in 3D or in 2D.
@@ -49,6 +52,6 @@ namespace YoutubeSnoop.Api.Entities.Videos
         /// <summary>
         /// Specifies the ratings that the video received under various rating schemes.
         /// </summary>
-        // public IDictionary<string, object> ContentRating { get; set; } TODO
+        public IDictionary<string, object> ContentRating { get; set; } // TODO
     }
 }

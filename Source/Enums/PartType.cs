@@ -11,9 +11,6 @@
         Localizations,
         Player,
         RecordingDetails,
-        FileDetails,
-        ProcessingDetails,
-        Suggestions,
         LiveStreamingDetails,
         BrandingSettings
     }

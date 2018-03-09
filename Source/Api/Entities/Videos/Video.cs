@@ -53,23 +53,6 @@ namespace YoutubeSnoop.Api.Entities.Videos
         public RecordingDetails RecordingDetails { get; set; }
 
         /// <summary>
-        /// The fileDetails object encapsulates information about the video file that was uploaded to YouTube, including the file's resolution, duration, audio and video codecs, stream bitrates, and more. This data can only be retrieved by the video owner.
-        /// </summary>
-        /// <remarks>
-        /// The fileDetails object will only be returned if the processingDetails.fileAvailability property has a value of available.
-        /// </remarks>
-        public FileDetails FileDetails { get; set; }
-
-        /// <summary>
-        /// The processingDetails object encapsulates information about YouTube's progress in processing the uploaded video file. The properties in the object identify the current processing status and an estimate of the time remaining until YouTube finishes processing the video. This part also indicates whether different types of data or content, such as file details or thumbnail images, are available for the video.
-        /// </summary>
-        /// <remarks>
-        /// The processingProgress object is designed to be polled so that the video uploaded can track the progress that YouTube has made in processing the uploaded video file. This data can only be retrieved by the video owner.
-        /// </remarks>
-        public ProcessingDetails ProcessingDetails { get; set; }
-
-
-        /// <summary>
         /// The liveStreamingDetails object contains metadata about a live video broadcast. The object will only be present in a video resource if the video is an upcoming, live, or completed live broadcast.
         /// </summary>
         public LiveStreamingDetails LiveStreamingDetails { get; set; }

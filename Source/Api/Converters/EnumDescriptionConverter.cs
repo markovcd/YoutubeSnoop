@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Linq;
+using Newtonsoft.Json;
+using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Api.Converters
 {
-    public class EnumDescriptionConverter : IApiRequestConverter
+    public class EnumDescriptionConverter : OneWayJsonConverter<Dimension>, IApiRequestConverter
     {
         public string Convert(object value)
         {
@@ -16,6 +19,18 @@ namespace YoutubeSnoop.Api.Converters
             else throw new InvalidOperationException();
 
             return e.GetDescription();
+        }
+
+        public override Dimension ReadJson(JsonReader reader, Type objectType, Dimension existingValue, bool hasExistingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.String)
+            {
+                var s = reader.Value.ToString();
+
+                return Enum.GetValues(typeof(Dimension)).Cast<Dimension>().First(d => s.Equals(d.GetDescription()));
+            }
+
+            throw new InvalidOperationException();
         }
     }
 }

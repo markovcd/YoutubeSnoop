@@ -4,12 +4,39 @@ namespace YoutubeSnoop.Api.Entities.ChannelSections
 {
     public class Snippet
     {
-        public ChannelSectionType? Type { get; set; } 
-        public string Style { get; set; } 
-        public string ChannelId { get; set; } 
-        public string Title { get; set; } 
-        public int Position { get; set; } 
-        public string DefaultLanguage { get; set; } 
+        /// <summary>
+        /// 
+        /// </summary>
+        public ChannelSectionType? Type { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Style { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ChannelId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Position { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string DefaultLanguage { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public TitleDescription Localized { get; set; } 
     }
 }

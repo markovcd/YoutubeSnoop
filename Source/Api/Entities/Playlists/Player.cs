@@ -2,6 +2,9 @@
 {
     public class Player
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public string EmbedHtml { get; set; }
     }
 }

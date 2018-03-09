@@ -2,6 +2,9 @@
 {
     public class ActivityUpload
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public string VideoId { get; set; }
     }
 }

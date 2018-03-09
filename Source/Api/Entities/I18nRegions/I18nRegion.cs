@@ -2,7 +2,14 @@
 {
     public class I18nRegion : Response
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public string Id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public Snippet Snippet { get; set; }
     }
 }

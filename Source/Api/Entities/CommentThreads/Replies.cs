@@ -5,6 +5,10 @@ namespace YoutubeSnoop.Api.Entities.CommentThreads
 {
     public class Replies
     {
+
+        /// <summary>
+        /// 
+        /// </summary>
         public IList<Comment> Comments { get; set; }
     }
 }

@@ -2,6 +2,9 @@
 {
     public class ContentDetails
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int? ItemCount { get; set; }
     }
 }

@@ -28,5 +28,7 @@ namespace YoutubeSnoop.Fluent
         {
             return GuideCategory(settings ?? new GuideCategoryApiRequestSettings(), PartType.Snippet);
         }
+
+
     }
 }

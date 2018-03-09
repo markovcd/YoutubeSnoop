@@ -7,6 +7,9 @@ namespace YoutubeSnoop.Api.Entities
     [JsonConverter(typeof(ResourceConverter))]
     public interface IResource
     {
+        /// <summary>
+        /// 
+        /// </summary>
         ResourceKind Kind { get; }
     }
 }

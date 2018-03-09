@@ -18,7 +18,7 @@ namespace YoutubeSnoop
         private string _title;
         private string _description;
         private string _channelTitle;
-        private IReadOnlyDictionary<string, Thumbnail> _thumbnails;
+        private IReadOnlyDictionary<ThumbnailSize, Thumbnail> _thumbnails;
 
         public Subscription Item => S(ref _item);
         public string Id => S(ref _id);
@@ -28,7 +28,7 @@ namespace YoutubeSnoop
         public string Title => S(ref _title);
         public string Description => S(ref _description);
         public string ChannelTitle => S(ref _channelTitle);
-        public IReadOnlyDictionary<string, Thumbnail> Thumbnails => S(ref _thumbnails);
+        public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails => S(ref _thumbnails);
 
         public YoutubeSubscription(IApiRequest<Subscription, SubscriptionApiRequestSettings> request) : base(request) { }
 

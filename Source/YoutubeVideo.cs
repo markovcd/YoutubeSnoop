@@ -18,7 +18,7 @@ namespace YoutubeSnoop
         private string _title;
         private string _description;
         private string _channelTitle;
-        private IReadOnlyDictionary<string, Thumbnail> _thumbnails;
+        private IReadOnlyDictionary<ThumbnailSize, Thumbnail> _thumbnails;
         private int _categoryId;
 
         public Video Item => S(ref _item);
@@ -29,7 +29,7 @@ namespace YoutubeSnoop
         public string Title => S(ref _title);
         public string Description => S(ref _description);
         public string ChannelTitle => S(ref _channelTitle);
-        public IReadOnlyDictionary<string, Thumbnail> Thumbnails => S(ref _thumbnails);
+        public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails => S(ref _thumbnails);
         public int CategoryId => S(ref _categoryId);
 
         public YoutubeVideo(IApiRequest<Video, VideoApiRequestSettings> request) : base(request) { }

@@ -5,12 +5,12 @@ namespace YoutubeSnoop.Api.Entities
     public class Distance
     {
         /// <summary>
-        /// 
+        /// Distance value.
         /// </summary>
         public double Value { get; set; }
 
         /// <summary>
-        /// 
+        /// Distance unit.
         /// </summary>
         public DistanceUnit Unit { get; set; }
 

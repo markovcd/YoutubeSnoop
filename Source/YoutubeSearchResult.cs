@@ -16,7 +16,7 @@ namespace YoutubeSnoop
         public string Title { get; }
         public string Description { get; }
         public string ChannelTitle { get; }
-        public IReadOnlyDictionary<string, Thumbnail> Thumbnails { get; }
+        public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails { get; }
 
         public YoutubeSearchResult(SearchResult searchResult)
         {

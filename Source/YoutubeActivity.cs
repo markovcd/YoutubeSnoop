@@ -16,7 +16,7 @@ namespace YoutubeSnoop
         private string _title;
         private string _description;
         private DateTime _publishedAt;
-        private IReadOnlyDictionary<string, Thumbnail> _thumbnails;
+        private IReadOnlyDictionary<ThumbnailSize, Thumbnail> _thumbnails;
         private string _channelId;
         private string _channelTitle;
         private string _groupId;
@@ -28,7 +28,7 @@ namespace YoutubeSnoop
         public string Title => S(ref _title);
         public string Description => S(ref _description);
         public DateTime PublishedAt => S(ref _publishedAt);
-        public IReadOnlyDictionary<string, Thumbnail> Thumbnails => S(ref _thumbnails);
+        public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails => S(ref _thumbnails);
         public string ChannelId => S(ref _channelId);
         public string ChannelTitle => S(ref _channelTitle);
         public string GroupId => S(ref _groupId);

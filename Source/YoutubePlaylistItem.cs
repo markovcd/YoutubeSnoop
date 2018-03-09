@@ -18,7 +18,7 @@ namespace YoutubeSnoop
         public string ChannelTitle { get; }
         public string PlaylistId { get; }
         public int? Position { get; }
-        public IReadOnlyDictionary<string, Thumbnail> Thumbnails { get; }
+        public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails { get; }
 
         public YoutubePlaylistItem(PlaylistItem playlistItem)
         {

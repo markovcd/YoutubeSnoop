@@ -8,7 +8,7 @@ namespace YoutubeSnoop.Api.Entities
     public interface IResource
     {
         /// <summary>
-        /// 
+        /// Identifies the API resource's type.
         /// </summary>
         ResourceKind Kind { get; }
     }

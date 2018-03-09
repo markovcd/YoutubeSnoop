@@ -98,11 +98,11 @@ namespace YoutubeSnoop
             throw new InvalidOperationException();
         }
 
-        public static IReadOnlyDictionary<string, Thumbnail> Clone(this IDictionary<string, Thumbnail> thumbnails)
+        public static IReadOnlyDictionary<ThumbnailSize, Thumbnail> Clone(this IDictionary<ThumbnailSize, Thumbnail> thumbnails)
         {
             var t = thumbnails?.ToDictionary(kv => kv.Key, kv => kv.Value);
             if (t == null) return null;
-            return new ReadOnlyDictionary<string, Thumbnail>(t);
+            return new ReadOnlyDictionary<ThumbnailSize, Thumbnail>(t);
         }
 
         public static IApiRequestSettings Clone(this IApiRequestSettings settings)

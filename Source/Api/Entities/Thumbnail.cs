@@ -7,17 +7,17 @@ namespace YoutubeSnoop.Api.Entities
     public class Thumbnail
     {
         /// <summary>
-        /// 
+        /// The image's URL.
         /// </summary>
         public string Url { get; }
 
         /// <summary>
-        /// 
+        /// The image's width.
         /// </summary>
         public int Width { get; }
 
         /// <summary>
-        /// 
+        /// The image's height.
         /// </summary>
         public int Height { get; }
 

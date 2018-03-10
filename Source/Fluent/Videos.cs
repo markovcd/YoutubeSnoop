@@ -30,7 +30,7 @@ namespace YoutubeSnoop.Fluent
             return Video(settings ?? new VideoApiRequestSettings(), PartType.Snippet);
         }
 
-        public static YoutubeVideos Videos(IEnumerable<string> ids)
+        public static YoutubeVideos Videos(params string[] ids)
         {
             return Videos(new VideoApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
         }
@@ -40,25 +40,148 @@ namespace YoutubeSnoop.Fluent
             return Video(new VideoApiRequestSettings { Id = id });
         }
 
-        public static YoutubeVideos RequestId(this YoutubeVideos playlists, string id)
+        public static YoutubeVideos RequestId(this YoutubeVideos videos, params string[] ids)
         {
-            var request = playlists.Request.Clone();
+            var request = videos.Request.Clone();
             if (request.Settings.Id == null) request.Settings.Id = "";
-            var ids = request.Settings.Id.Split(',').Append(id).Distinct();
-            request.Settings.Id = ids.Aggregate((s1, s2) => $"{s1},{s2}");
+
+            request.Settings.Id = request.Settings
+                                         .Id
+                                         .Split(',')
+                                         .Concat(ids)
+                                         .Distinct()
+                                         .ToArray()
+                                         .Aggregate((s1, s2) => $"{s1},{s2}");
+
             return new YoutubeVideos(request);
         }
 
-        public static YoutubeVideos RequestPart(this YoutubeVideos playlists, PartType partType)
+        public static YoutubeVideos RequestPart(this YoutubeVideos videos, PartType partType)
         {
-            var request = playlists.Request.RequestPart(partType);
+            var request = videos.Request.RequestPart(partType);
             return new YoutubeVideos(request);
         }
 
-        public static YoutubeVideo RequestPart(this YoutubeVideo playlists, PartType partType)
+        public static YoutubeVideos RequestContentDetails(this YoutubeVideos videos)
         {
-            var request = playlists.Request.RequestPart(partType);
+            return videos.RequestPart(PartType.ContentDetails);
+        }
+
+        public static YoutubeVideos RequestStatistics(this YoutubeVideos videos)
+        {
+            return videos.RequestPart(PartType.Statistics);
+        }
+
+        public static YoutubeVideos RequestStatus(this YoutubeVideos videos)
+        {
+            return videos.RequestPart(PartType.Status);
+        }
+
+        public static YoutubeVideos RequestLocalizations(this YoutubeVideos videos)
+        {
+            return videos.RequestPart(PartType.Localizations);
+        }
+
+        public static YoutubeVideos RequestPlayer(this YoutubeVideos videos)
+        {
+            return videos.RequestPart(PartType.Player);
+        }
+
+        public static YoutubeVideos RequestTopicDetails(this YoutubeVideos videos)
+        {
+            return videos.RequestPart(PartType.TopicDetails);
+        }
+
+        public static YoutubeVideos RequestRecordingDetails(this YoutubeVideos videos)
+        {
+            return videos.RequestPart(PartType.RecordingDetails);
+        }
+
+        public static YoutubeVideos RequestLiveStreamingDetails(this YoutubeVideos videos)
+        {
+            return videos.RequestPart(PartType.LiveStreamingDetails);
+        }
+
+        public static YoutubeVideos RequestSnippet(this YoutubeVideos videos)
+        {
+            return videos.RequestPart(PartType.Snippet);
+        }
+
+        public static YoutubeVideos RequestAllParts(this YoutubeVideos videos)
+        {
+            return videos.RequestContentDetails()
+                         .RequestStatistics()
+                         .RequestStatus()
+                         .RequestLocalizations()
+                         .RequestPlayer()
+                         .RequestTopicDetails()
+                         .RequestRecordingDetails()
+                         .RequestLiveStreamingDetails()
+                         .RequestSnippet(); 
+        }
+
+        public static YoutubeVideo RequestPart(this YoutubeVideo video, PartType partType)
+        {
+            var request = video.Request.RequestPart(partType);
             return new YoutubeVideo(request);
+        }
+
+        public static YoutubeVideo RequestContentDetails(this YoutubeVideo video)
+        {
+            return video.RequestPart(PartType.ContentDetails);
+        }
+
+        public static YoutubeVideo RequestStatistics(this YoutubeVideo video)
+        {
+            return video.RequestPart(PartType.Statistics);
+        }
+
+        public static YoutubeVideo RequestStatus(this YoutubeVideo video)
+        {
+            return video.RequestPart(PartType.Status);
+        }
+
+        public static YoutubeVideo RequestLocalizations(this YoutubeVideo video)
+        {
+            return video.RequestPart(PartType.Localizations);
+        }
+
+        public static YoutubeVideo RequestPlayer(this YoutubeVideo video)
+        {
+            return video.RequestPart(PartType.Player);
+        }
+
+        public static YoutubeVideo RequestTopicDetails(this YoutubeVideo video)
+        {
+            return video.RequestPart(PartType.TopicDetails);
+        }
+
+        public static YoutubeVideo RequestRecordingDetails(this YoutubeVideo video)
+        {
+            return video.RequestPart(PartType.RecordingDetails);
+        }
+
+        public static YoutubeVideo RequestLiveStreamingDetails(this YoutubeVideo video)
+        {
+            return video.RequestPart(PartType.LiveStreamingDetails);
+        }
+
+        public static YoutubeVideo RequestSnippet(this YoutubeVideo video)
+        {
+            return video.RequestPart(PartType.Snippet);
+        }
+
+        public static YoutubeVideo RequestAllParts(this YoutubeVideo video)
+        {
+            return video.RequestContentDetails()
+                        .RequestStatistics()
+                        .RequestStatus()
+                        .RequestLocalizations()
+                        .RequestPlayer()
+                        .RequestTopicDetails()
+                        .RequestRecordingDetails()
+                        .RequestLiveStreamingDetails()
+                        .RequestSnippet();
         }
 
         public static YoutubeSearch Related(this YoutubeVideo video)

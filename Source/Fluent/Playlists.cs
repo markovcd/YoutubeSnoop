@@ -40,19 +40,20 @@ namespace YoutubeSnoop.Fluent
             return Playlist(new PlaylistApiRequestSettings { Id = id });
         }
 
-        public static YoutubePlaylists RequestId(this YoutubePlaylists playlists, string id)
+        public static YoutubePlaylists RequestId(this YoutubePlaylists playlists, params string[] ids)
         {
             var request = playlists.Request.Clone();
             if (request.Settings.Id == null) request.Settings.Id = "";
-            var ids = request.Settings.Id.Split(',').Append(id).Distinct();
-            request.Settings.Id = ids.Aggregate((s1, s2) => $"{s1},{s2}");
-            return new YoutubePlaylists(request);
-        }
+            
+            request.Settings.Id = request.Settings
+                                         .Id
+                                         .Split(',')
+                                         .Concat(ids)
+                                         .Distinct()
+                                         .ToArray()
+                                         .Aggregate((s1, s2) => $"{s1},{s2}");
 
-        public static YoutubePlaylist RequestPart(this YoutubePlaylist playlist, PartType partType)
-        {
-            var request = playlist.Request.RequestPart(partType);
-            return new YoutubePlaylist(request);
+            return new YoutubePlaylists(request);
         }
 
         public static YoutubePlaylists RequestPart(this YoutubePlaylists playlists, PartType partType)
@@ -61,16 +62,90 @@ namespace YoutubeSnoop.Fluent
             return new YoutubePlaylists(request);
         }
 
-        public static YoutubePlaylists ChannelId(this YoutubePlaylists playlists, string id)
+        public static YoutubePlaylists RequestContentDetails(this YoutubePlaylists playlists)
         {
-            var request = playlists.Request.Clone();
-            request.Settings.ChannelId = id;
-            return new YoutubePlaylists(request);
+            return playlists.RequestPart(PartType.ContentDetails);
+        }       
+
+        public static YoutubePlaylists RequestStatus(this YoutubePlaylists playlists)
+        {
+            return playlists.RequestPart(PartType.Status);
+        }
+
+        public static YoutubePlaylists RequestLocalizations(this YoutubePlaylists playlists)
+        {
+            return playlists.RequestPart(PartType.Localizations);
+        }
+
+        public static YoutubePlaylists RequestPlayer(this YoutubePlaylists playlists)
+        {
+            return playlists.RequestPart(PartType.Player);
+        }
+
+        public static YoutubePlaylists RequestSnippet(this YoutubePlaylists playlists)
+        {
+            return playlists.RequestPart(PartType.Snippet);
+        }
+
+        public static YoutubePlaylists RequestAllParts(this YoutubePlaylists playlists)
+        {
+            return playlists.RequestContentDetails()
+                            .RequestStatus()
+                            .RequestLocalizations()
+                            .RequestPlayer()
+                            .RequestSnippet();
+        }
+
+        public static YoutubePlaylist RequestPart(this YoutubePlaylist playlist, PartType partType)
+        {
+            var request = playlist.Request.RequestPart(partType);
+            return new YoutubePlaylist(request);
+        }
+
+        public static YoutubePlaylist RequestContentDetails(this YoutubePlaylist playlist)
+        {
+            return playlist.RequestPart(PartType.ContentDetails);
+        }
+
+        public static YoutubePlaylist RequestStatus(this YoutubePlaylist playlist)
+        {
+            return playlist.RequestPart(PartType.Status);
+        }
+
+        public static YoutubePlaylist RequestLocalizations(this YoutubePlaylist playlist)
+        {
+            return playlist.RequestPart(PartType.Localizations);
+        }
+
+        public static YoutubePlaylist RequestPlayer(this YoutubePlaylist playlist)
+        {
+            return playlist.RequestPart(PartType.Player);
+        }
+
+        public static YoutubePlaylist RequestSnippet(this YoutubePlaylist playlist)
+        {
+            return playlist.RequestPart(PartType.Snippet);
+        }
+
+        public static YoutubePlaylist RequestAllParts(this YoutubePlaylist playlist)
+        {
+            return playlist.RequestContentDetails()
+                           .RequestStatus()
+                           .RequestLocalizations()
+                           .RequestPlayer()
+                           .RequestSnippet();
         }
 
         public static YoutubePlaylistItems Items(this YoutubePlaylist playlist)
         {
             return PlaylistItems(playlist.Id);
+        }
+
+        public static YoutubePlaylists ChannelId(this YoutubePlaylists playlists, string id)
+        {
+            var request = playlists.Request.Clone();
+            request.Settings.ChannelId = id;
+            return new YoutubePlaylists(request);
         }
     }
 }

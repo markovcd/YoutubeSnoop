@@ -22,14 +22,7 @@ namespace YoutubeSnoop.Fluent
         public static YoutubePlaylistItems PlaylistItems(string playlistId)
         {
             return PlaylistItems(new PlaylistItemsApiRequestSettings { PlaylistId = playlistId });
-        }
-
-        public static YoutubePlaylistItems PlaylistId(this YoutubePlaylistItems playlistItems, string id)
-        {
-            var request = playlistItems.Request.Clone();
-            request.Settings.PlaylistId = id;
-            return new YoutubePlaylistItems(request);
-        }
+        }       
 
         public static YoutubePlaylistItems RequestPart(this YoutubePlaylistItems playlistItems, PartType partType)
         {
@@ -37,20 +30,29 @@ namespace YoutubeSnoop.Fluent
             return new YoutubePlaylistItems(request);
         }
 
+        public static YoutubePlaylistItems RequestSnippet(this YoutubePlaylistItems playlistItems)
+        {
+            return playlistItems.RequestPart(PartType.Snippet);
+        }
+
+        public static YoutubePlaylistItems RequestContentDetails(this YoutubePlaylistItems playlistItems)
+        {
+            return playlistItems.RequestPart(PartType.ContentDetails);
+        }
+
+        public static YoutubePlaylistItems RequestStatus(this YoutubePlaylistItems playlistItems)
+        {
+            return playlistItems.RequestPart(PartType.Status);
+        }
+
         public static IYoutubeItem Details(this YoutubePlaylistItem playlistItem)
         {
-            return playlistItem.Item.Snippet.ResourceId.Details();
+            return playlistItem.Item.Snippet?.ResourceId?.Details();
         }
 
         public static TItem Details<TItem>(this YoutubePlaylistItem playlistItem) where TItem : class, IYoutubeItem
         {
             return Details(playlistItem) as TItem;
-        }
-
-        public static YoutubeVideos Videos(this YoutubePlaylistItems playlistItems)
-        {
-            return Videos(playlistItems.Where(i => i.Kind == ResourceKind.Video)
-                                       .Select(i => i.Id));
         }
     }
 }

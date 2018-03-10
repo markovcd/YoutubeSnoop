@@ -4,6 +4,7 @@ using YoutubeSnoop;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.Videos;
 using YoutubeSnoop.Enums;
+using System.Linq;
 
 namespace IntegrationTests
 {
@@ -11,15 +12,14 @@ namespace IntegrationTests
     {
         private static void Main(string[] args)
         {
-            var v = Youtube.Video("H4imggTBb0Q").RequestPart(PartType.ContentDetails)
-                                                .RequestPart(PartType.Statistics)
-                                                .RequestPart(PartType.Status)
-                                                .RequestPart(PartType.Localizations)
-                                                .RequestPart(PartType.Player)
-                                                .RequestPart(PartType.TopicDetails)
-                                                .RequestPart(PartType.RecordingDetails)
-                                                .RequestPart(PartType.LiveStreamingDetails);
+            var v = Youtube.Video("H4imggTBb0Q").RequestAllParts();
             Console.WriteLine(v.ChannelTitle);
+
+            var c = Youtube.Channel().ForUsername("markovcd").RequestAllParts();
+            Console.WriteLine(c.Title);
+
+            var u = c.Uploads().ToList();
+            
         }
     }
 }

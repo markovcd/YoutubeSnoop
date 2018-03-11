@@ -91,28 +91,28 @@ namespace YoutubeSnoop.Fluent
             return commentThread.RequestReplies().RequestSnippet();
         }
 
-        public static YoutubeCommentThreads ChannelId(this YoutubeCommentThreads commentThreads, string id)
+        public static YoutubeCommentThreads ForChannelId(this YoutubeCommentThreads commentThreads, string id)
         {
             var request = commentThreads.Request.Clone();
             request.Settings.ChannelId = id;
             return new YoutubeCommentThreads(request);
         }
 
-        public static YoutubeCommentThreads VideoId(this YoutubeCommentThreads commentThreads, string id)
+        public static YoutubeCommentThreads ForVideoId(this YoutubeCommentThreads commentThreads, string id)
         {
             var request = commentThreads.Request.Clone();
             request.Settings.VideoId = id;
             return new YoutubeCommentThreads(request);
         }
 
-        public static YoutubeCommentThreads AllThreadsRelatedToChannelId(this YoutubeCommentThreads commentThreads, string id)
+        public static YoutubeCommentThreads ForChannelIdAll(this YoutubeCommentThreads commentThreads, string id)
         {
             var request = commentThreads.Request.Clone();
             request.Settings.AllThreadsRelatedToChannelId = id;
             return new YoutubeCommentThreads(request);
         }
 
-        public static YoutubeCommentThreads Order(this YoutubeCommentThreads commentThreads, CommentOrder order)
+        public static YoutubeCommentThreads OrderBy(this YoutubeCommentThreads commentThreads, CommentOrder order)
         {
             var request = commentThreads.Request.Clone();
             request.Settings.Order = order;
@@ -121,12 +121,12 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeCommentThreads OrderByTime(this YoutubeCommentThreads commentThreads)
         {
-            return commentThreads.Order(CommentOrder.Time);
+            return commentThreads.OrderBy(CommentOrder.Time);
         }
 
         public static YoutubeCommentThreads OrderByRelevance(this YoutubeCommentThreads commentThreads)
         {
-            return commentThreads.Order(CommentOrder.Relevance);
+            return commentThreads.OrderBy(CommentOrder.Relevance);
         }
 
         public static YoutubeCommentThreads SearchTerms(this YoutubeCommentThreads commentThreads, string s)

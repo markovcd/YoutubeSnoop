@@ -72,7 +72,7 @@ namespace YoutubeSnoop.Fluent
             return activities.RequestSnippet().RequestContentDetails();
         }
 
-        public static YoutubeActivities ChannelId(this YoutubeActivities activities, string id)
+        public static YoutubeActivities ForChannelId(this YoutubeActivities activities, string id)
         {
             var request = activities.Request.Clone();
             request.Settings.ChannelId = id;

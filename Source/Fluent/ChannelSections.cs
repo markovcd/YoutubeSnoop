@@ -117,7 +117,7 @@ namespace YoutubeSnoop.Fluent
             return new YoutubeChannelSections(request);
         }
 
-        public static YoutubeChannelSections ChannelId(this YoutubeChannelSections channelSections, string id)
+        public static YoutubeChannelSections ForChannelId(this YoutubeChannelSections channelSections, string id)
         {
             var request = channelSections.Request.Clone();
             request.Settings.ChannelId = id;

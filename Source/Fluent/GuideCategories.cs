@@ -34,10 +34,5 @@ namespace YoutubeSnoop.Fluent
             return Channel(guideCategory.Item?.Snippet?.ChannelId);
         }
 
-        public static YoutubeChannels Channels(this YoutubeGuideCategories guideCategories)
-        {
-            return Channels(guideCategory.Item?.Snippet?.ChannelId);
-        }
-
     }
 }

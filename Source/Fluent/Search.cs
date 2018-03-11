@@ -61,7 +61,7 @@ namespace YoutubeSnoop.Fluent
             return new YoutubeSearch(request);
         }
 
-        public static YoutubeSearch Type(this YoutubeSearch search, ResourceKind t)
+        public static YoutubeSearch OfType(this YoutubeSearch search, ResourceKind t)
         {
             var request = search.Request.Clone();
             request.Settings.Type = t;

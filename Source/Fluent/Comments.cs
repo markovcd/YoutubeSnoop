@@ -29,7 +29,7 @@ namespace YoutubeSnoop.Fluent
             return Comment(new CommentApiRequestSettings { Id = id });
         }
 
-        public static YoutubeComments ParentId(this YoutubeComments comments, string id)
+        public static YoutubeComments ForParentId(this YoutubeComments comments, string id)
         {
             var request = comments.Request.Clone();
             request.Settings.ParentId = id;
@@ -82,7 +82,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeComments Replies(this YoutubeComment comment)
         {
-            return Comments().ParentId(comment.Id);
+            return Comments().ForParentId(comment.Id);
         }
     }
 }

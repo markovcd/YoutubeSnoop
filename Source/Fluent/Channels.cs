@@ -188,17 +188,17 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubePlaylists Playlists(this YoutubeChannel channel)
         {
-            return Playlists().ChannelId(channel.Id);
+            return Playlists().ForChannelId(channel.Id);
         }
 
         public static YoutubeActivities Activities(this YoutubeChannel channel)
         {
-            return Activities().ChannelId(channel.Id);
+            return Activities().ForChannelId(channel.Id);
         }
 
         public static YoutubeChannelSections Sections(this YoutubeChannel channel)
         {
-            return ChannelSections().ChannelId(channel.Id);
+            return ChannelSections().ForChannelId(channel.Id);
         }
 
         public static YoutubeSearch Search(this YoutubeChannel channel)
@@ -208,7 +208,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeCommentThreads Comments(this YoutubeChannel channel)
         {
-            return CommentThreads().ChannelId(channel.Id);
+            return CommentThreads().ForChannelId(channel.Id);
         }
 
         public static YoutubeSubscriptions Subscriptions(this YoutubeChannel channel)

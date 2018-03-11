@@ -135,7 +135,7 @@ namespace YoutubeSnoop.Fluent
             return PlaylistItems(playlist.Id);
         }
 
-        public static YoutubePlaylists ChannelId(this YoutubePlaylists playlists, string id)
+        public static YoutubePlaylists ForChannelId(this YoutubePlaylists playlists, string id)
         {
             var request = playlists.Request.Clone();
             request.Settings.ChannelId = id;

@@ -39,7 +39,7 @@ namespace YoutubeSnoop.Fluent
             return new YoutubeCaptions(request);
         }
 
-        public static YoutubeCaptions VideoId(this YoutubeCaptions captions, string id)
+        public static YoutubeCaptions ForVideoId(this YoutubeCaptions captions, string id)
         {
             var request = captions.Request.Clone();
             request.Settings.VideoId = id;

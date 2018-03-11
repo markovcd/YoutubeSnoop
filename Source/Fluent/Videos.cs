@@ -185,7 +185,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeCommentThreads Comments(this YoutubeVideo video)
         {
-            return CommentThreads().VideoId(video.Id);
+            return CommentThreads().ForVideoId(video.Id);
         }
 
         public static YoutubeVideos MostPopular(this YoutubeVideos videos)

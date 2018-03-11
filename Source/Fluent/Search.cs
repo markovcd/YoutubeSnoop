@@ -13,7 +13,7 @@ namespace YoutubeSnoop.Fluent
             return new YoutubeSearch(request);
         }
 
-        public static YoutubeSearch Search(string query = null)
+        public static YoutubeSearch Search(string query)
         {
             return Search(new SearchApiRequestSettings { Query = query });
         }
@@ -29,6 +29,14 @@ namespace YoutubeSnoop.Fluent
         {
             var request = search.Request.Clone();
             request.Settings.ChannelId = id;
+            return new YoutubeSearch(request);
+        }
+
+        public static YoutubeSearch RelatedToVideoId(this YoutubeSearch search, string id)
+        {
+            var request = search.Request.Clone();
+            request.Settings.RelatedToVideoId = id;
+            request.Settings.Type = ResourceKind.Video;
             return new YoutubeSearch(request);
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using YoutubeSnoop.Api.Entities.Activities;
 using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
@@ -69,6 +70,27 @@ namespace YoutubeSnoop.Fluent
         public static YoutubeActivities RequestAllParts(this YoutubeActivities activities)
         {
             return activities.RequestSnippet().RequestContentDetails();
+        }
+
+        public static YoutubeActivities ChannelId(this YoutubeActivities activities, string id)
+        {
+            var request = activities.Request.Clone();
+            request.Settings.ChannelId = id;
+            return new YoutubeActivities(request);
+        }
+
+        public static YoutubeActivities PublishedBefore(this YoutubeActivities activities, DateTime d)
+        {
+            var request = activities.Request.Clone();
+            request.Settings.PublishedBefore = d;
+            return new YoutubeActivities(request);
+        }
+
+        public static YoutubeActivities PublishedAfter(this YoutubeActivities activities, DateTime d)
+        {
+            var request = activities.Request.Clone();
+            request.Settings.PublishedAfter = d;
+            return new YoutubeActivities(request);
         }
     }
 }

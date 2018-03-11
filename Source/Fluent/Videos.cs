@@ -45,13 +45,7 @@ namespace YoutubeSnoop.Fluent
             var request = videos.Request.Clone();
             if (request.Settings.Id == null) request.Settings.Id = "";
 
-            request.Settings.Id = request.Settings
-                                         .Id
-                                         .Split(',')
-                                         .Concat(ids)
-                                         .Distinct()
-                                         .ToArray()
-                                         .Aggregate((s1, s2) => $"{s1},{s2}");
+            request.Settings.Id = request.Settings.Id.AddItems(ids);
 
             return new YoutubeVideos(request);
         }
@@ -184,9 +178,14 @@ namespace YoutubeSnoop.Fluent
                         .RequestSnippet();
         }
 
-        public static YoutubeSearch Related(this YoutubeVideo video)
+        public static YoutubeSearch RelatedVideos(this YoutubeVideo video)
         {
-            return Search(new SearchApiRequestSettings { RelatedToVideoId = video.Id, Type = ResourceKind.Video });
+            return Search().RelatedToVideoId(video.Id);
+        }
+
+        public static YoutubeCommentThreads Comments(this YoutubeVideo video)
+        {
+            return CommentThreads().VideoId(video.Id);
         }
 
         public static YoutubeVideos MostPopular(this YoutubeVideos videos)

@@ -7,28 +7,37 @@ namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeGuideCategories GuideCategories(GuideCategoryApiRequestSettings settings, params PartType[] partTypes)
-        {
-            var request = DefaultRequest<GuideCategory, GuideCategoryApiRequestSettings>(settings, partTypes);
-            return new YoutubeGuideCategories(request);
-        }
-
-        public static YoutubeGuideCategory GuideCategory(GuideCategoryApiRequestSettings settings, params PartType[] partTypes)
-        {
-            var request = DefaultRequest<GuideCategory, GuideCategoryApiRequestSettings>(settings, partTypes);
-            return new YoutubeGuideCategory(request);
-        }
-
         public static YoutubeGuideCategories GuideCategories(GuideCategoryApiRequestSettings settings = null)
         {
-            return GuideCategories(settings ?? new GuideCategoryApiRequestSettings(), PartType.Snippet);
+            var request = DefaultRequest<GuideCategory, GuideCategoryApiRequestSettings>(settings ?? new GuideCategoryApiRequestSettings(), new[] { PartType.Snippet });
+            return new YoutubeGuideCategories(request);
         }
 
         public static YoutubeGuideCategory GuideCategory(GuideCategoryApiRequestSettings settings = null)
         {
-            return GuideCategory(settings ?? new GuideCategoryApiRequestSettings(), PartType.Snippet);
+            var request = DefaultRequest<GuideCategory, GuideCategoryApiRequestSettings>(settings ?? new GuideCategoryApiRequestSettings(), new[] { PartType.Snippet });
+            return new YoutubeGuideCategory(request);
         }
 
+        public static YoutubeGuideCategories GuideCategories(params string[] ids)
+        {
+            return GuideCategories(new GuideCategoryApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
+        }
+
+        public static YoutubeGuideCategory GuideCategory(string id)
+        {
+            return GuideCategory(new GuideCategoryApiRequestSettings { Id = id });
+        }
+
+        public static YoutubeChannel Channel(this YoutubeGuideCategory guideCategory)
+        {
+            return Channel(guideCategory.Item?.Snippet?.ChannelId);
+        }
+
+        public static YoutubeChannels Channels(this YoutubeGuideCategories guideCategories)
+        {
+            return Channels(guideCategory.Item?.Snippet?.ChannelId);
+        }
 
     }
 }

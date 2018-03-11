@@ -30,7 +30,7 @@ namespace YoutubeSnoop.Fluent
             return Playlist(settings ?? new PlaylistApiRequestSettings(), PartType.Snippet);
         }
 
-        public static YoutubePlaylists Playlists(IEnumerable<string> ids)
+        public static YoutubePlaylists Playlists(params string[] ids)
         {
             return Playlists(new PlaylistApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
         }
@@ -44,14 +44,8 @@ namespace YoutubeSnoop.Fluent
         {
             var request = playlists.Request.Clone();
             if (request.Settings.Id == null) request.Settings.Id = "";
-            
-            request.Settings.Id = request.Settings
-                                         .Id
-                                         .Split(',')
-                                         .Concat(ids)
-                                         .Distinct()
-                                         .ToArray()
-                                         .Aggregate((s1, s2) => $"{s1},{s2}");
+
+            request.Settings.Id = request.Settings.Id.AddItems(ids);
 
             return new YoutubePlaylists(request);
         }

@@ -58,13 +58,7 @@ namespace YoutubeSnoop.Fluent
             var request = channels.Request.Clone();
             if (request.Settings.Id == null) request.Settings.Id = "";
 
-            request.Settings.Id = request.Settings
-                                         .Id
-                                         .Split(',')
-                                         .Concat(ids)
-                                         .Distinct()
-                                         .ToArray()
-                                         .Aggregate((s1, s2) => $"{s1},{s2}");
+            request.Settings.Id = request.Settings.Id.AddItems(ids);
 
             return new YoutubeChannels(request);
         }
@@ -195,6 +189,31 @@ namespace YoutubeSnoop.Fluent
         public static YoutubePlaylists Playlists(this YoutubeChannel channel)
         {
             return Playlists().ChannelId(channel.Id);
+        }
+
+        public static YoutubeActivities Activities(this YoutubeChannel channel)
+        {
+            return Activities().ChannelId(channel.Id);
+        }
+
+        public static YoutubeChannelSections Sections(this YoutubeChannel channel)
+        {
+            return ChannelSections().ChannelId(channel.Id);
+        }
+
+        public static YoutubeSearch Search(this YoutubeChannel channel)
+        {
+            return Search().ForChannelId(channel.Id);
+        }
+
+        public static YoutubeCommentThreads Comments(this YoutubeChannel channel)
+        {
+            return CommentThreads().ChannelId(channel.Id);
+        }
+
+        public static YoutubeSubscriptions Subscriptions(this YoutubeChannel channel)
+        {
+            return Subscriptions().ForChannelId(channel.Id);
         }
     }
 }

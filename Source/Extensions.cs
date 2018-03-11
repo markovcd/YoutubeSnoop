@@ -133,5 +133,13 @@ namespace YoutubeSnoop
 
             return result;
         }
+
+        public static string AddItems(this string s, params string[] items)
+        {
+            return s.Split(',')
+                    .Concat(items)
+                    .Distinct()
+                    .Aggregate((s1, s2) => $"{s1},{s2}");
+        }
     }
 }

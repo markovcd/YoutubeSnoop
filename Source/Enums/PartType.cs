@@ -12,6 +12,8 @@
         Player,
         RecordingDetails,
         LiveStreamingDetails,
-        BrandingSettings
+        BrandingSettings,
+        Targeting,
+        Replies
     }
 }

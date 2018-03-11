@@ -34,13 +34,7 @@ namespace YoutubeSnoop.Fluent
             var request = captions.Request.Clone();
             if (request.Settings.Id == null) request.Settings.Id = "";
 
-            request.Settings.Id = request.Settings
-                                         .Id
-                                         .Split(',')
-                                         .Concat(ids)
-                                         .Distinct()
-                                         .ToArray()
-                                         .Aggregate((s1, s2) => $"{s1},{s2}");
+            request.Settings.Id = request.Settings.Id.AddItems(ids);
 
             return new YoutubeCaptions(request);
         }

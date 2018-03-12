@@ -14,6 +14,7 @@
         LiveStreamingDetails,
         BrandingSettings,
         Targeting,
-        Replies
+        Replies,
+        SubscriberSnippet
     }
 }

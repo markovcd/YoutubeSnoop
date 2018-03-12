@@ -14,15 +14,10 @@ namespace YoutubeSnoop.Api.Converters
             {
                 var item = JObject.Load(reader);
                 var kind = Extensions.ParseResourceKind(item["kind"].Value<string>());
-                var s = item.ToString();
+                var id = item[kind.ToCamelCase() + "Id"].Value<string>();
 
-                switch (kind)
-                {
-                    case ResourceKind.Video: return JsonConvert.DeserializeObject<ResourceVideo>(s);
-                    case ResourceKind.Playlist: return JsonConvert.DeserializeObject<ResourcePlaylist>(s);
-                    case ResourceKind.Channel: return JsonConvert.DeserializeObject<ResourceChannel>(s);
-                    default: throw new InvalidOperationException();
-                }
+                return Resource.Create(kind, id);
+
             }
 
             return null;

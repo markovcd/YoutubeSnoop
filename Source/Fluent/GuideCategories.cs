@@ -29,6 +29,13 @@ namespace YoutubeSnoop.Fluent
             return GuideCategory(new GuideCategoryApiRequestSettings { Id = id });
         }
 
+        public static YoutubeGuideCategories ForRegion(this YoutubeGuideCategories guideCategories, string regionCode)
+        {
+            var request = guideCategories.Request.Clone();
+            request.Settings.RegionCode = regionCode;
+            return new YoutubeGuideCategories(request);
+        }
+
         public static YoutubeChannel Channel(this YoutubeGuideCategory guideCategory)
         {
             return Channel(guideCategory.Item?.Snippet?.ChannelId);

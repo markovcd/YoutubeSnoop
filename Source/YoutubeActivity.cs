@@ -41,7 +41,7 @@ namespace YoutubeSnoop
         protected override void SetProperties(Activity response)
         {
             if (response == null) return;
-
+            
             _item = response;
             _id = response.Id;
             _kind = response.Kind;
@@ -53,6 +53,8 @@ namespace YoutubeSnoop
             _channelTitle = response.Snippet?.ChannelTitle;
             _groupId = response.Snippet?.GroupId;
             _type = (response.Snippet?.Type).GetValueOrDefault();
+
+            if (response.ContentDetails == null) return;
         }
     }
 }

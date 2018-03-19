@@ -19,7 +19,7 @@ namespace IntegrationTests
             Console.WriteLine(c.Title);
 
             var u = c.Uploads().ToList();
-            var s = c.Subscriptions().Take(20).ToList();
+            var s = c.Subscriptions().RequestContentDetails().Take(20).ToList();
         }
     }
 }

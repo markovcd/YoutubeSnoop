@@ -41,8 +41,10 @@ namespace YoutubeSnoop
             return (attributes.Length > 0) ? (T)attributes[0] : null;
         }
 
-        public static Type GetMappedResponse(this Enum kind)
+        public static Type GetMappedResponse(this ResourceKind kind)
         {
+            if (kind == ResourceKind.None) throw new InvalidOperationException();
+
             var entityAttr = kind.GetAttributeOfType<EntityMappingAttribute>();
             if (entityAttr != null) return entityAttr.EntityType;
 
@@ -76,9 +78,9 @@ namespace YoutubeSnoop
 
         public static string Url(this IResource resourceId)
         {
-            var id = resourceId.Id();
+            var id = resourceId?.Id();
 
-            switch (resourceId.Kind)
+            switch (resourceId?.Kind)
             {
                 case ResourceKind.Video: return string.Format(_videoUrl, id);
                 case ResourceKind.Playlist: return string.Format(_playlistUrl, id);
@@ -107,10 +109,12 @@ namespace YoutubeSnoop
 
         public static IApiRequestSettings Clone(this IApiRequestSettings settings)
         {
-            var type = settings.GetType();
+            var type = settings?.GetType();
+
+            if (type == null) return null;
 
             var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                                 .Where(p => !p.IsDefined(typeof(ApiRequestIgnoreAttribute)));
+                                  .Where(p => !p.IsDefined(typeof(ApiRequestIgnoreAttribute)));
 
             var cloned = Activator.CreateInstance(type);
 
@@ -136,10 +140,10 @@ namespace YoutubeSnoop
 
         public static string AddItems(this string s, params string[] items)
         {
-            return s.Split(',')
-                    .Concat(items)
-                    .Distinct()
-                    .Aggregate((s1, s2) => $"{s1},{s2}");
+            return s?.Split(',')
+                     .Concat(items)
+                     .Distinct()
+                     .Aggregate((s1, s2) => $"{s1},{s2}");
         }
     }
 }

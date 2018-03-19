@@ -4,7 +4,7 @@
     {
         Bulletin,
         ChannelItem,
-        Comment, //not currently returned
+        Comment, //not currently returned by API
         Favorite,
         Like,
         PlaylistItem,

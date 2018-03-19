@@ -9,9 +9,9 @@ namespace YoutubeSnoop.Api.Converters
     {
         public override TimeSpan ReadJson(JsonReader reader, Type objectType, TimeSpan existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            if (reader.TokenType == JsonToken.String)
+            if (reader?.TokenType == JsonToken.String)
             {
-                var timeSpan = XmlConvert.ToTimeSpan(reader.Value.ToString());
+                var timeSpan = XmlConvert.ToTimeSpan(reader.Value?.ToString());
                 return timeSpan;
             }
 

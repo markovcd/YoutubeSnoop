@@ -9,18 +9,18 @@ namespace YoutubeSnoop.Api.Converters
     {
         public override IResponse ReadJson(JsonReader reader, Type objectType, IResponse existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            if (reader.TokenType == JsonToken.StartObject)
+            if (reader?.TokenType == JsonToken.StartObject)
             {
                 var item = JObject.Load(reader);
-                var kind = Extensions.ParseResourceKind(item["kind"].Value<string>());
+                var kind = Extensions.ParseResourceKind(item["kind"]?.Value<string>());
 
-                var s = item.ToString();
+                var s = item?.ToString();
                 var t = kind.GetMappedResponse();
 
                 return (IResponse)JsonConvert.DeserializeObject(s, t);
             }
 
-            return null;
+            throw new InvalidOperationException();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace YoutubeSnoop.Api.Converters
     {
         public override IResource ReadJson(JsonReader reader, Type objectType, IResource existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            if (reader.TokenType == JsonToken.StartObject)
+            if (reader?.TokenType == JsonToken.StartObject)
             {
                 var item = JObject.Load(reader);
                 var kind = Extensions.ParseResourceKind(item["kind"].Value<string>());
@@ -20,7 +20,7 @@ namespace YoutubeSnoop.Api.Converters
 
             }
 
-            return null;
+            throw new InvalidOperationException();
         }
     }
 

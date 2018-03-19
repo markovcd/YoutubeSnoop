@@ -8,7 +8,7 @@ namespace YoutubeSnoop.Api.Converters
     {
         public override ResourceKind ReadJson(JsonReader reader, Type objectType, ResourceKind existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            if (reader.TokenType == JsonToken.String)
+            if (reader?.TokenType == JsonToken.String)
             {
                 var kind = Extensions.ParseResourceKind(reader.Value.ToString());
                 return kind;

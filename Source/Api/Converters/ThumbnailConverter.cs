@@ -12,7 +12,7 @@ namespace YoutubeSnoop.Api.Converters
             if (reader.TokenType == JsonToken.StartObject)
             {
                 var item = JObject.Load(reader);
-                return new Thumbnail(item["url"].Value<string>(), item["width"].Value<int>(), item["height"].Value<int>());
+                return new Thumbnail(item["url"].Value<string>(), item["width"]?.Value<int?>(), item["height"]?.Value<int?>());
             }
 
             return null;

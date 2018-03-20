@@ -12,6 +12,6 @@ namespace YoutubeSnoop.Api.Entities.Activities
         /// <summary>
         /// The seedResourceId object contains information about the resource that caused the recommendation.
         /// </summary>
-        public IResource SeedResourceId { get; set; }
+        public Resource SeedResourceId { get; set; }
     }
 }

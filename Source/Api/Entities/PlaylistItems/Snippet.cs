@@ -39,6 +39,6 @@ namespace YoutubeSnoop.Api.Entities.PlaylistItems
         /// <summary>
         /// The id object contains information that can be used to uniquely identify the resource that is included in the playlist as the playlist item.
         /// </summary>
-        public IResource ResourceId { get; set; }
+        public Resource ResourceId { get; set; }
     }
 }

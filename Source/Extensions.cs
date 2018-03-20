@@ -65,18 +65,18 @@ namespace YoutubeSnoop
             return ToCamelCase(value.ToString());
         }
 
-        public static string Id(this IResource resourceId)
+        public static string Id(this Resource resourceId)
         {
             switch (resourceId.Kind)
             {
-                case ResourceKind.Video: return ((ResourceVideo)resourceId).VideoId;
-                case ResourceKind.Playlist: return ((ResourcePlaylist)resourceId).PlaylistId;
-                case ResourceKind.Channel: return ((ResourceChannel)resourceId).ChannelId;
+                case ResourceKind.Video: return resourceId.VideoId;
+                case ResourceKind.Playlist: return resourceId.PlaylistId;
+                case ResourceKind.Channel: return resourceId.ChannelId;
                 default: throw new InvalidOperationException();
             }
         }
 
-        public static string Url(this IResource resourceId)
+        public static string Url(this Resource resourceId)
         {
             var id = resourceId?.Id();
 

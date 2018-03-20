@@ -5,6 +5,6 @@
         /// <summary>
         /// 
         /// </summary>
-        public IResource ResourceId { get; set; }
+        public Resource ResourceId { get; set; }
     }
 }

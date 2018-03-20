@@ -57,7 +57,7 @@ namespace YoutubeSnoop.Fluent
             return request.Clone(request.PartTypes.Concat(new[] { partType }).Distinct());
         }
 
-        public static IYoutubeItem Details(this IResource resourceId)
+        public static IYoutubeItem Details(this Resource resourceId)
         {
             var id = resourceId.Id();
 

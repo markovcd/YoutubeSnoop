@@ -20,7 +20,7 @@ namespace YoutubeSnoop.Api.Entities.Subscriptions
         /// <summary>
         /// The id object contains information about the channel that the user subscribed to.
         /// </summary>
-        public IResource ResourceId { get; set; }
+        public Resource ResourceId { get; set; }
 
         /// <summary>
         /// The ID that YouTube uses to uniquely identify the subscriber's channel. The resource_id object identifies the channel that the user subscribed to.

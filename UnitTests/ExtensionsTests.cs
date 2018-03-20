@@ -78,43 +78,43 @@ namespace UnitTests
             Assert.IsNull(actual);
         }
 
-        [TestMethod]
-        public void GetId_ThrowsException()
-        {
-            var invalid = new ResourceChannel { Kind = ResourceKind.GuideCategoryListResponse, ChannelId = "invalid" };
-            Action a = () => Extensions.Id(invalid); 
+        //[TestMethod]
+        //public void GetId_ThrowsException()
+        //{
+        //    var invalid = new ResourceChannel { Kind = ResourceKind.GuideCategoryListResponse, ChannelId = "invalid" };
+        //    Action a = () => Extensions.Id(invalid); 
 
-            Assert.ThrowsException<InvalidOperationException>(a);
-        }
+        //    Assert.ThrowsException<InvalidOperationException>(a);
+        //}
 
-        [TestMethod]
-        public void GetId_Channel()
-        {
-            var channel = new ResourceChannel { Kind = ResourceKind.Channel, ChannelId = "UCTxdujUsyc9TsjW1BnBxivg" };
-            var actual = Extensions.Id(channel);
-            var expected = "UCTxdujUsyc9TsjW1BnBxivg";
+        //[TestMethod]
+        //public void GetId_Channel()
+        //{
+        //    var channel = new ResourceChannel { Kind = ResourceKind.Channel, ChannelId = "UCTxdujUsyc9TsjW1BnBxivg" };
+        //    var actual = Extensions.Id(channel);
+        //    var expected = "UCTxdujUsyc9TsjW1BnBxivg";
 
-            Assert.AreEqual(expected, actual);
-        }
+        //    Assert.AreEqual(expected, actual);
+        //}
 
-        [TestMethod]
-        public void GetId_Playlist()
-        {
-            var playlist = new ResourcePlaylist { Kind = ResourceKind.Playlist, PlaylistId = "PLg-NWZjrm22usa_eVDKCADwbJ29JYOrDI" };
-            var actual = Extensions.Id(playlist);
-            var expected = "PLg-NWZjrm22usa_eVDKCADwbJ29JYOrDI";
+        //[TestMethod]
+        //public void GetId_Playlist()
+        //{
+        //    var playlist = new ResourcePlaylist { Kind = ResourceKind.Playlist, PlaylistId = "PLg-NWZjrm22usa_eVDKCADwbJ29JYOrDI" };
+        //    var actual = Extensions.Id(playlist);
+        //    var expected = "PLg-NWZjrm22usa_eVDKCADwbJ29JYOrDI";
 
-            Assert.AreEqual(expected, actual);
-        }
+        //    Assert.AreEqual(expected, actual);
+        //}
 
-        [TestMethod]
-        public void GetId_Video()
-        {
-            var video = new ResourceVideo { Kind = ResourceKind.Video, VideoId = "ybipOaP0o1I" };
-            var actual = Extensions.Id(video);
-            var expected = "ybipOaP0o1I";
+        //[TestMethod]
+        //public void GetId_Video()
+        //{
+        //    var video = new ResourceVideo { Kind = ResourceKind.Video, VideoId = "ybipOaP0o1I" };
+        //    var actual = Extensions.Id(video);
+        //    var expected = "ybipOaP0o1I";
 
-            Assert.AreEqual(expected, actual);
-        }
+        //    Assert.AreEqual(expected, actual);
+        //}
     }
 }

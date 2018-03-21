@@ -123,5 +123,19 @@ namespace YoutubeSnoop.Fluent
             request.Settings.ChannelId = id;
             return new YoutubeChannelSections(request);
         }
+
+        public static YoutubeChannels Channels(this YoutubeChannelSection channelSection)
+        {           
+            if (channelSection.ChannelIds == null) channelSection = channelSection.RequestContentDetails();
+            if (channelSection.ChannelIds == null) return null;
+            return Channels(channelSection.ChannelIds.ToArray());
+        }
+
+        public static YoutubePlaylists Playlists(this YoutubeChannelSection channelSection)
+        {
+            if (channelSection.PlaylistIds == null) channelSection = channelSection.RequestContentDetails();
+            if (channelSection.PlaylistIds == null) return null;
+            return Playlists(channelSection.PlaylistIds.ToArray());
+        }
     }
 }

@@ -181,9 +181,8 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubePlaylistItems Uploads(this YoutubeChannel channel)
         {
-            if (channel.Item.ContentDetails == null) channel = channel.RequestContentDetails();
-            var id = channel.Item.ContentDetails.RelatedPlaylists.Uploads;
-            return PlaylistItems(id);
+            if (channel.UploadsPlaylistId == null) channel = channel.RequestContentDetails();
+            return PlaylistItems(channel.UploadsPlaylistId);
         }
 
         public static YoutubePlaylists Playlists(this YoutubeChannel channel)
@@ -209,6 +208,11 @@ namespace YoutubeSnoop.Fluent
         public static YoutubeCommentThreads Comments(this YoutubeChannel channel)
         {
             return CommentThreads().ForChannelId(channel.Id);
+        }
+
+        public static YoutubeCommentThreads AllComments(this YoutubeChannel channel)
+        {
+            return CommentThreads().ForChannelIdAll(channel.Id);
         }
 
         public static YoutubeSubscriptions Subscriptions(this YoutubeChannel channel)

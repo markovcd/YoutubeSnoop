@@ -21,12 +21,12 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeCommentThreads CommentThreads(CommentThreadApiRequestSettings settings = null)
         {
-            return CommentThreads(settings ?? new CommentThreadApiRequestSettings(), PartType.Snippet, PartType.ContentDetails);
+            return CommentThreads(settings ?? new CommentThreadApiRequestSettings(), PartType.Snippet, PartType.Replies);
         }
 
         public static YoutubeCommentThread CommentThread(CommentThreadApiRequestSettings settings = null)
         {
-            return CommentThread(settings ?? new CommentThreadApiRequestSettings(), PartType.Snippet, PartType.ContentDetails);
+            return CommentThread(settings ?? new CommentThreadApiRequestSettings(), PartType.Snippet, PartType.Replies);
         }
 
         public static YoutubeCommentThreads CommentThreads(params string[] ids)
@@ -175,6 +175,20 @@ namespace YoutubeSnoop.Fluent
         public static YoutubeCommentThreads FormatPlainText(this YoutubeCommentThreads commentThreads)
         {
             return commentThreads.TextFormat(Enums.TextFormat.PlainText);
+        }
+
+        public static YoutubeVideo Video(this YoutubeCommentThread commentThread)
+        {
+            if (commentThread.VideoId == null) commentThread = commentThread.RequestSnippet();
+            if (commentThread.VideoId == null) return null;
+            return Video(commentThread.VideoId);
+        }
+
+        public static YoutubeChannel Channel(this YoutubeCommentThread commentThread)
+        {
+            if (commentThread.ChannelId == null) commentThread = commentThread.RequestSnippet();
+            if (commentThread.ChannelId == null) return null;
+            return Channel(commentThread.ChannelId);
         }
     }
 }

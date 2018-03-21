@@ -84,5 +84,29 @@ namespace YoutubeSnoop.Fluent
         {
             return Comments().ForParentId(comment.Id);
         }
+
+        public static YoutubeComment Parent(this YoutubeComment comment)
+        {
+            if (comment.ParentId == null) return null;
+            return Comment(comment.ParentId);
+        }
+
+        public static YoutubeVideo Video(this YoutubeComment comment)
+        {
+            if (comment.VideoId == null) return null;
+            return Video(comment.VideoId);
+        }
+
+        public static YoutubeChannel Channel(this YoutubeComment comment)
+        {
+            if (comment.ChannelId == null) return null;
+            return Channel(comment.ChannelId);
+        }
+
+        public static YoutubeChannel AuthorChannel(this YoutubeComment comment)
+        {
+            if (comment.AuthorChannelId == null) return null;
+            return Channel(comment.AuthorChannelId);
+        }
     }
 }

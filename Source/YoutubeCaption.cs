@@ -11,8 +11,8 @@ namespace YoutubeSnoop
     public sealed class YoutubeCaption : YoutubeItem<Caption, CaptionApiRequestSettings>, IYoutubeItem
     {
          
-        private Caption _item;
-        public Caption Item => Set(ref _item);
+        //private Caption _item;
+        //public Caption Item => Set(ref _item);
 
         private string _id;
         public string Id => Set(ref _id);
@@ -58,7 +58,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
-            _item = response;
+            //_item = response;
             _id = response.Id;
             _kind = response.Kind;
 

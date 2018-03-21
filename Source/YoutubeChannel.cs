@@ -35,6 +35,21 @@ namespace YoutubeSnoop
         private IReadOnlyDictionary<ThumbnailSize, Thumbnail> _thumbnails;
         public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails => Set(ref _thumbnails);
 
+        private string _uploadsPlaylistId;
+        public string UploadsPlaylistId => Set(ref _uploadsPlaylistId);
+
+        private long _subscriberCount;
+        public long SubscriberCount => Set(ref _subscriberCount);
+
+        private long _uploadsCount;
+        public long UploadsCount => Set(ref _uploadsCount);
+
+        private long _viewCount;
+        public long ViewCount => Set(ref _viewCount);
+
+        private long _commentCount;
+        public long CommentCount => Set(ref _commentCount);
+
         public YoutubeChannel(IApiRequest<Channel, ChannelApiRequestSettings> request) : base(request) { }
 
         public YoutubeChannel(Channel response) : base(response) { }
@@ -47,13 +62,27 @@ namespace YoutubeSnoop
             _id = response.Id;
             _kind = response.Kind;
 
-            if (response.Snippet == null) return;
+            if (response.Snippet != null)
+            {
+                _title = response.Snippet.Title;
+                _description = response.Snippet.Description;
+                _customUrl = response.Snippet.CustomUrl;
+                _publishedAt = response.Snippet.PublishedAt.GetValueOrDefault();
+                _thumbnails = response.Snippet.Thumbnails?.Clone();
+            }
 
-            _title = response.Snippet.Title;
-            _description = response.Snippet.Description;
-            _customUrl = response.Snippet.CustomUrl;
-            _publishedAt = response.Snippet.PublishedAt.GetValueOrDefault();
-            _thumbnails = response.Snippet.Thumbnails?.Clone();
+            if (response.ContentDetails != null)
+            {
+                _uploadsPlaylistId = response.ContentDetails.RelatedPlaylists?.Uploads;
+            }
+
+            if (response.Statistics != null)
+            {
+                _subscriberCount = response.Statistics.SubscriberCount.GetValueOrDefault();
+                _uploadsCount = response.Statistics.VideoCount.GetValueOrDefault();
+                _viewCount = response.Statistics.ViewCount.GetValueOrDefault();
+                _commentCount = response.Statistics.CommentCount.GetValueOrDefault();
+            }
         }
     }
 }

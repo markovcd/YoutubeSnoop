@@ -21,6 +21,8 @@ namespace IntegrationTests
             var u = c.Uploads().ToList();
             var s = c.Subscriptions().RequestContentDetails().Take(20).ToList();
             var a = c.Activities().RequestContentDetails().Take(20).ToList();
+
+            //var su = Youtube.Subscriptions(new YoutubeSnoop.Api.Settings.SubscriptionApiRequestSettings { ChannelId = c.Id }).RequestAllParts().ToList();
         }
     }
 }

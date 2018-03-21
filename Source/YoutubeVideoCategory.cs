@@ -7,18 +7,22 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeVideoCategory : YoutubeItem<VideoCategory, VideoCategoryApiRequestSettings>, IYoutubeItem
     {
-        private string _id;
         private VideoCategory _item;
-        private ResourceKind _kind;
-        private string _channelId;
-        private string _title;
-        private bool _assignable;
-
         public VideoCategory Item => Set(ref _item);
+
+        private string _id;
         public string Id => Set(ref _id);
+
+        private ResourceKind _kind;
         public ResourceKind Kind => Set(ref _kind);
+
+        private string _channelId;
         public string ChannelId => Set(ref _channelId);
+
+        private string _title;
         public string Title => Set(ref _title);
+
+        private bool _assignable;
         public bool Assignable => Set(ref _assignable);
 
         public YoutubeVideoCategory(IApiRequest<VideoCategory, VideoCategoryApiRequestSettings> request) : base(request) { }
@@ -31,10 +35,13 @@ namespace YoutubeSnoop
 
             _item = response;
             _id = response.Id;
-            _kind = response.Kind;         
-            _channelId = response.Snippet?.ChannelId;
-            _title = response.Snippet?.Title;
-            _assignable = (response.Snippet?.Assignable).GetValueOrDefault();
+            _kind = response.Kind;
+
+            if (response.Snippet == null) return;
+
+            _channelId = response.Snippet.ChannelId;
+            _title = response.Snippet.Title;
+            _assignable = response.Snippet.Assignable.GetValueOrDefault();
         }
     }
 }

@@ -18,19 +18,19 @@ namespace YoutubeSnoop
         public string ChannelTitle { get; }
         public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails { get; }
 
-        public YoutubeSearchResult(SearchResult searchResult)
+        public YoutubeSearchResult(SearchResult response)
         {
-            if (searchResult == null) return;
+            if (response == null) return;
 
-            Item = searchResult;
-            Kind = (searchResult.Id?.Kind).GetValueOrDefault();
-            Id = searchResult.Id?.Id();           
-            PublishedAt = (searchResult.Snippet?.PublishedAt).GetValueOrDefault();
-            ChannelId = searchResult.Snippet?.ChannelId;
-            Title = searchResult.Snippet?.Title;
-            Description = searchResult.Snippet?.Description;
-            ChannelTitle = searchResult.Snippet?.ChannelTitle;
-            Thumbnails = searchResult.Snippet?.Thumbnails?.Clone();
+            Item = response;
+            Kind = (response.Id?.Kind).GetValueOrDefault();
+            Id = response.Id?.Id();           
+            PublishedAt = (response.Snippet?.PublishedAt).GetValueOrDefault();
+            ChannelId = response.Snippet?.ChannelId;
+            Title = response.Snippet?.Title;
+            Description = response.Snippet?.Description;
+            ChannelTitle = response.Snippet?.ChannelTitle;
+            Thumbnails = response.Snippet?.Thumbnails?.Clone();
         }       
     }
 }

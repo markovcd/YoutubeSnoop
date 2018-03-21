@@ -28,5 +28,10 @@ namespace YoutubeSnoop
             Id = LanguageCode = languageCode;
             LanguageName = languageName;
         }
+
+        public override string ToString()
+        {
+            return LanguageCode ?? base.ToString();
+        }
     }
 }

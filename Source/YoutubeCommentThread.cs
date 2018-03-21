@@ -46,7 +46,7 @@ namespace YoutubeSnoop
             _item = response;
             _id = response.Id;
             _kind = response.Kind;
-            _replies = response.Replies?.Comments.Select(c => new YoutubeComment(c)).ToList();
+            _replies = response.Replies?.Comments.Select(c => new YoutubeComment(c)).ToList().AsReadOnly();
 
             if (response.Snippet == null) return;
 

@@ -28,5 +28,10 @@ namespace YoutubeSnoop
             Id = CountryCode = countryCode;
             CountryName = countryName;
         }
+
+        public override string ToString()
+        {
+            return CountryCode ?? base.ToString();
+        }
     }
 }

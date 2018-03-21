@@ -20,21 +20,21 @@ namespace YoutubeSnoop
         public int? Position { get; }
         public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails { get; }
 
-        public YoutubePlaylistItem(PlaylistItem playlistItem)
+        public YoutubePlaylistItem(PlaylistItem response)
         {
-            if (playlistItem == null) return;
+            if (response == null) return;
 
-            Item = playlistItem;
-            Kind = (playlistItem.Snippet?.ResourceId?.Kind).GetValueOrDefault();
-            Id = playlistItem.Snippet?.ResourceId?.Id();
-            PublishedAt = (playlistItem.Snippet?.PublishedAt).GetValueOrDefault();
-            ChannelId = playlistItem.Snippet?.ChannelId;
-            Title = playlistItem.Snippet?.Title;
-            Description = playlistItem.Snippet?.Description;
-            ChannelTitle = playlistItem.Snippet?.ChannelTitle;
-            PlaylistId = playlistItem.Snippet?.PlaylistId;
-            Position = playlistItem.Snippet?.Position;
-            Thumbnails = playlistItem.Snippet?.Thumbnails?.Clone();
+            Item = response;
+            Kind = (response.Snippet?.ResourceId?.Kind).GetValueOrDefault();
+            Id = response.Snippet?.ResourceId?.Id();
+            PublishedAt = (response.Snippet?.PublishedAt).GetValueOrDefault();
+            ChannelId = response.Snippet?.ChannelId;
+            Title = response.Snippet?.Title;
+            Description = response.Snippet?.Description;
+            ChannelTitle = response.Snippet?.ChannelTitle;
+            PlaylistId = response.Snippet?.PlaylistId;
+            Position = response.Snippet?.Position;
+            Thumbnails = response.Snippet?.Thumbnails?.Clone();
         }
     }
 }

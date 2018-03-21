@@ -5,6 +5,7 @@ using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Api.Entities.ChannelSections;
 using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
+using System.Linq;
 
 namespace YoutubeSnoop
 {
@@ -35,6 +36,12 @@ namespace YoutubeSnoop
         private ChannelSectionType _type;
         public ChannelSectionType Type => Set(ref _type);
 
+        private IReadOnlyList<string> _channelIds;
+        public IReadOnlyList<string> ChannelIds => Set(ref _channelIds);
+
+        private IReadOnlyList<string> _playlistIds;
+        public IReadOnlyList<string> PlaylistIds => Set(ref _playlistIds);
+
         public YoutubeChannelSection(IApiRequest<ChannelSection, ChannelSectionApiRequestSettings> request) : base(request) { }
 
         public YoutubeChannelSection(ChannelSection response) : base(response) { }
@@ -46,14 +53,21 @@ namespace YoutubeSnoop
             _item = response;
             _id = response.Id;
             _kind = response.Kind;
-            
-            if (response.Snippet == null) return;
 
-            _channelId = response.Snippet.ChannelId;
-            _position = response.Snippet.Position.GetValueOrDefault();
-            _style = response.Snippet.Style.GetValueOrDefault();
-            _title = response.Snippet.Title;
-            _type = response.Snippet.Type.GetValueOrDefault();
+            if (response.Snippet != null)
+            {
+                _channelId = response.Snippet.ChannelId;
+                _position = response.Snippet.Position.GetValueOrDefault();
+                _style = response.Snippet.Style.GetValueOrDefault();
+                _title = response.Snippet.Title;
+                _type = response.Snippet.Type.GetValueOrDefault();
+            }
+
+            if (response.ContentDetails != null)
+            {
+                _channelIds = response.ContentDetails.Channels?.ToList().AsReadOnly();
+                _playlistIds = response.ContentDetails.Playlists?.ToList().AsReadOnly();
+            }
         }
     }
 }

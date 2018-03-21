@@ -10,24 +10,35 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeSubscription : YoutubeItem<Subscription, SubscriptionApiRequestSettings>, IYoutubeItem
     {
-        private string _id;
-        private Subscription _item;
-        private ResourceKind _kind;
-        private string _channelId;
-        private DateTime _publishedAt;
-        private string _title;
-        private string _description;
-        private string _channelTitle;
-        private IReadOnlyDictionary<ThumbnailSize, Thumbnail> _thumbnails;
 
+        private Subscription _item;
         public Subscription Item => Set(ref _item);
+
+        private string _id;
         public string Id => Set(ref _id);
+
+        private ResourceKind _kind;
         public ResourceKind Kind => Set(ref _kind);
+
+        private DateTime _publishedAt;
         public DateTime PublishedAt => Set(ref _publishedAt);
+
+        private string _channelId;
         public string ChannelId => Set(ref _channelId);
+
+        private string _subscriberChannelId;
+        public string SubscriberChannelId => Set(ref _subscriberChannelId);
+
+        private string _title;
         public string Title => Set(ref _title);
+
+        private string _description;
         public string Description => Set(ref _description);
+
+        private string _channelTitle;
         public string ChannelTitle => Set(ref _channelTitle);
+
+        private IReadOnlyDictionary<ThumbnailSize, Thumbnail> _thumbnails;
         public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails => Set(ref _thumbnails);
 
         public YoutubeSubscription(IApiRequest<Subscription, SubscriptionApiRequestSettings> request) : base(request) { }
@@ -41,13 +52,17 @@ namespace YoutubeSnoop
             _item = response;
             _id = response.Id;
             _kind = response.Kind;
-            _publishedAt = (response.Snippet?.PublishedAt).GetValueOrDefault();
-            _channelId = response.Snippet?.ChannelId;
-            _title = response.Snippet?.Title;
-            _description = response.Snippet?.Description;
-            _channelTitle = response.Snippet?.ChannelTitle;
-            // todo
-            _thumbnails = response.Snippet?.Thumbnails?.Clone();
+
+            if (response.Snippet != null)
+            {
+                _publishedAt = response.Snippet.PublishedAt.GetValueOrDefault();
+                _channelId = response.Snippet.ChannelId;
+                _subscriberChannelId = response.Snippet.ResourceId?.ChannelId;
+                _title = response.Snippet.Title;
+                _description = response.Snippet.Description;
+                _channelTitle = response.Snippet.ChannelTitle;
+                _thumbnails = response.Snippet.Thumbnails?.Clone();
+            }
         }
     }
 }

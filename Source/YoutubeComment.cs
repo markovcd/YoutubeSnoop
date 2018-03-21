@@ -76,5 +76,10 @@ namespace YoutubeSnoop
             _updatedAt = response.Snippet.UpdatedAt.GetValueOrDefault();
             _videoId = response.Snippet.VideoId;    
         }
+
+        public override string ToString()
+        {
+            return _textDisplay ?? base.ToString();
+        }
     }
 }

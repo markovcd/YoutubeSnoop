@@ -7,7 +7,7 @@ using YoutubeSnoop.Api.Entities;
 
 namespace YoutubeSnoop.Api.Exceptions
 {
-    internal class ApiException : Exception
+    public class ApiException : Exception
     {
         public IList<Error> Errors { get; set; }
         public HttpStatusCode Code { get; set; }

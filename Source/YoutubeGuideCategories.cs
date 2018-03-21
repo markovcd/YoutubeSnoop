@@ -4,7 +4,7 @@ using YoutubeSnoop.Api.Settings;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeGuideCategories : YoutubeCollection<YoutubeGuideCategory, GuideCategory, GuideCategoryApiRequestSettings>
+    public sealed class YoutubeGuideCategories : YoutubeCollection<YoutubeGuideCategory, GuideCategory, GuideCategoryApiRequestSettings>
     {        
         public YoutubeGuideCategories(IApiRequest<GuideCategory, GuideCategoryApiRequestSettings> request) : base(request) {  }
 

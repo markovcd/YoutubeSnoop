@@ -2,6 +2,7 @@
 {
     public enum ActivityType
     {
+        None,
         Bulletin,
         ChannelItem,
         Comment, //not currently returned by API

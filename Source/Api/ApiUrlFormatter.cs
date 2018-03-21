@@ -6,8 +6,7 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Api
 {
-    public class ApiUrlFormatter<TSettings> : IApiUrlFormatter<TSettings>
-        where TSettings : IApiRequestSettings
+    public class ApiUrlFormatter : IApiUrlFormatter
     {
         private const string _apiUrl = "https://www.googleapis.com/youtube/v3/{0}?{1}";
 
@@ -20,7 +19,7 @@ namespace YoutubeSnoop.Api
         private static readonly ApiArgument _prettyPrintArgument = new ApiArgument<bool>(_prettyPrintName, _prettyPrint);
         private static readonly ApiArgument _apiKeyArgument = new ApiArgument(_apiKeyName, _apiKey);
 
-        public static string Format(TSettings settings, IEnumerable<PartType> partTypes, string pageToken, int resultsPerPage)
+        public static string Format(IApiRequestSettings settings, IEnumerable<PartType> partTypes, string pageToken, int resultsPerPage)
         {
             var arguments = settings.GetArguments().ToList();
             arguments.Add(new ApiPartArgument(partTypes));
@@ -36,7 +35,7 @@ namespace YoutubeSnoop.Api
             return string.Format(_apiUrl, settings.RequestType.ToCamelCase(), argumentString);
         }
 
-        string IApiUrlFormatter<TSettings>.Format(TSettings settings, IEnumerable<PartType> partTypes, string pageToken, int resultsPerPage)
+        string IApiUrlFormatter.Format(IApiRequestSettings settings, IEnumerable<PartType> partTypes, string pageToken, int resultsPerPage)
         {
             return Format(settings, partTypes, pageToken, resultsPerPage);
         }

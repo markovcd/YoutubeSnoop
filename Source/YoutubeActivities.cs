@@ -4,7 +4,7 @@ using YoutubeSnoop.Api.Settings;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeActivities : YoutubeCollection<YoutubeActivity, Activity, ActivityApiRequestSettings>
+    public sealed class YoutubeActivities : YoutubeCollection<YoutubeActivity, Activity, ActivityApiRequestSettings>
     {        
         public YoutubeActivities(IApiRequest<Activity, ActivityApiRequestSettings> request) : base(request) {  }
 

@@ -4,7 +4,7 @@ using YoutubeSnoop.Api.Settings;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeVideoCategories : YoutubeCollection<YoutubeVideoCategory, VideoCategory, VideoCategoryApiRequestSettings>
+    public sealed class YoutubeVideoCategories : YoutubeCollection<YoutubeVideoCategory, VideoCategory, VideoCategoryApiRequestSettings>
     {
         public YoutubeVideoCategories(IApiRequest<VideoCategory, VideoCategoryApiRequestSettings> request) : base(request) { }
 

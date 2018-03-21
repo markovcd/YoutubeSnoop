@@ -4,7 +4,7 @@ using YoutubeSnoop.Api.Settings;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeCountries : YoutubeCollection<YoutubeCountry, I18nRegion, I18nRegionApiRequestSettings>
+    public sealed class YoutubeCountries : YoutubeCollection<YoutubeCountry, I18nRegion, I18nRegionApiRequestSettings>
     {
         public YoutubeCountries(IApiRequest<I18nRegion, I18nRegionApiRequestSettings> request) : base(request) { }
 

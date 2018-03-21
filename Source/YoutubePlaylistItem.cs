@@ -6,7 +6,7 @@ using YoutubeSnoop.Api.Entities;
 
 namespace YoutubeSnoop
 {
-    public class YoutubePlaylistItem : IYoutubeItem
+    public sealed class YoutubePlaylistItem : IYoutubeItem
     {     
         public ResourceKind Kind { get; }
         public string Id { get; }

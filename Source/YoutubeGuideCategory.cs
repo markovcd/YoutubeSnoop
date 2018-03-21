@@ -5,7 +5,7 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeGuideCategory : YoutubeItem<GuideCategory, GuideCategoryApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubeGuideCategory : YoutubeItem<GuideCategory, GuideCategoryApiRequestSettings>, IYoutubeItem
     {
         private GuideCategory _item;
         private string _id;
@@ -13,11 +13,11 @@ namespace YoutubeSnoop
         private string _title;
         private string _channelId;
 
-        public GuideCategory Item => S(ref _item);
-        public string Id => S(ref _id);
-        public ResourceKind Kind => S(ref _kind);
-        public string Title => S(ref _title);
-        public string ChannelId => S(ref _channelId);
+        public GuideCategory Item => Set(ref _item);
+        public string Id => Set(ref _id);
+        public ResourceKind Kind => Set(ref _kind);
+        public string Title => Set(ref _title);
+        public string ChannelId => Set(ref _channelId);
 
         public YoutubeGuideCategory(IApiRequest<GuideCategory, GuideCategoryApiRequestSettings> request) : base(request) { }
 

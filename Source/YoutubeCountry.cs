@@ -3,7 +3,7 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeCountry : IYoutubeItem
+    public sealed class YoutubeCountry : IYoutubeItem
     {
         public ResourceKind Kind { get; }
         public string Id { get; }

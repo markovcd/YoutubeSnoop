@@ -4,7 +4,7 @@ using YoutubeSnoop.Api.Settings;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeCommentThreads : YoutubeCollection<YoutubeCommentThread, CommentThread, CommentThreadApiRequestSettings>
+    public sealed class YoutubeCommentThreads : YoutubeCollection<YoutubeCommentThread, CommentThread, CommentThreadApiRequestSettings>
     {        
         public YoutubeCommentThreads(IApiRequest<CommentThread, CommentThreadApiRequestSettings> request) : base(request) {  }
 

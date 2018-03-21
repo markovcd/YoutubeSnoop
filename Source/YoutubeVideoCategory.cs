@@ -5,7 +5,7 @@ using YoutubeSnoop.Api;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeVideoCategory : YoutubeItem<VideoCategory, VideoCategoryApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubeVideoCategory : YoutubeItem<VideoCategory, VideoCategoryApiRequestSettings>, IYoutubeItem
     {
         private string _id;
         private VideoCategory _item;
@@ -14,12 +14,12 @@ namespace YoutubeSnoop
         private string _title;
         private bool _assignable;
 
-        public VideoCategory Item => S(ref _item);
-        public string Id => S(ref _id);
-        public ResourceKind Kind => S(ref _kind);
-        public string ChannelId => S(ref _channelId);
-        public string Title => S(ref _title);
-        public bool Assignable => S(ref _assignable);
+        public VideoCategory Item => Set(ref _item);
+        public string Id => Set(ref _id);
+        public ResourceKind Kind => Set(ref _kind);
+        public string ChannelId => Set(ref _channelId);
+        public string Title => Set(ref _title);
+        public bool Assignable => Set(ref _assignable);
 
         public YoutubeVideoCategory(IApiRequest<VideoCategory, VideoCategoryApiRequestSettings> request) : base(request) { }
 

@@ -5,7 +5,7 @@ using YoutubeSnoop.Api.Settings;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeComments : YoutubeCollection<YoutubeComment, Comment, CommentApiRequestSettings>
+    public sealed class YoutubeComments : YoutubeCollection<YoutubeComment, Comment, CommentApiRequestSettings>
     {        
         public YoutubeComments(IApiRequest<Comment, CommentApiRequestSettings> request) : base(request) {  }
 

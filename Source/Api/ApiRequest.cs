@@ -13,7 +13,7 @@ namespace YoutubeSnoop.Api
     {
         private readonly IJsonDownloader _jsonDownloader;
         private readonly IPagedResponseDeserializer<TItem> _responseDeserializer;
-        private readonly IApiUrlFormatter<TSettings> _apiUrlFormatter;
+        private readonly IApiUrlFormatter _apiUrlFormatter;
 
         private TItem _firstItem;
         public TItem FirstItem => _firstItem ?? (_firstItem = Items.FirstOrDefault());
@@ -24,7 +24,7 @@ namespace YoutubeSnoop.Api
 
         public IEnumerable<PartType> PartTypes { get; }
 
-        public ApiRequest(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TItem> responseDeserializer, IApiUrlFormatter<TSettings> apiUrlFormatter)
+        public ApiRequest(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TItem> responseDeserializer, IApiUrlFormatter apiUrlFormatter)
         {
             _jsonDownloader = jsonDownloader;
             _responseDeserializer = responseDeserializer;
@@ -39,9 +39,15 @@ namespace YoutubeSnoop.Api
 
         public IPagedResponse<TItem> Deserialize(string pageToken = null)
         {
-            var requestUrl = _apiUrlFormatter.Format(Settings, PartTypes, pageToken, ResultsPerPage);
-            var json = _jsonDownloader.Download(requestUrl);
-            return _responseDeserializer.Deserialize(json);
+            return Deserialize(_apiUrlFormatter, _jsonDownloader, _responseDeserializer, Settings, PartTypes, ResultsPerPage, pageToken);
+        }
+
+        public static IPagedResponse<TItem> Deserialize(IApiUrlFormatter apiUrlFormatter, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TItem> responseDeserializer, 
+                                                        TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, string pageToken = null)
+        {
+            var requestUrl = apiUrlFormatter.Format(settings, partTypes, pageToken, resultsPerPage);
+            var json = jsonDownloader.Download(requestUrl);
+            return responseDeserializer.Deserialize(json);
         }
 
         public IEnumerator<IPagedResponse<TItem>> GetEnumerator()

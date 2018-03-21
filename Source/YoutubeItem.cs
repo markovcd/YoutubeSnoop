@@ -19,13 +19,16 @@ namespace YoutubeSnoop
 
         protected YoutubeItem(TResponse response)
         {
+            #pragma warning disable RECS0021 // Don't tell me how to live my life, fucker
             SetProperties(response);
+            #pragma warning restore RECS0021
+
             _propertiesSet = true;
         }
 
         protected abstract void SetProperties(TResponse response);
 
-        protected T S<T>(ref T field)
+        protected T Set<T>(ref T field)
         {
             if (!_propertiesSet) SetProperties(Request.FirstItem);
             _propertiesSet = true;

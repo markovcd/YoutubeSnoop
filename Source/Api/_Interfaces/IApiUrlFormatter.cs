@@ -4,9 +4,8 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Api
 {
-    public interface IApiUrlFormatter<TSettings>
-    where TSettings : IApiRequestSettings
+    public interface IApiUrlFormatter
     {
-        string Format(TSettings settings, IEnumerable<PartType> partTypes, string pageToken, int resultsPerPage);
+        string Format(IApiRequestSettings settings, IEnumerable<PartType> partTypes, string pageToken, int resultsPerPage);
     }
 }

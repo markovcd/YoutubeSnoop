@@ -6,37 +6,49 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public class YoutubeComment : YoutubeItem<Comment, CommentApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubeComment : YoutubeItem<Comment, CommentApiRequestSettings>, IYoutubeItem
     {
         private Comment _item;
-        private string _id;
-        private ResourceKind _kind;
-        private DateTime _publishedAt;
-        private string _textDisplay;
-        private DateTime _updatedAt;
-        private string _videoId;
-        private string _authorChannelId;
-        private string _authorChannelUrl;
-        private string _authorDisplayName;
-        private string _authorProfileImageUrl;
-        private string _channelId;
-        private int _likeCount;
-        private string _parentId;
+        public Comment Item => Set(ref _item);
 
-        public Comment Item => S(ref _item);
-        public string Id => S(ref _id);
-        public ResourceKind Kind => S(ref _kind);
-        public DateTime PublishedAt => S(ref _publishedAt);
-        public string TextDisplay => S(ref _textDisplay);
-        public DateTime UpdatedAt => S(ref _updatedAt);
-        public string VideoId => S(ref _videoId);
-        public string AuthorChannelId => S(ref _authorChannelId);
-        public string AuthorChannelUrl => S(ref _authorChannelUrl);
-        public string AuthorDisplayName => S(ref _authorDisplayName);
-        public string AuthorProfileImageUrl => S(ref _authorProfileImageUrl);
-        public string ChannelId => S(ref _channelId);
-        public int LikeCount => S(ref _likeCount);
-        public string ParentId => S(ref _parentId);
+        private string _id;
+        public string Id => Set(ref _id);
+
+        private ResourceKind _kind;
+        public ResourceKind Kind => Set(ref _kind);
+
+        private DateTime _publishedAt;
+        public DateTime PublishedAt => Set(ref _publishedAt);
+
+        private string _textDisplay;
+        public string TextDisplay => Set(ref _textDisplay);
+
+        private DateTime _updatedAt;
+        public DateTime UpdatedAt => Set(ref _updatedAt);
+
+        private string _videoId;
+        public string VideoId => Set(ref _videoId);
+
+        private string _authorChannelId;
+        public string AuthorChannelId => Set(ref _authorChannelId);
+
+        private string _authorChannelUrl;
+        public string AuthorChannelUrl => Set(ref _authorChannelUrl);
+
+        private string _authorDisplayName;
+        public string AuthorDisplayName => Set(ref _authorDisplayName);
+
+        private string _authorProfileImageUrl;
+        public string AuthorProfileImageUrl => Set(ref _authorProfileImageUrl);
+
+        private string _channelId;
+        public string ChannelId => Set(ref _channelId);
+
+        private int _likeCount;
+        public int LikeCount => Set(ref _likeCount);
+
+        private string _parentId;
+        public string ParentId => Set(ref _parentId);
 
         public YoutubeComment(IApiRequest<Comment, CommentApiRequestSettings> request) : base(request) { }
 
@@ -49,17 +61,20 @@ namespace YoutubeSnoop
             _item = response;
             _id = response.Id;
             _kind = response.Kind;
-            _publishedAt = (response.Snippet?.PublishedAt).GetValueOrDefault();
-            _authorChannelId = response.Snippet?.AuthorChannelId?.Value;
-            _authorChannelUrl = response.Snippet?.AuthorChannelUrl;
-            _authorDisplayName = response.Snippet?.AuthorDisplayName;
-            _authorProfileImageUrl = response.Snippet?.AuthorProfileImageUrl;
-            _channelId = response.Snippet?.ChannelId;
-            _likeCount = (response.Snippet?.LikeCount).GetValueOrDefault();
-            _parentId = response.Snippet?.ParentId;          
-            _textDisplay = response.Snippet?.TextDisplay;
-            _updatedAt = (response.Snippet?.UpdatedAt).GetValueOrDefault();
-            _videoId = response.Snippet?.VideoId;            
+
+            if (response.Snippet == null) return;
+
+            _publishedAt = response.Snippet.PublishedAt.GetValueOrDefault();
+            _authorChannelId = response.Snippet.AuthorChannelId?.Value;
+            _authorChannelUrl = response.Snippet.AuthorChannelUrl;
+            _authorDisplayName = response.Snippet.AuthorDisplayName;
+            _authorProfileImageUrl = response.Snippet.AuthorProfileImageUrl;
+            _channelId = response.Snippet.ChannelId;
+            _likeCount = response.Snippet.LikeCount.GetValueOrDefault();
+            _parentId = response.Snippet.ParentId;          
+            _textDisplay = response.Snippet.TextDisplay;
+            _updatedAt = response.Snippet.UpdatedAt.GetValueOrDefault();
+            _videoId = response.Snippet.VideoId;    
         }
     }
 }

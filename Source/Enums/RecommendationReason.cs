@@ -2,6 +2,6 @@
 {
     public enum RecommendationReason
     {
-        VideoFavorited, VideoLiked, VideoWatched
+        None, VideoFavorited, VideoLiked, VideoWatched
     }
 }

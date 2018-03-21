@@ -22,7 +22,7 @@ namespace YoutubeSnoop.Api.Entities.Search
         public string ChannelTitle { get; set; }
 
         /// <summary>
-        /// An indication of whether a video or channel resource has live broadcast content. 
+        /// An indication of whether a video or channel resource has live broadcast content.
         /// </summary>
         /// <remarks>
         /// For a video resource, a value of upcoming indicates that the video is a live broadcast that has not yet started, while a value of live indicates that the video is an active live broadcast. For a channel resource, a value of upcoming indicates that the channel has a scheduled broadcast that has not yet started, while a value of live indicates that the channel has an active live broadcast.

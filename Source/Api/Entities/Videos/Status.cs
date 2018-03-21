@@ -26,7 +26,7 @@ namespace YoutubeSnoop.Api.Entities.Videos
         public PrivacyStatus? PrivacyStatus { get; set; }
 
         /// <summary>
-        /// The date and time when the video is scheduled to publish. It can be set only if the privacy status of the video is private. 
+        /// The date and time when the video is scheduled to publish. It can be set only if the privacy status of the video is private.
         /// </summary>
         /// <remarks>
         /// Note the following two additional points about this property's behavior:

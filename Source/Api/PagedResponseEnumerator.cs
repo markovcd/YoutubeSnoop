@@ -22,6 +22,7 @@ namespace YoutubeSnoop.Api
             _responses = new List<IPagedResponse<TItem>>();
             _getNextResponse = getNextResponse;
         }
+
         public bool MoveNext()
         {
             _index++;

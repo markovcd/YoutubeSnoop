@@ -4,7 +4,6 @@ namespace YoutubeSnoop.Api.Entities
 {
     public class VideoStream
     {
-
         /// <summary>
         /// The encoded video content's width in pixels. You can calculate the video's encoding aspect ratio as width_pixels / height_pixels.
         /// </summary>

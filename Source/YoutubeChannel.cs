@@ -10,7 +10,6 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeChannel : YoutubeItem<Channel, ChannelApiRequestSettings>, IYoutubeItem
     {
-           
         private Channel _item;
         public Channel Item => Set(ref _item);
 
@@ -50,9 +49,13 @@ namespace YoutubeSnoop
         private long _commentCount;
         public long CommentCount => Set(ref _commentCount);
 
-        public YoutubeChannel(IApiRequest<Channel, ChannelApiRequestSettings> request) : base(request) { }
+        public YoutubeChannel(IApiRequest<Channel, ChannelApiRequestSettings> request) : base(request)
+        {
+        }
 
-        public YoutubeChannel(Channel response) : base(response) { }
+        public YoutubeChannel(Channel response) : base(response)
+        {
+        }
 
         protected override void SetProperties(Channel response)
         {

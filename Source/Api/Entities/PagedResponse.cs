@@ -25,8 +25,4 @@ namespace YoutubeSnoop.Api.Entities
         /// </summary>
         public IList<TItem> Items { get; set; }
     }
-
-    
-
-    
 }

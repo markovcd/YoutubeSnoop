@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using YoutubeSnoop.Api.Entities.PlaylistItems;
+﻿using YoutubeSnoop.Api.Entities.PlaylistItems;
 using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
@@ -7,7 +6,6 @@ namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-
         public static YoutubePlaylistItems PlaylistItems(PlaylistItemsApiRequestSettings settings, params PartType[] partTypes)
         {
             var request = DefaultRequest<PlaylistItem, PlaylistItemsApiRequestSettings>(settings, partTypes);
@@ -22,7 +20,7 @@ namespace YoutubeSnoop.Fluent
         public static YoutubePlaylistItems PlaylistItems(string playlistId)
         {
             return PlaylistItems(new PlaylistItemsApiRequestSettings { PlaylistId = playlistId });
-        }       
+        }
 
         public static YoutubePlaylistItems RequestPart(this YoutubePlaylistItems playlistItems, PartType partType)
         {

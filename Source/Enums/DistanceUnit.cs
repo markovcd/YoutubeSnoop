@@ -6,10 +6,13 @@ namespace YoutubeSnoop.Enums
     {
         [Description("m")]
         Meter,
+
         [Description("km")]
         Kilometer,
+
         [Description("ft")]
         Feet,
+
         [Description("mi")]
         Mile
     }

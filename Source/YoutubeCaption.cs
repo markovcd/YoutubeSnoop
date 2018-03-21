@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using YoutubeSnoop.Api;
-using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Api.Entities.Captions;
 using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
@@ -10,7 +8,6 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeCaption : YoutubeItem<Caption, CaptionApiRequestSettings>, IYoutubeItem
     {
-         
         //private Caption _item;
         //public Caption Item => Set(ref _item);
 
@@ -50,9 +47,13 @@ namespace YoutubeSnoop
         private string _videoId;
         public string VideoId => Set(ref _videoId);
 
-        public YoutubeCaption(IApiRequest<Caption, CaptionApiRequestSettings> request) : base(request) { }
+        public YoutubeCaption(IApiRequest<Caption, CaptionApiRequestSettings> request) : base(request)
+        {
+        }
 
-        public YoutubeCaption(Caption response) : base(response) { }
+        public YoutubeCaption(Caption response) : base(response)
+        {
+        }
 
         protected override void SetProperties(Caption response)
         {

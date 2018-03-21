@@ -44,7 +44,7 @@ namespace YoutubeSnoop.Fluent
             var request = channelSection.Request.RequestPart(partType);
             return new YoutubeChannelSection(request);
         }
-      
+
         public static YoutubeChannelSection RequestContentDetails(this YoutubeChannelSection channelSection)
         {
             return channelSection.RequestPart(PartType.ContentDetails);
@@ -125,7 +125,7 @@ namespace YoutubeSnoop.Fluent
         }
 
         public static YoutubeChannels Channels(this YoutubeChannelSection channelSection)
-        {           
+        {
             if (channelSection.ChannelIds == null) channelSection = channelSection.RequestContentDetails();
             if (channelSection.ChannelIds == null) return null;
             return Channels(channelSection.ChannelIds.ToArray());

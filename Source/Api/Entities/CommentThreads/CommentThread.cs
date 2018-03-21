@@ -2,7 +2,6 @@
 {
     public class CommentThread : Response
     {
-
         /// <summary>
         /// The ID that YouTube uses to uniquely identify the comment thread.
         /// </summary>

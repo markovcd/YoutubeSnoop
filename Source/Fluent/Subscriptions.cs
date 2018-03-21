@@ -114,6 +114,5 @@ namespace YoutubeSnoop.Fluent
             request.Settings.Order = order;
             return new YoutubeSubscriptions(request);
         }
-
     }
 }

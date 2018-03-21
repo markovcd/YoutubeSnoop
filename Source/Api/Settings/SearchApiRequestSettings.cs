@@ -19,7 +19,7 @@ namespace YoutubeSnoop.Api.Settings
         public string Query { get; set; }
 
         /// <summary>
-        /// Parameter indicates that the API response should only contain resources created by the channel. 
+        /// Parameter indicates that the API response should only contain resources created by the channel.
         /// </summary>
         /// <remarks>
         /// Note: Search results are constrained to a maximum of 500 videos if your request specifies a value for the channelId parameter and sets the type parameter value to video.
@@ -37,7 +37,7 @@ namespace YoutubeSnoop.Api.Settings
         public EventType? EventType { get; set; }
 
         /// <summary>
-        /// The location parameter, in conjunction with the locationRadius parameter, defines a circular geographic area and also restricts a search to videos that specify, in their metadata, a geographic location that falls within that area. 
+        /// The location parameter, in conjunction with the locationRadius parameter, defines a circular geographic area and also restricts a search to videos that specify, in their metadata, a geographic location that falls within that area.
         /// </summary>
         /// <remarks>
         /// The API returns an error if your request specifies a value for the location parameter but does not also specify a value for the locationRadius parameter.
@@ -61,7 +61,7 @@ namespace YoutubeSnoop.Api.Settings
         public DateTime? PublishedAfter { get; set; }
 
         /// <summary>
-        /// Indicates that the API response should only contain resources created before or at the specified time. 
+        /// Indicates that the API response should only contain resources created before or at the specified time.
         /// </summary>
         [ApiRequestConverter(typeof(DateTimeConverter))]
         public DateTime? PublishedBefore { get; set; }
@@ -78,7 +78,7 @@ namespace YoutubeSnoop.Api.Settings
         /// Note that if the relatedToVideoId parameter is set, the only other supported parameters are regionCode, relevanceLanguage, safeSearch, type (which must be set to video).
         /// </remarks>
         public string RelatedToVideoId { get; set; }
-   
+
         /// <summary>
         /// Instructs the API to return search results that are most relevant to the specified language. The parameter value is typically an ISO 639-1 two-letter language code. However, you should use the values zh-Hans for simplified Chinese and zh-Hant for traditional Chinese. Please note that results in other languages will still be returned if they are highly relevant to the search query term.
         /// </summary>

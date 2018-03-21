@@ -37,7 +37,7 @@ namespace YoutubeSnoop.Api.Entities.Videos
         public IDictionary<ThumbnailSize, Thumbnail> Thumbnails { get; set; }
 
         /// <summary>
-        /// A list of keyword tags associated with the video. Tags may contain spaces. The property value has a maximum length of 500 characters. 
+        /// A list of keyword tags associated with the video. Tags may contain spaces. The property value has a maximum length of 500 characters.
         /// </summary>
         /// <remarks>
         /// Note the following rules regarding the way the character limit is calculated:

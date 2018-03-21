@@ -42,6 +42,6 @@ namespace YoutubeSnoop.Api.Entities.ChannelSections
         /// Localized text is returned if the channelSections.list request used the hl parameter to specify a language for which localized text should be returned and localized text is available in that language.
         /// Metadata for the default language is returned if an hl parameter value is not specified or a value is specified but localized metadata is not available for the specified language.
         /// </remarks>
-        public TitleDescription Localized { get; set; } 
+        public TitleDescription Localized { get; set; }
     }
 }

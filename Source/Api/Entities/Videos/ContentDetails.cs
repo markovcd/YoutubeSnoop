@@ -9,7 +9,7 @@ namespace YoutubeSnoop.Api.Entities.Videos
     public class ContentDetails
     {
         /// <summary>
-        /// The length of the video. 
+        /// The length of the video.
         /// </summary>
         [JsonConverter(typeof(TimeSpanConverter))]
         public TimeSpan? Duration { get; set; }

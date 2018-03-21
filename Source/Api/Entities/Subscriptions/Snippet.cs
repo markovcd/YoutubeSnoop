@@ -6,7 +6,6 @@ namespace YoutubeSnoop.Api.Entities.Subscriptions
 {
     public class Snippet : TitleDescription
     {
-
         /// <summary>
         /// The date and time that the subscription was created.
         /// </summary>

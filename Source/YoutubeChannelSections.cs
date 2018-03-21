@@ -5,8 +5,10 @@ using YoutubeSnoop.Api.Settings;
 namespace YoutubeSnoop
 {
     public sealed class YoutubeChannelSections : YoutubeCollection<YoutubeChannelSection, ChannelSection, ChannelSectionApiRequestSettings>
-    {        
-        public YoutubeChannelSections(IApiRequest<ChannelSection, ChannelSectionApiRequestSettings> request) : base(request) {  }
+    {
+        public YoutubeChannelSections(IApiRequest<ChannelSection, ChannelSectionApiRequestSettings> request) : base(request)
+        {
+        }
 
         protected override YoutubeChannelSection CreateItem(ChannelSection response)
         {

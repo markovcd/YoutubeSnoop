@@ -5,8 +5,10 @@ using YoutubeSnoop.Api.Settings;
 namespace YoutubeSnoop
 {
     public sealed class YoutubeCommentThreads : YoutubeCollection<YoutubeCommentThread, CommentThread, CommentThreadApiRequestSettings>
-    {        
-        public YoutubeCommentThreads(IApiRequest<CommentThread, CommentThreadApiRequestSettings> request) : base(request) {  }
+    {
+        public YoutubeCommentThreads(IApiRequest<CommentThread, CommentThreadApiRequestSettings> request) : base(request)
+        {
+        }
 
         protected override YoutubeCommentThread CreateItem(CommentThread response)
         {

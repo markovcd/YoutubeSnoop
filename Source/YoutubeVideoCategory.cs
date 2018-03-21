@@ -1,7 +1,7 @@
-﻿using YoutubeSnoop.Enums;
-using YoutubeSnoop.Api.Settings;
+﻿using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.VideoCategories;
-using YoutubeSnoop.Api;
+using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
@@ -25,9 +25,13 @@ namespace YoutubeSnoop
         private bool _assignable;
         public bool Assignable => Set(ref _assignable);
 
-        public YoutubeVideoCategory(IApiRequest<VideoCategory, VideoCategoryApiRequestSettings> request) : base(request) { }
+        public YoutubeVideoCategory(IApiRequest<VideoCategory, VideoCategoryApiRequestSettings> request) : base(request)
+        {
+        }
 
-        public YoutubeVideoCategory(VideoCategory response) : base(response) { }
+        public YoutubeVideoCategory(VideoCategory response) : base(response)
+        {
+        }
 
         protected override void SetProperties(VideoCategory response)
         {

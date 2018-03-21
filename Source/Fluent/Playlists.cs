@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using YoutubeSnoop.Api.Entities.Playlists;
 using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
@@ -59,7 +58,7 @@ namespace YoutubeSnoop.Fluent
         public static YoutubePlaylists RequestContentDetails(this YoutubePlaylists playlists)
         {
             return playlists.RequestPart(PartType.ContentDetails);
-        }       
+        }
 
         public static YoutubePlaylists RequestStatus(this YoutubePlaylists playlists)
         {

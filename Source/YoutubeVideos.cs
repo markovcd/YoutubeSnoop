@@ -6,7 +6,9 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeVideos : YoutubeCollection<YoutubeVideo, Video, VideoApiRequestSettings>
     {
-        public YoutubeVideos(IApiRequest<Video, VideoApiRequestSettings> request) : base(request) { }
+        public YoutubeVideos(IApiRequest<Video, VideoApiRequestSettings> request) : base(request)
+        {
+        }
 
         protected override YoutubeVideo CreateItem(Video response)
         {

@@ -1,13 +1,13 @@
 ﻿using System;
-using YoutubeSnoop.Enums;
 using System.Collections.Generic;
-using YoutubeSnoop.Api.Entities.PlaylistItems;
 using YoutubeSnoop.Api.Entities;
+using YoutubeSnoop.Api.Entities.PlaylistItems;
+using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
     public sealed class YoutubePlaylistItem : IYoutubeItem
-    {     
+    {
         public ResourceKind Kind { get; }
         public string Id { get; }
         public PlaylistItem Item { get; }

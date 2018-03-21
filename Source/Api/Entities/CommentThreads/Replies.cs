@@ -5,7 +5,6 @@ namespace YoutubeSnoop.Api.Entities.CommentThreads
 {
     public class Replies
     {
-
         /// <summary>
         /// A list of one or more replies to the top-level comment. Each item in the list is a comment resource.
         /// </summary>

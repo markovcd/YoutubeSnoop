@@ -70,14 +70,18 @@ namespace YoutubeSnoop
         private SocialType _socialType;
         public SocialType SocialType => Set(ref _socialType);
 
-        public YoutubeActivity(IApiRequest<Activity, ActivityApiRequestSettings> request) : base(request) { }
+        public YoutubeActivity(IApiRequest<Activity, ActivityApiRequestSettings> request) : base(request)
+        {
+        }
 
-        public YoutubeActivity(Activity response) : base(response) { }
+        public YoutubeActivity(Activity response) : base(response)
+        {
+        }
 
         protected override void SetProperties(Activity response)
         {
             if (response == null) return;
-            
+
             _item = response;
             _id = response.Id;
             _kind = response.Kind;
@@ -101,28 +105,35 @@ namespace YoutubeSnoop
                     case ActivityType.Bulletin:
                         _resourceId = response.ContentDetails.Bulletin.ResourceId;
                         break;
+
                     case ActivityType.ChannelItem:
                         _resourceId = response.ContentDetails.ChannelItem.ResourceId;
                         break;
+
                     case ActivityType.Comment:
                         _resourceId = response.ContentDetails.Comment.ResourceId;
                         break;
+
                     case ActivityType.Favorite:
                         _resourceId = response.ContentDetails.Favorite.ResourceId;
                         break;
+
                     case ActivityType.Like:
                         _resourceId = response.ContentDetails.Like.ResourceId;
                         break;
+
                     case ActivityType.PlaylistItem:
                         _resourceId = response.ContentDetails.PlaylistItem.ResourceId;
                         _playlistId = response.ContentDetails.PlaylistItem.PlaylistId;
                         _playlistItemId = response.ContentDetails.PlaylistItem.PlaylistItemId;
-                        break;                  
+                        break;
+
                     case ActivityType.Recommendation:
                         _resourceId = response.ContentDetails.Recommendation.ResourceId;
                         _seedResourceId = response.ContentDetails.Recommendation.SeedResourceId;
                         _recommendationReason = response.ContentDetails.Recommendation.Reason.GetValueOrDefault();
                         break;
+
                     case ActivityType.Social:
                         _resourceId = response.ContentDetails.Social.ResourceId;
                         _socialAuthor = response.ContentDetails.Social.Author;
@@ -130,17 +141,18 @@ namespace YoutubeSnoop
                         _socialReferenceUrl = response.ContentDetails.Social.ReferenceUrl;
                         _socialType = response.ContentDetails.Social.Type.GetValueOrDefault();
                         break;
+
                     case ActivityType.Subscription:
                         _resourceId = response.ContentDetails.Subscription.ResourceId;
                         break;
+
                     case ActivityType.Upload:
                         _resourceId = new Resource { Kind = ResourceKind.Video, VideoId = response.ContentDetails.Upload.VideoId };
                         break;
+
                     default: throw new InvalidOperationException();
                 }
             }
-
-            
         }
     }
 }

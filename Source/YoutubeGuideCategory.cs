@@ -7,7 +7,6 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeGuideCategory : YoutubeItem<GuideCategory, GuideCategoryApiRequestSettings>, IYoutubeItem
     {
-
         private GuideCategory _item;
         public GuideCategory Item => Set(ref _item);
 
@@ -23,9 +22,13 @@ namespace YoutubeSnoop
         private string _channelId;
         public string ChannelId => Set(ref _channelId);
 
-        public YoutubeGuideCategory(IApiRequest<GuideCategory, GuideCategoryApiRequestSettings> request) : base(request) { }
+        public YoutubeGuideCategory(IApiRequest<GuideCategory, GuideCategoryApiRequestSettings> request) : base(request)
+        {
+        }
 
-        public YoutubeGuideCategory(GuideCategory response) : base(response) { }
+        public YoutubeGuideCategory(GuideCategory response) : base(response)
+        {
+        }
 
         protected override void SetProperties(GuideCategory response)
         {
@@ -38,7 +41,7 @@ namespace YoutubeSnoop
             if (response.Snippet == null) return;
 
             _title = response.Snippet.Title;
-            _channelId = response.Snippet.ChannelId;           
+            _channelId = response.Snippet.ChannelId;
         }
     }
 }

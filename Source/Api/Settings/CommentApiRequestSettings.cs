@@ -12,7 +12,7 @@ namespace YoutubeSnoop.Api.Settings
         public string Id { get; set; }
 
         /// <summary>
-        /// Specifies the ID of the comment for which replies should be retrieved. 
+        /// Specifies the ID of the comment for which replies should be retrieved.
         /// </summary>
         /// <remarks>
         /// Note: YouTube currently supports replies only for top-level comments. However, replies to replies may be supported in the future.

@@ -50,9 +50,13 @@ namespace YoutubeSnoop
         private string _parentId;
         public string ParentId => Set(ref _parentId);
 
-        public YoutubeComment(IApiRequest<Comment, CommentApiRequestSettings> request) : base(request) { }
+        public YoutubeComment(IApiRequest<Comment, CommentApiRequestSettings> request) : base(request)
+        {
+        }
 
-        public YoutubeComment(Comment response) : base(response) { }
+        public YoutubeComment(Comment response) : base(response)
+        {
+        }
 
         protected override void SetProperties(Comment response)
         {
@@ -71,10 +75,10 @@ namespace YoutubeSnoop
             _authorProfileImageUrl = response.Snippet.AuthorProfileImageUrl;
             _channelId = response.Snippet.ChannelId;
             _likeCount = response.Snippet.LikeCount.GetValueOrDefault();
-            _parentId = response.Snippet.ParentId;          
+            _parentId = response.Snippet.ParentId;
             _textDisplay = response.Snippet.TextDisplay;
             _updatedAt = response.Snippet.UpdatedAt.GetValueOrDefault();
-            _videoId = response.Snippet.VideoId;    
+            _videoId = response.Snippet.VideoId;
         }
 
         public override string ToString()

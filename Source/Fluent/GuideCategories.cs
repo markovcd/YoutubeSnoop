@@ -40,6 +40,5 @@ namespace YoutubeSnoop.Fluent
         {
             return Channel(guideCategory.Item?.Snippet?.ChannelId);
         }
-
     }
 }

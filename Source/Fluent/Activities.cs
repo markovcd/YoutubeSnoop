@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using YoutubeSnoop.Api.Entities.Activities;
 using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;

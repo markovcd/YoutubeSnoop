@@ -6,7 +6,9 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeSearch : YoutubeCollection<YoutubeSearchResult, SearchResult, SearchApiRequestSettings>
     {
-        public YoutubeSearch(IApiRequest<SearchResult, SearchApiRequestSettings> request) : base(request) { }
+        public YoutubeSearch(IApiRequest<SearchResult, SearchApiRequestSettings> request) : base(request)
+        {
+        }
 
         protected override YoutubeSearchResult CreateItem(SearchResult response)
         {

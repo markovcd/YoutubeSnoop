@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using YoutubeSnoop.Api.Entities.Videos;
 using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
@@ -111,7 +110,7 @@ namespace YoutubeSnoop.Fluent
                          .RequestTopicDetails()
                          .RequestRecordingDetails()
                          .RequestLiveStreamingDetails()
-                         .RequestSnippet(); 
+                         .RequestSnippet();
         }
 
         public static YoutubeVideo RequestPart(this YoutubeVideo video, PartType partType)

@@ -5,8 +5,10 @@ using YoutubeSnoop.Api.Settings;
 namespace YoutubeSnoop
 {
     public sealed class YoutubeActivities : YoutubeCollection<YoutubeActivity, Activity, ActivityApiRequestSettings>
-    {        
-        public YoutubeActivities(IApiRequest<Activity, ActivityApiRequestSettings> request) : base(request) {  }
+    {
+        public YoutubeActivities(IApiRequest<Activity, ActivityApiRequestSettings> request) : base(request)
+        {
+        }
 
         protected override YoutubeActivity CreateItem(Activity response)
         {

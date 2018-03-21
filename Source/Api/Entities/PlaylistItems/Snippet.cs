@@ -7,7 +7,7 @@ namespace YoutubeSnoop.Api.Entities.PlaylistItems
     public class Snippet : TitleDescription
     {
         /// <summary>
-        /// The date and time that the item was added to the playlist. 
+        /// The date and time that the item was added to the playlist.
         /// </summary>
         public DateTime? PublishedAt { get; set; }
 

@@ -1,6 +1,4 @@
-﻿using YoutubeSnoop.Enums;
-
-namespace YoutubeSnoop.Api.Entities.I18nLanguages
+﻿namespace YoutubeSnoop.Api.Entities.I18nLanguages
 {
     public class Snippet
     {

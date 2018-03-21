@@ -10,7 +10,6 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubePlaylist : YoutubeItem<Playlist, PlaylistApiRequestSettings>, IYoutubeItem
     {
-
         private Playlist _item;
         public Playlist Item => Set(ref _item);
 
@@ -41,9 +40,13 @@ namespace YoutubeSnoop
         private int _itemCount;
         public int ItemCount => Set(ref _itemCount);
 
-        public YoutubePlaylist(IApiRequest<Playlist, PlaylistApiRequestSettings> request) : base(request) { }
+        public YoutubePlaylist(IApiRequest<Playlist, PlaylistApiRequestSettings> request) : base(request)
+        {
+        }
 
-        public YoutubePlaylist(Playlist response) : base(response) { }
+        public YoutubePlaylist(Playlist response) : base(response)
+        {
+        }
 
         protected override void SetProperties(Playlist response)
         {

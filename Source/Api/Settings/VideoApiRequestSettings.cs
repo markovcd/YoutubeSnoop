@@ -43,6 +43,5 @@ namespace YoutubeSnoop.Api.Settings
         /// Identifies the video category for which the chart should be retrieved. This parameter can only be used in conjunction with the chart parameter. By default, charts are not restricted to a particular category. The default value is 0.
         /// </summary>
         public int? VideoCategoryId { get; set; }
-
     }
 }

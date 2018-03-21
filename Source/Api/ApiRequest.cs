@@ -42,7 +42,7 @@ namespace YoutubeSnoop.Api
             return Deserialize(_apiUrlFormatter, _jsonDownloader, _responseDeserializer, Settings, PartTypes, ResultsPerPage, pageToken);
         }
 
-        public static IPagedResponse<TItem> Deserialize(IApiUrlFormatter apiUrlFormatter, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TItem> responseDeserializer, 
+        public static IPagedResponse<TItem> Deserialize(IApiUrlFormatter apiUrlFormatter, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TItem> responseDeserializer,
                                                         TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, string pageToken = null)
         {
             var requestUrl = apiUrlFormatter.Format(settings, partTypes, pageToken, resultsPerPage);

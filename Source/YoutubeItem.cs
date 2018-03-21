@@ -19,9 +19,9 @@ namespace YoutubeSnoop
 
         protected YoutubeItem(TResponse response)
         {
-            #pragma warning disable RECS0021 // Don't tell me how to live my life, fucker
+#pragma warning disable RECS0021 // Don't tell me how to live my life, fucker
             SetProperties(response);
-            #pragma warning restore RECS0021
+#pragma warning restore RECS0021
 
             _propertiesSet = true;
         }
@@ -34,6 +34,5 @@ namespace YoutubeSnoop
             _propertiesSet = true;
             return field;
         }
-
     }
 }

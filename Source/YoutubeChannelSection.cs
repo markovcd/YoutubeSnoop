@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using YoutubeSnoop.Api;
-using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Api.Entities.ChannelSections;
 using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
-using System.Linq;
 
 namespace YoutubeSnoop
 {
     public sealed class YoutubeChannelSection : YoutubeItem<ChannelSection, ChannelSectionApiRequestSettings>, IYoutubeItem
     {
-
         private ChannelSection _item;
         public ChannelSection Item => Set(ref _item);
 
@@ -42,9 +39,13 @@ namespace YoutubeSnoop
         private IReadOnlyList<string> _playlistIds;
         public IReadOnlyList<string> PlaylistIds => Set(ref _playlistIds);
 
-        public YoutubeChannelSection(IApiRequest<ChannelSection, ChannelSectionApiRequestSettings> request) : base(request) { }
+        public YoutubeChannelSection(IApiRequest<ChannelSection, ChannelSectionApiRequestSettings> request) : base(request)
+        {
+        }
 
-        public YoutubeChannelSection(ChannelSection response) : base(response) { }
+        public YoutubeChannelSection(ChannelSection response) : base(response)
+        {
+        }
 
         protected override void SetProperties(ChannelSection response)
         {

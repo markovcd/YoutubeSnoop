@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using YoutubeSnoop.Enums;
+﻿using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Api.Entities
 {
@@ -14,7 +12,5 @@ namespace YoutubeSnoop.Api.Entities
         public string ChannelId { get; set; }
         public string PlaylistId { get; set; }
         public string VideoId { get; set; }
-
-        
     }
 }

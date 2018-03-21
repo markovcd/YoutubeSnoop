@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Xml;
-using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Api.Converters
 {

@@ -6,7 +6,9 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubePlaylistItems : YoutubeCollection<YoutubePlaylistItem, PlaylistItem, PlaylistItemsApiRequestSettings>
     {
-        public YoutubePlaylistItems(IApiRequest<PlaylistItem, PlaylistItemsApiRequestSettings> request) : base(request) { }
+        public YoutubePlaylistItems(IApiRequest<PlaylistItem, PlaylistItemsApiRequestSettings> request) : base(request)
+        {
+        }
 
         protected override YoutubePlaylistItem CreateItem(PlaylistItem response)
         {

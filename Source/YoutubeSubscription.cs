@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using YoutubeSnoop.Enums;
-using YoutubeSnoop.Api.Settings;
-using YoutubeSnoop.Api.Entities.Subscriptions;
-using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Api;
+using YoutubeSnoop.Api.Entities;
+using YoutubeSnoop.Api.Entities.Subscriptions;
+using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
     public sealed class YoutubeSubscription : YoutubeItem<Subscription, SubscriptionApiRequestSettings>, IYoutubeItem
     {
-
         private Subscription _item;
         public Subscription Item => Set(ref _item);
 
@@ -41,9 +40,13 @@ namespace YoutubeSnoop
         private IReadOnlyDictionary<ThumbnailSize, Thumbnail> _thumbnails;
         public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails => Set(ref _thumbnails);
 
-        public YoutubeSubscription(IApiRequest<Subscription, SubscriptionApiRequestSettings> request) : base(request) { }
+        public YoutubeSubscription(IApiRequest<Subscription, SubscriptionApiRequestSettings> request) : base(request)
+        {
+        }
 
-        public YoutubeSubscription(Subscription response) : base(response) { }
+        public YoutubeSubscription(Subscription response) : base(response)
+        {
+        }
 
         protected override void SetProperties(Subscription response)
         {

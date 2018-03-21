@@ -13,9 +13,9 @@ namespace YoutubeSnoop
 {
     public static class Extensions
     {
-        const string _playlistUrl = @"https://www.youtube.com/playlist?list={0}";
-        const string _channelUrl = @"https://www.youtube.com/channel/{0}";
-        const string _videoUrl = @"https://www.youtube.com/watch?v={0}";
+        private const string _playlistUrl = @"https://www.youtube.com/playlist?list={0}";
+        private const string _channelUrl = @"https://www.youtube.com/channel/{0}";
+        private const string _videoUrl = @"https://www.youtube.com/watch?v={0}";
 
         public static string GetDescription(this Enum value)
         {
@@ -37,7 +37,7 @@ namespace YoutubeSnoop
             var type = enumVal.GetType();
             var memInfo = type.GetMember(enumVal.ToString());
             var attributes = memInfo[0].GetCustomAttributes(typeof(T), false);
-            
+
             return (attributes.Length > 0) ? (T)attributes[0] : null;
         }
 
@@ -96,7 +96,7 @@ namespace YoutubeSnoop
             if (youtubeItem is YoutubeChannel) return string.Format(_channelUrl, youtubeItem.Id);
             if (youtubeItem is YoutubeSearchResult) return (youtubeItem as YoutubeSearchResult).Item.Id.Url();
             if (youtubeItem is YoutubePlaylistItem) return (youtubeItem as YoutubePlaylistItem).Item.Snippet.ResourceId.Url();
-        
+
             throw new InvalidOperationException();
         }
 
@@ -130,7 +130,7 @@ namespace YoutubeSnoop
         public static ResourceKind ParseResourceKind(string s)
         {
             if (string.IsNullOrWhiteSpace(s)) return ResourceKind.None;
-            
+
             s = s.Split('#')[1];
 
             if (!Enum.TryParse<ResourceKind>(s, true, out var result)) return ResourceKind.None;

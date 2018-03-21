@@ -5,7 +5,7 @@ namespace YoutubeSnoop.Api.Entities.Videos
     public class LiveStreamingDetails
     {
         /// <summary>
-        /// The time that the broadcast actually started. 
+        /// The time that the broadcast actually started.
         /// </summary>
         public DateTime? ActualStartTime { get; set; }
 
@@ -15,12 +15,12 @@ namespace YoutubeSnoop.Api.Entities.Videos
         public DateTime? ActualEndTime { get; set; }
 
         /// <summary>
-        /// The time that the broadcast is scheduled to begin. 
+        /// The time that the broadcast is scheduled to begin.
         /// </summary>
         public DateTime? ScheduledStartTime { get; set; }
 
         /// <summary>
-        /// The time that the broadcast is scheduled to end. 
+        /// The time that the broadcast is scheduled to end.
         /// </summary>
         public DateTime? ScheduledEndTime { get; set; }
 

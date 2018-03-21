@@ -6,7 +6,9 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeSubscriptions : YoutubeCollection<YoutubeSubscription, Subscription, SubscriptionApiRequestSettings>
     {
-        public YoutubeSubscriptions(IApiRequest<Subscription, SubscriptionApiRequestSettings> request) : base(request) { }
+        public YoutubeSubscriptions(IApiRequest<Subscription, SubscriptionApiRequestSettings> request) : base(request)
+        {
+        }
 
         protected override YoutubeSubscription CreateItem(Subscription response)
         {

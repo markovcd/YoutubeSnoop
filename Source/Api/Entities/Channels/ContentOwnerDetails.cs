@@ -8,7 +8,7 @@
         public string ContentOwner { get; set; }
 
         /// <summary>
-        /// The date and time of when the channel was linked to the content owner. 
+        /// The date and time of when the channel was linked to the content owner.
         /// </summary>
         public string TimeLinked { get; set; }
     }

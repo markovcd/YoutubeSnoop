@@ -1,7 +1,7 @@
 ﻿namespace YoutubeSnoop.Enums
 {
     /// <summary>
-    /// The reason that YouTube failed to process the caption track. 
+    /// The reason that YouTube failed to process the caption track.
     /// </summary>
     public enum CaptionFailureReason
     {

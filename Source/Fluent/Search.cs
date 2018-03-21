@@ -74,8 +74,5 @@ namespace YoutubeSnoop.Fluent
             request.Settings.SafeSearch = s;
             return new YoutubeSearch(request);
         }
-
- 
-
     }
 }

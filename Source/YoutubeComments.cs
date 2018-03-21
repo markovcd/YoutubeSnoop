@@ -1,13 +1,14 @@
-﻿
-using YoutubeSnoop.Api;
+﻿using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.Comments;
 using YoutubeSnoop.Api.Settings;
 
 namespace YoutubeSnoop
 {
     public sealed class YoutubeComments : YoutubeCollection<YoutubeComment, Comment, CommentApiRequestSettings>
-    {        
-        public YoutubeComments(IApiRequest<Comment, CommentApiRequestSettings> request) : base(request) {  }
+    {
+        public YoutubeComments(IApiRequest<Comment, CommentApiRequestSettings> request) : base(request)
+        {
+        }
 
         protected override YoutubeComment CreateItem(Comment response)
         {

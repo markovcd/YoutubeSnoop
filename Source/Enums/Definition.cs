@@ -2,6 +2,6 @@
 {
     public enum Definition
     {
-        Any, High, Standard, Sd, Hd 
+        Any, High, Standard, Sd, Hd
     }
 }

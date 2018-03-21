@@ -4,7 +4,6 @@ namespace YoutubeSnoop.Api.Entities
 {
     public class Response : IResponse
     {
-
         /// <summary>
         /// The Etag of this resource.
         /// </summary>

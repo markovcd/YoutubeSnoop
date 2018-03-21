@@ -5,8 +5,10 @@ using YoutubeSnoop.Api.Settings;
 namespace YoutubeSnoop
 {
     public sealed class YoutubeCaptions : YoutubeCollection<YoutubeCaption, Caption, CaptionApiRequestSettings>
-    {        
-        public YoutubeCaptions(IApiRequest<Caption, CaptionApiRequestSettings> request) : base(request) {  }
+    {
+        public YoutubeCaptions(IApiRequest<Caption, CaptionApiRequestSettings> request) : base(request)
+        {
+        }
 
         protected override YoutubeCaption CreateItem(Caption response)
         {

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities;
-using YoutubeSnoop.Api.Entities.I18nLanguages;
-using YoutubeSnoop.Api.Entities.I18nRegions;
 using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
@@ -24,7 +22,7 @@ namespace YoutubeSnoop.Fluent
             return new PagedResponseDeserializer<TItem>();
         }
 
-        private static IApiUrlFormatter DefaultUrlFormatter() 
+        private static IApiUrlFormatter DefaultUrlFormatter()
         {
             return new ApiUrlFormatter();
         }
@@ -68,6 +66,6 @@ namespace YoutubeSnoop.Fluent
                 case ResourceKind.Channel: return Channel(id);
                 default: throw new InvalidOperationException();
             }
-        }  
+        }
     }
 }

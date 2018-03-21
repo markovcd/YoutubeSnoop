@@ -1,8 +1,8 @@
 ﻿using System;
-using YoutubeSnoop.Enums;
 using System.Collections.Generic;
-using YoutubeSnoop.Api.Entities.Search;
 using YoutubeSnoop.Api.Entities;
+using YoutubeSnoop.Api.Entities.Search;
+using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
@@ -24,13 +24,13 @@ namespace YoutubeSnoop
 
             Item = response;
             Kind = (response.Id?.Kind).GetValueOrDefault();
-            Id = response.Id?.Id();           
+            Id = response.Id?.Id();
             PublishedAt = (response.Snippet?.PublishedAt).GetValueOrDefault();
             ChannelId = response.Snippet?.ChannelId;
             Title = response.Snippet?.Title;
             Description = response.Snippet?.Description;
             ChannelTitle = response.Snippet?.ChannelTitle;
             Thumbnails = response.Snippet?.Thumbnails?.Clone();
-        }       
+        }
     }
 }

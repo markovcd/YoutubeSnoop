@@ -1,7 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using YoutubeSnoop;
-using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Enums;
 
 namespace UnitTests
@@ -82,7 +80,7 @@ namespace UnitTests
         //public void GetId_ThrowsException()
         //{
         //    var invalid = new ResourceChannel { Kind = ResourceKind.GuideCategoryListResponse, ChannelId = "invalid" };
-        //    Action a = () => Extensions.Id(invalid); 
+        //    Action a = () => Extensions.Id(invalid);
 
         //    Assert.ThrowsException<InvalidOperationException>(a);
         //}

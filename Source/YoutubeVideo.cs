@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using YoutubeSnoop.Enums;
-using YoutubeSnoop.Api.Settings;
-using YoutubeSnoop.Api.Entities.Videos;
-using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Api;
+using YoutubeSnoop.Api.Entities;
+using YoutubeSnoop.Api.Entities.Videos;
+using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
     public sealed class YoutubeVideo : YoutubeItem<Video, VideoApiRequestSettings>, IYoutubeItem
     {
-
         private Video _item;
         public Video Item => Set(ref _item);
 
@@ -62,9 +61,13 @@ namespace YoutubeSnoop
         private Dimension _dimension;
         public Dimension Dimension => Set(ref _dimension);
 
-        public YoutubeVideo(IApiRequest<Video, VideoApiRequestSettings> request) : base(request) { }
+        public YoutubeVideo(IApiRequest<Video, VideoApiRequestSettings> request) : base(request)
+        {
+        }
 
-        public YoutubeVideo(Video response) : base(response) { }
+        public YoutubeVideo(Video response) : base(response)
+        {
+        }
 
         protected override void SetProperties(Video response)
         {

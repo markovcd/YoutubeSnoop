@@ -4,7 +4,7 @@
     {
         /// <summary>
         /// The ID that YouTube uses to uniquely identify the i18n language.
-        /// </summary>    
+        /// </summary>
         public string Id { get; set; }
 
         /// <summary>

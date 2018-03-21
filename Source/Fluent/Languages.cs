@@ -1,6 +1,4 @@
-﻿using System;
-using YoutubeSnoop.Api.Entities.I18nLanguages;
-using YoutubeSnoop.Api.Entities.Search;
+﻿using YoutubeSnoop.Api.Entities.I18nLanguages;
 using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 

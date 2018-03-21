@@ -6,7 +6,9 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeCountries : YoutubeCollection<YoutubeCountry, I18nRegion, I18nRegionApiRequestSettings>
     {
-        public YoutubeCountries(IApiRequest<I18nRegion, I18nRegionApiRequestSettings> request) : base(request) { }
+        public YoutubeCountries(IApiRequest<I18nRegion, I18nRegionApiRequestSettings> request) : base(request)
+        {
+        }
 
         protected override YoutubeCountry CreateItem(I18nRegion response)
         {

@@ -12,11 +12,7 @@ using YoutubeSnoop.Enums;
 namespace YoutubeSnoop
 {
     public static class Extensions
-    {
-        private const string _playlistUrl = @"https://www.youtube.com/playlist?list={0}";
-        private const string _channelUrl = @"https://www.youtube.com/channel/{0}";
-        private const string _videoUrl = @"https://www.youtube.com/watch?v={0}";
-
+    {       
         public static string GetDescription(this Enum value)
         {
             FieldInfo fieldInfo = value.GetType().GetField(value.ToString());
@@ -25,13 +21,6 @@ namespace YoutubeSnoop
             return attribute?.Description;
         }
 
-        /// <summary>
-        /// Gets an attribute on an enum field value
-        /// </summary>
-        /// <typeparam name="T">The type of the attribute you want to retrieve</typeparam>
-        /// <param name="enumVal">The enum value</param>
-        /// <returns>The attribute of type T that exists on the enum value</returns>
-        /// <example>string desc = myEnumVariable.GetAttributeOfType<DescriptionAttribute>().Description;</example>
         public static T GetAttributeOfType<T>(this Enum enumVal) where T : Attribute
         {
             var type = enumVal.GetType();
@@ -74,30 +63,6 @@ namespace YoutubeSnoop
                 case ResourceKind.Channel: return resourceId.ChannelId;
                 default: throw new InvalidOperationException();
             }
-        }
-
-        public static string Url(this Resource resourceId)
-        {
-            var id = resourceId?.Id();
-
-            switch (resourceId?.Kind)
-            {
-                case ResourceKind.Video: return string.Format(_videoUrl, id);
-                case ResourceKind.Playlist: return string.Format(_playlistUrl, id);
-                case ResourceKind.Channel: return string.Format(_channelUrl, id);
-                default: throw new InvalidOperationException();
-            }
-        }
-
-        public static string Url(this IYoutubeItem youtubeItem)
-        {
-            if (youtubeItem is YoutubeVideo) return string.Format(_videoUrl, youtubeItem.Id);
-            if (youtubeItem is YoutubePlaylist) return string.Format(_playlistUrl, youtubeItem.Id);
-            if (youtubeItem is YoutubeChannel) return string.Format(_channelUrl, youtubeItem.Id);
-            if (youtubeItem is YoutubeSearchResult) return (youtubeItem as YoutubeSearchResult).Item.Id.Url();
-            if (youtubeItem is YoutubePlaylistItem) return (youtubeItem as YoutubePlaylistItem).Item.Snippet.ResourceId.Url();
-
-            throw new InvalidOperationException();
         }
 
         public static IReadOnlyDictionary<ThumbnailSize, Thumbnail> Clone(this IDictionary<ThumbnailSize, Thumbnail> thumbnails)

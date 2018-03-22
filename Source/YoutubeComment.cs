@@ -8,9 +8,6 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeComment : YoutubeItem<Comment, CommentApiRequestSettings>, IYoutubeItem
     {
-        private Comment _item;
-        public Comment Item => Set(ref _item);
-
         private string _id;
         public string Id => Set(ref _id);
 
@@ -62,7 +59,6 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
-            _item = response;
             _id = response.Id;
             _kind = response.Kind;
 

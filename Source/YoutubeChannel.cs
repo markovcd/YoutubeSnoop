@@ -10,8 +10,7 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeChannel : YoutubeItem<Channel, ChannelApiRequestSettings>, IYoutubeItem
     {
-        private Channel _item;
-        public Channel Item => Set(ref _item);
+        private const string _channelUrl = @"https://www.youtube.com/channel/{0}";
 
         private string _id;
         public string Id => Set(ref _id);
@@ -49,6 +48,9 @@ namespace YoutubeSnoop
         private long _commentCount;
         public long CommentCount => Set(ref _commentCount);
 
+        private string _url;
+        public string Url => Set(ref _url);
+
         public YoutubeChannel(IApiRequest<Channel, ChannelApiRequestSettings> request) : base(request)
         {
         }
@@ -61,9 +63,9 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
-            _item = response;
             _id = response.Id;
             _kind = response.Kind;
+            _url = GetUrl(response.Id);
 
             if (response.Snippet != null)
             {
@@ -86,6 +88,11 @@ namespace YoutubeSnoop
                 _viewCount = response.Statistics.ViewCount.GetValueOrDefault();
                 _commentCount = response.Statistics.CommentCount.GetValueOrDefault();
             }
+        }
+
+        public static string GetUrl(string id)
+        {
+            return string.Format(_channelUrl, id);
         }
     }
 }

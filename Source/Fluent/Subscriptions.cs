@@ -9,13 +9,13 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubeSubscriptions Subscriptions(SubscriptionApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = DefaultRequest<Subscription, SubscriptionApiRequestSettings>(settings, partTypes);
+            var request = GetDefaultRequest<Subscription, SubscriptionApiRequestSettings>(settings, partTypes);
             return new YoutubeSubscriptions(request);
         }
 
         public static YoutubeSubscription Subscription(SubscriptionApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = DefaultRequest<Subscription, SubscriptionApiRequestSettings>(settings, partTypes);
+            var request = GetDefaultRequest<Subscription, SubscriptionApiRequestSettings>(settings, partTypes);
             return new YoutubeSubscription(request);
         }
 

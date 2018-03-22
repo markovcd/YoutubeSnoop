@@ -9,13 +9,13 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubeCaptions Captions(CaptionApiRequestSettings settings = null)
         {
-            var request = DefaultRequest<Caption, CaptionApiRequestSettings>(settings ?? new CaptionApiRequestSettings(), new[] { PartType.Snippet });
+            var request = GetDefaultRequest<Caption, CaptionApiRequestSettings>(settings ?? new CaptionApiRequestSettings(), new[] { PartType.Snippet });
             return new YoutubeCaptions(request);
         }
 
         public static YoutubeCaption Caption(CaptionApiRequestSettings settings = null)
         {
-            var request = DefaultRequest<Caption, CaptionApiRequestSettings>(settings ?? new CaptionApiRequestSettings(), new[] { PartType.Snippet });
+            var request = GetDefaultRequest<Caption, CaptionApiRequestSettings>(settings ?? new CaptionApiRequestSettings(), new[] { PartType.Snippet });
             return new YoutubeCaption(request);
         }
 

@@ -7,9 +7,6 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeGuideCategory : YoutubeItem<GuideCategory, GuideCategoryApiRequestSettings>, IYoutubeItem
     {
-        private GuideCategory _item;
-        public GuideCategory Item => Set(ref _item);
-
         private string _id;
         public string Id => Set(ref _id);
 
@@ -34,7 +31,6 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
-            _item = response;
             _id = response.Id;
             _kind = response.Kind;
 

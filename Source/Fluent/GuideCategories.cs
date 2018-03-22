@@ -9,13 +9,13 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubeGuideCategories GuideCategories(GuideCategoryApiRequestSettings settings = null)
         {
-            var request = DefaultRequest<GuideCategory, GuideCategoryApiRequestSettings>(settings ?? new GuideCategoryApiRequestSettings(), new[] { PartType.Snippet });
+            var request = GetDefaultRequest<GuideCategory, GuideCategoryApiRequestSettings>(settings ?? new GuideCategoryApiRequestSettings(), new[] { PartType.Snippet });
             return new YoutubeGuideCategories(request);
         }
 
         public static YoutubeGuideCategory GuideCategory(GuideCategoryApiRequestSettings settings = null)
         {
-            var request = DefaultRequest<GuideCategory, GuideCategoryApiRequestSettings>(settings ?? new GuideCategoryApiRequestSettings(), new[] { PartType.Snippet });
+            var request = GetDefaultRequest<GuideCategory, GuideCategoryApiRequestSettings>(settings ?? new GuideCategoryApiRequestSettings(), new[] { PartType.Snippet });
             return new YoutubeGuideCategory(request);
         }
 
@@ -38,7 +38,8 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeChannel Channel(this YoutubeGuideCategory guideCategory)
         {
-            return Channel(guideCategory.Item?.Snippet?.ChannelId);
+            if (guideCategory.ChannelId == null) return null;
+            return Channel(guideCategory.ChannelId);
         }
     }
 }

@@ -9,13 +9,13 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubeVideoCategories VideoCategories(VideoCategoryApiRequestSettings settings = null)
         {
-            var request = DefaultRequest<VideoCategory, VideoCategoryApiRequestSettings>(settings ?? new VideoCategoryApiRequestSettings(), new[] { PartType.Snippet });
+            var request = GetDefaultRequest<VideoCategory, VideoCategoryApiRequestSettings>(settings ?? new VideoCategoryApiRequestSettings(), new[] { PartType.Snippet });
             return new YoutubeVideoCategories(request);
         }
 
         public static YoutubeVideoCategory VideoCategory(VideoCategoryApiRequestSettings settings = null)
         {
-            var request = DefaultRequest<VideoCategory, VideoCategoryApiRequestSettings>(settings ?? new VideoCategoryApiRequestSettings(), new[] { PartType.Snippet });
+            var request = GetDefaultRequest<VideoCategory, VideoCategoryApiRequestSettings>(settings ?? new VideoCategoryApiRequestSettings(), new[] { PartType.Snippet });
             return new YoutubeVideoCategory(request);
         }
 

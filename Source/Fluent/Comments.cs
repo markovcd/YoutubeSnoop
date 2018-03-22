@@ -9,13 +9,13 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubeComments Comments(CommentApiRequestSettings settings = null)
         {
-            var request = DefaultRequest<Comment, CommentApiRequestSettings>(settings, new[] { PartType.Snippet });
+            var request = GetDefaultRequest<Comment, CommentApiRequestSettings>(settings, new[] { PartType.Snippet });
             return new YoutubeComments(request);
         }
 
         public static YoutubeComment Comment(CommentApiRequestSettings settings = null)
         {
-            var request = DefaultRequest<Comment, CommentApiRequestSettings>(settings, new[] { PartType.Snippet });
+            var request = GetDefaultRequest<Comment, CommentApiRequestSettings>(settings, new[] { PartType.Snippet });
             return new YoutubeComment(request);
         }
 

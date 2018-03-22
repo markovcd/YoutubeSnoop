@@ -1,4 +1,5 @@
-﻿using YoutubeSnoop.Api.Entities.PlaylistItems;
+﻿using System;
+using YoutubeSnoop.Api.Entities.PlaylistItems;
 using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
@@ -8,7 +9,7 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubePlaylistItems PlaylistItems(PlaylistItemsApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = DefaultRequest<PlaylistItem, PlaylistItemsApiRequestSettings>(settings, partTypes);
+            var request = GetDefaultRequest<PlaylistItem, PlaylistItemsApiRequestSettings>(settings, partTypes);
             return new YoutubePlaylistItems(request);
         }
 
@@ -45,7 +46,13 @@ namespace YoutubeSnoop.Fluent
 
         public static IYoutubeItem Details(this YoutubePlaylistItem playlistItem)
         {
-            return playlistItem.Item.Snippet?.ResourceId?.Details();
+            switch (playlistItem.ItemKind)
+            {
+                case ResourceKind.Video: return Video(playlistItem.ItemId);
+                case ResourceKind.Playlist: return Playlist(playlistItem.ItemId);
+                case ResourceKind.Channel: return Channel(playlistItem.ItemId);
+                default: throw new InvalidOperationException();
+            }
         }
 
         public static TItem Details<TItem>(this YoutubePlaylistItem playlistItem) where TItem : class, IYoutubeItem

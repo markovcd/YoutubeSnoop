@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities;
@@ -22,23 +21,23 @@ namespace YoutubeSnoop.Fluent
             return new PagedResponseDeserializer<TItem>();
         }
 
-        private static IApiUrlFormatter DefaultUrlFormatter()
+        private static IApiUrlFormatter GetDefaultUrlFormatter()
         {
             return new ApiUrlFormatter();
         }
 
-        public static IApiRequest<TItem, TSettings> DefaultRequest<TItem, TSettings>(TSettings settings, IEnumerable<PartType> partTypes)
+        public static IApiRequest<TItem, TSettings> GetDefaultRequest<TItem, TSettings>(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage = 20)
             where TItem : class, IResponse
             where TSettings : IApiRequestSettings
         {
-            return new ApiRequest<TItem, TSettings>(settings, partTypes, ResultsPerPage, GetDefaultJsonDownloader(), DefaultDeserializer<TItem>(), DefaultUrlFormatter());
+            return new ApiRequest<TItem, TSettings>(settings, partTypes, resultsPerPage, GetDefaultJsonDownloader(), DefaultDeserializer<TItem>(), GetDefaultUrlFormatter());
         }
 
         public static IApiRequest<TItem, TSettings> Clone<TItem, TSettings>(this IApiRequest<TItem, TSettings> request, IEnumerable<PartType> partTypes)
             where TItem : class, IResponse
             where TSettings : IApiRequestSettings
         {
-            return new ApiRequest<TItem, TSettings>((TSettings)request.Settings.Clone(), partTypes, ResultsPerPage, GetDefaultJsonDownloader(), DefaultDeserializer<TItem>(), DefaultUrlFormatter());
+            return new ApiRequest<TItem, TSettings>((TSettings)request.Settings.Clone(), partTypes, ResultsPerPage, GetDefaultJsonDownloader(), DefaultDeserializer<TItem>(), GetDefaultUrlFormatter());
         }
 
         public static IApiRequest<TItem, TSettings> Clone<TItem, TSettings>(this IApiRequest<TItem, TSettings> request)
@@ -53,19 +52,6 @@ namespace YoutubeSnoop.Fluent
             where TSettings : IApiRequestSettings
         {
             return request.Clone(request.PartTypes.Concat(new[] { partType }).Distinct());
-        }
-
-        public static IYoutubeItem Details(this Resource resourceId)
-        {
-            var id = resourceId.Id();
-
-            switch (resourceId.Kind)
-            {
-                case ResourceKind.Video: return Video(id);
-                case ResourceKind.Playlist: return Playlist(id);
-                case ResourceKind.Channel: return Channel(id);
-                default: throw new InvalidOperationException();
-            }
         }
     }
 }

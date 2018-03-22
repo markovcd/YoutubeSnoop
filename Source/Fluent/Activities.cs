@@ -9,13 +9,13 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubeActivities Activities(ActivityApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = DefaultRequest<Activity, ActivityApiRequestSettings>(settings, partTypes);
+            var request = GetDefaultRequest<Activity, ActivityApiRequestSettings>(settings, partTypes);
             return new YoutubeActivities(request);
         }
 
         public static YoutubeActivity Activity(ActivityApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = DefaultRequest<Activity, ActivityApiRequestSettings>(settings, partTypes);
+            var request = GetDefaultRequest<Activity, ActivityApiRequestSettings>(settings, partTypes);
             return new YoutubeActivity(request);
         }
 

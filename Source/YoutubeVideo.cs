@@ -10,8 +10,7 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeVideo : YoutubeItem<Video, VideoApiRequestSettings>, IYoutubeItem
     {
-        private Video _item;
-        public Video Item => Set(ref _item);
+        private const string _videoUrl = @"https://www.youtube.com/watch?v={0}";
 
         private string _id;
         public string Id => Set(ref _id);
@@ -61,6 +60,9 @@ namespace YoutubeSnoop
         private Dimension _dimension;
         public Dimension Dimension => Set(ref _dimension);
 
+        private string _url;
+        public string Url => Set(ref _url);
+
         public YoutubeVideo(IApiRequest<Video, VideoApiRequestSettings> request) : base(request)
         {
         }
@@ -73,9 +75,9 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
-            _item = response;
             _id = response.Id;
             _kind = response.Kind;
+            _url = GetUrl(response.Id);
 
             if (response.Snippet != null)
             {
@@ -102,6 +104,11 @@ namespace YoutubeSnoop
                 _definition = response.ContentDetails.Definition.GetValueOrDefault();
                 _dimension = response.ContentDetails.Dimension.GetValueOrDefault();
             }
+        }
+
+        public static string GetUrl(string id)
+        {
+            return string.Format(_videoUrl, id);
         }
     }
 }

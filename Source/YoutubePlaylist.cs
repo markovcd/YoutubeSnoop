@@ -10,8 +10,7 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubePlaylist : YoutubeItem<Playlist, PlaylistApiRequestSettings>, IYoutubeItem
     {
-        private Playlist _item;
-        public Playlist Item => Set(ref _item);
+        private const string _playlistUrl = @"https://www.youtube.com/playlist?list={0}";
 
         private string _id;
         public string Id => Set(ref _id);
@@ -40,6 +39,9 @@ namespace YoutubeSnoop
         private int _itemCount;
         public int ItemCount => Set(ref _itemCount);
 
+        private string _url;
+        public string Url => Set(ref _url);
+
         public YoutubePlaylist(IApiRequest<Playlist, PlaylistApiRequestSettings> request) : base(request)
         {
         }
@@ -52,9 +54,9 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
-            _item = response;
             _id = response.Id;
             _kind = response.Kind;
+            _url = GetUrl(response.Id);
 
             if (response.Snippet != null)
             {
@@ -70,6 +72,11 @@ namespace YoutubeSnoop
             {
                 _itemCount = response.ContentDetails.ItemCount.GetValueOrDefault();
             }
+        }
+
+        public static string GetUrl(string id)
+        {
+            return string.Format(_playlistUrl, id);
         }
     }
 }

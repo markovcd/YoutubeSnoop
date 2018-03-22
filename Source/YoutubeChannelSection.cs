@@ -9,9 +9,6 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeChannelSection : YoutubeItem<ChannelSection, ChannelSectionApiRequestSettings>, IYoutubeItem
     {
-        private ChannelSection _item;
-        public ChannelSection Item => Set(ref _item);
-
         private string _id;
         public string Id => Set(ref _id);
 
@@ -51,7 +48,6 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
-            _item = response;
             _id = response.Id;
             _kind = response.Kind;
 

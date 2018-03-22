@@ -9,7 +9,7 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubeSearch Search(SearchApiRequestSettings settings = null)
         {
-            var request = DefaultRequest<SearchResult, SearchApiRequestSettings>(settings ?? new SearchApiRequestSettings(), new[] { PartType.Snippet });
+            var request = GetDefaultRequest<SearchResult, SearchApiRequestSettings>(settings ?? new SearchApiRequestSettings(), new[] { PartType.Snippet });
             return new YoutubeSearch(request);
         }
 

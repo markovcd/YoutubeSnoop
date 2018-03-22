@@ -10,9 +10,6 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeActivity : YoutubeItem<Activity, ActivityApiRequestSettings>, IYoutubeItem
     {
-        private Activity _item;
-        public Activity Item => Set(ref _item);
-
         private string _id;
         public string Id => Set(ref _id);
 
@@ -82,7 +79,6 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
-            _item = response;
             _id = response.Id;
             _kind = response.Kind;
 

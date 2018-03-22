@@ -9,13 +9,13 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubeChannelSections ChannelSections(ChannelSectionApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = DefaultRequest<ChannelSection, ChannelSectionApiRequestSettings>(settings, partTypes);
+            var request = GetDefaultRequest<ChannelSection, ChannelSectionApiRequestSettings>(settings, partTypes);
             return new YoutubeChannelSections(request);
         }
 
         public static YoutubeChannelSection ChannelSection(ChannelSectionApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = DefaultRequest<ChannelSection, ChannelSectionApiRequestSettings>(settings, partTypes);
+            var request = GetDefaultRequest<ChannelSection, ChannelSectionApiRequestSettings>(settings, partTypes);
             return new YoutubeChannelSection(request);
         }
 

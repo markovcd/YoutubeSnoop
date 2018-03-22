@@ -7,19 +7,17 @@ namespace YoutubeSnoop
     {
         public ResourceKind Kind { get; }
         public string Id { get; }
-        public I18nLanguage Item { get; }
         public string LanguageCode { get; }
         public string LanguageName { get; }
 
-        public YoutubeLanguage(I18nLanguage language)
+        public YoutubeLanguage(I18nLanguage response)
         {
-            if (language == null) return;
+            if (response == null) return;
 
-            Item = language;
-            Kind = language.Kind;
-            Id = language.Id;
-            LanguageCode = language.Snippet?.Hl;
-            LanguageName = language.Snippet?.Name;
+            Kind = response.Kind;
+            Id = response.Id;
+            LanguageCode = response.Snippet?.Hl;
+            LanguageName = response.Snippet?.Name;
         }
 
         public YoutubeLanguage(string languageCode, string languageName)

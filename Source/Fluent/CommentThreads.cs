@@ -9,13 +9,13 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubeCommentThreads CommentThreads(CommentThreadApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = DefaultRequest<CommentThread, CommentThreadApiRequestSettings>(settings, partTypes);
+            var request = GetDefaultRequest<CommentThread, CommentThreadApiRequestSettings>(settings, partTypes);
             return new YoutubeCommentThreads(request);
         }
 
         public static YoutubeCommentThread CommentThread(CommentThreadApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = DefaultRequest<CommentThread, CommentThreadApiRequestSettings>(settings, partTypes);
+            var request = GetDefaultRequest<CommentThread, CommentThreadApiRequestSettings>(settings, partTypes);
             return new YoutubeCommentThread(request);
         }
 

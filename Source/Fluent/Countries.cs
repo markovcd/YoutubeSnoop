@@ -9,7 +9,7 @@ namespace YoutubeSnoop.Fluent
         public static YoutubeCountries Countries(string languageCode = "")
         {
             var settings = new I18nRegionApiRequestSettings { Hl = languageCode };
-            var request = DefaultRequest<I18nRegion, I18nRegionApiRequestSettings>(settings, new[] { PartType.Snippet });
+            var request = GetDefaultRequest<I18nRegion, I18nRegionApiRequestSettings>(settings, new[] { PartType.Snippet });
             return new YoutubeCountries(request);
         }
     }

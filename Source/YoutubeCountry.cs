@@ -7,19 +7,17 @@ namespace YoutubeSnoop
     {
         public ResourceKind Kind { get; }
         public string Id { get; }
-        public I18nRegion Item { get; }
         public string CountryCode { get; }
         public string CountryName { get; }
 
-        public YoutubeCountry(I18nRegion region)
+        public YoutubeCountry(I18nRegion response)
         {
-            if (region == null) return;
+            if (response == null) return;
 
-            Item = region;
-            Kind = region.Kind;
-            Id = region.Id;
-            CountryCode = region.Snippet?.Gl;
-            CountryName = region.Snippet?.Name;
+            Kind = response.Kind;
+            Id = response.Id;
+            CountryCode = response.Snippet?.Gl;
+            CountryName = response.Snippet?.Name;
         }
 
         public YoutubeCountry(string countryCode, string countryName)

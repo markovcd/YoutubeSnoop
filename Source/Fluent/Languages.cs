@@ -9,7 +9,7 @@ namespace YoutubeSnoop.Fluent
         public static YoutubeLanguages Languages(string languageCode = "")
         {
             var settings = new I18nLanguageApiRequestSettings { Hl = languageCode };
-            var request = DefaultRequest<I18nLanguage, I18nLanguageApiRequestSettings>(settings, new[] { PartType.Snippet });
+            var request = GetDefaultRequest<I18nLanguage, I18nLanguageApiRequestSettings>(settings, new[] { PartType.Snippet });
             return new YoutubeLanguages(request);
         }
     }

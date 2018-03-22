@@ -9,13 +9,13 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubeChannels Channels(ChannelApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = DefaultRequest<Channel, ChannelApiRequestSettings>(settings, partTypes);
+            var request = GetDefaultRequest<Channel, ChannelApiRequestSettings>(settings, partTypes);
             return new YoutubeChannels(request);
         }
 
         public static YoutubeChannel Channel(ChannelApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = DefaultRequest<Channel, ChannelApiRequestSettings>(settings, partTypes);
+            var request = GetDefaultRequest<Channel, ChannelApiRequestSettings>(settings, partTypes);
             return new YoutubeChannel(request);
         }
 

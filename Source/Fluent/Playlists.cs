@@ -9,13 +9,13 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubePlaylists Playlists(PlaylistApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = DefaultRequest<Playlist, PlaylistApiRequestSettings>(settings, partTypes);
+            var request = GetDefaultRequest<Playlist, PlaylistApiRequestSettings>(settings, partTypes);
             return new YoutubePlaylists(request);
         }
 
         public static YoutubePlaylist Playlist(PlaylistApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = DefaultRequest<Playlist, PlaylistApiRequestSettings>(settings, partTypes);
+            var request = GetDefaultRequest<Playlist, PlaylistApiRequestSettings>(settings, partTypes);
             return new YoutubePlaylist(request);
         }
 

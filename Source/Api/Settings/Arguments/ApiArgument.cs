@@ -4,31 +4,31 @@ namespace YoutubeSnoop.Api.Settings.Arguments
 {
     public class ApiArgument
     {
-        public string ArgumentName { get; }
-        public string ArgumentValue { get; }
+        public string Name { get; }
+        public string Value { get; }
 
         public ApiArgument(string argumentName, string argumentValue)
         {
             if (string.IsNullOrWhiteSpace(argumentName)) throw new ArgumentNullException(nameof(argumentName));
 
-            ArgumentName = argumentName;
-            ArgumentValue = argumentValue;
+            Name = argumentName;
+            Value = argumentValue;
         }
 
         public override string ToString()
         {
-            if (string.IsNullOrEmpty(ArgumentValue)) return string.Empty;
-            return $"{ArgumentName}={ArgumentValue}";
+            if (string.IsNullOrEmpty(Value)) return string.Empty;
+            return $"{Name}={Value}";
         }
     }
 
     public class ApiArgument<T> : ApiArgument
     {
-        public T Value { get; }
+        public new T Value { get; }
 
-        public ApiArgument(string argumentName, T argumentValue) : base(argumentName, argumentValue?.ToString().ToCamelCase())
+        public ApiArgument(string name, T value) : base(name, value?.ToString().ToCamelCase())
         {
-            Value = argumentValue;
+            Value = value;
         }
     }
 }

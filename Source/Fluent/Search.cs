@@ -47,6 +47,31 @@ namespace YoutubeSnoop.Fluent
             return new YoutubeSearch(request);
         }
 
+        public static YoutubeSearch OrderByDate(this YoutubeSearch search)
+        {
+            return search.OrderBy(SearchOrder.Date);
+        }
+        public static YoutubeSearch OrderByRating(this YoutubeSearch search)
+        {
+            return search.OrderBy(SearchOrder.Rating);
+        }
+        public static YoutubeSearch OrderByRelevance(this YoutubeSearch search)
+        {
+            return search.OrderBy(SearchOrder.Relevance);
+        }
+        public static YoutubeSearch OrderByTitle(this YoutubeSearch search)
+        {
+            return search.OrderBy(SearchOrder.Title);
+        }
+        public static YoutubeSearch OrderByVideoCount(this YoutubeSearch search)
+        {
+            return search.OrderBy(SearchOrder.VideoCount);
+        }
+        public static YoutubeSearch OrderByViewCount(this YoutubeSearch search)
+        {
+            return search.OrderBy(SearchOrder.ViewCount);
+        }
+
         public static YoutubeSearch PublishedAfter(this YoutubeSearch search, DateTime d)
         {
             var request = search.Request.Clone();

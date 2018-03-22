@@ -205,6 +205,11 @@ namespace YoutubeSnoop.Fluent
             return Search().ForChannelId(channel.Id);
         }
 
+        public static YoutubeSearch Search(this YoutubeChannel channel, string query)
+        {
+            return Search(query).ForChannelId(channel.Id);
+        }
+
         public static YoutubeCommentThreads Comments(this YoutubeChannel channel)
         {
             return CommentThreads().ForChannelId(channel.Id);

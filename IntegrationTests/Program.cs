@@ -6,6 +6,7 @@ using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Api.Entities.Videos;
 using YoutubeSnoop.Enums;
 using System.Linq;
+using YoutubeSnoop.Api.Entities.Search;
 
 namespace IntegrationTests
 {
@@ -36,7 +37,13 @@ namespace IntegrationTests
             //Console.WriteLine(vid.Title);
 
             //var popular = Youtube.Videos().MostPopular().Take(2).ToList();
+            var settings = new SearchApiRequestSettings { Query = "minecraft" };
+            var downloader = new JsonDownloader();
+            var deserializer = new PagedResponseDeserializer<SearchResult>();
+            var urlFormatter = new ApiUrlFormatter();
 
+            var request = ApiRequest.Create(settings, null, 20, downloader, deserializer, urlFormatter);
+            var first = request.FirstItem;
         }
     }
 }

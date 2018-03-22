@@ -7,6 +7,16 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Api
 {
+    public static class ApiRequest
+    {
+        public static ApiRequest<TItem, TSettings> Create<TItem, TSettings>(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TItem> responseDeserializer, IApiUrlFormatter apiUrlFormatter)
+            where TItem : class, IResponse
+            where TSettings : IApiRequestSettings
+        {
+            return new ApiRequest<TItem, TSettings>(settings,partTypes, resultsPerPage, jsonDownloader, responseDeserializer, apiUrlFormatter);
+        }
+    }
+
     /// <summary>
     /// Core functionality class of YoutubeSnoop. 
     /// </summary>

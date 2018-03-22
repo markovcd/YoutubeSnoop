@@ -35,19 +35,6 @@ namespace YoutubeSnoop
             return (attributes.Length > 0) ? (T)attributes[0] : null;
         }
 
-        public static Type GetMappedResponse(this ResourceKind kind)
-        {
-            if (kind == ResourceKind.None) throw new InvalidOperationException();
-
-            var entityAttr = kind.GetAttributeOfType<EntityMappingAttribute>();
-            if (entityAttr != null) return entityAttr.EntityType;
-
-            var apiAttr = kind.GetAttributeOfType<ApiMappingAttribute>();
-            if (apiAttr == null) return null;
-
-            return typeof(PagedResponse<>).MakeGenericType(apiAttr.EntityType);
-        }
-
         public static string ToCamelCase(this string value)
         {
             if (string.IsNullOrEmpty(value)) return null;

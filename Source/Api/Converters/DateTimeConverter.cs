@@ -3,9 +3,9 @@ using System.Xml;
 
 namespace YoutubeSnoop.Api.Converters
 {
-    public class DateTimeConverter : IApiRequestConverter
+    public class DateTimeConverter : ApiRequestConverter<DateTime?>
     {
-        public string Convert(object value)
+        public override string Convert(DateTime? value)
         {
             if (value == null) return null;
             return XmlConvert.ToString((DateTime)value, XmlDateTimeSerializationMode.Utc);

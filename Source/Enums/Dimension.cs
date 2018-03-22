@@ -4,7 +4,7 @@ using YoutubeSnoop.Api.Converters;
 
 namespace YoutubeSnoop.Enums
 {
-    [JsonConverter(typeof(EnumDescriptionConverter))]
+    [JsonConverter(typeof(DimensionConverter))]
     public enum Dimension
     {
         [Description("any")]

@@ -31,7 +31,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeCommentThreads CommentThreads(params string[] ids)
         {
-            return CommentThreads(new CommentThreadApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
+            return CommentThreads(new CommentThreadApiRequestSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeCommentThread CommentThread(string id)

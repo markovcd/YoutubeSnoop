@@ -3,6 +3,9 @@ using YoutubeSnoop.Api.Exceptions;
 
 namespace YoutubeSnoop.Api
 {
+    /// <summary>
+    /// Default downloader for JSON data from Youtube. Use this in the constructor of ApiRequest class.
+    /// </summary>
     public class JsonDownloader : IJsonDownloader
     {
         public static string Download(string url)

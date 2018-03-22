@@ -21,7 +21,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeGuideCategories GuideCategories(params string[] ids)
         {
-            return GuideCategories(new GuideCategoryApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
+            return GuideCategories(new GuideCategoryApiRequestSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeGuideCategory GuideCategory(string id)

@@ -31,7 +31,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeChannelSections ChannelSections(params string[] ids)
         {
-            return ChannelSections(new ChannelSectionApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
+            return ChannelSections(new ChannelSectionApiRequestSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeChannelSection ChannelSection(string id)

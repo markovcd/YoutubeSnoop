@@ -57,13 +57,13 @@ namespace YoutubeSnoop.Api.Settings
         /// <summary>
         /// Indicates that the API response should only contain resources created at or after the specified time.
         /// </summary>
-        [ApiRequestConverter(typeof(DateTimeConverter))]
+        [ApiRequestConvert(typeof(DateTimeConverter))]
         public DateTime? PublishedAfter { get; set; }
 
         /// <summary>
         /// Indicates that the API response should only contain resources created before or at the specified time.
         /// </summary>
-        [ApiRequestConverter(typeof(DateTimeConverter))]
+        [ApiRequestConvert(typeof(DateTimeConverter))]
         public DateTime? PublishedBefore { get; set; }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace YoutubeSnoop.Api.Settings
         /// <summary>
         /// Lets you restrict a search to only retrieve 2D or 3D videos. If you specify a value for this parameter, you must also set the type parameter's value to video.
         /// </summary>
-        [ApiRequestConverter(typeof(EnumDescriptionConverter))]
+        [ApiRequestConvert(typeof(EnumDescriptionConverter))]
         public Dimension? VideoDimension { get; set; }
 
         /// <summary>

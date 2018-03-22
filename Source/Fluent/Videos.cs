@@ -31,7 +31,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeVideos Videos(params string[] ids)
         {
-            return Videos(new VideoApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
+            return Videos(new VideoApiRequestSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeVideo Video(string id)

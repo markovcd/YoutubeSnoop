@@ -8,6 +8,9 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Api.Settings
 {
+    /// <summary>
+    /// Override this class to specify settings structure for API request.
+    /// </summary>
     public abstract class ApiRequestSettings : IApiRequestSettings
     {
         [ApiRequestIgnore]
@@ -20,7 +23,7 @@ namespace YoutubeSnoop.Api.Settings
 
             foreach (var property in properties)
             {
-                var converter = property.GetCustomAttribute<ApiRequestConverterAttribute>(true)?.Converter;
+                var converter = property.GetCustomAttribute<ApiRequestConvertAttribute>(true)?.Converter;
 
                 var name = property.GetCustomAttribute<ApiRequestArgumentNameAttribute>(true)?.Name ?? property.Name.ToCamelCase();
 

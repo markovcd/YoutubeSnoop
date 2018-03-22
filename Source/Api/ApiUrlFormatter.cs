@@ -6,6 +6,9 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Api
 {
+    /// <summary>
+    /// Default API request URL formatter for YoutubeSnoop. Use this in the constructor of ApiRequest class.
+    /// </summary>
     public class ApiUrlFormatter : IApiUrlFormatter
     {
         private const string _apiUrl = "https://www.googleapis.com/youtube/v3/{0}?{1}";
@@ -30,7 +33,7 @@ namespace YoutubeSnoop.Api
 
             var argumentString = arguments.Select(a => a.ToString())
                                           .Where(s => !string.IsNullOrEmpty(s))
-                                          .Aggregate((s1, s2) => $"{s1}&{s2}");
+                                          .Aggregate('&');
 
             return string.Format(_apiUrl, settings.RequestType.ToCamelCase(), argumentString);
         }

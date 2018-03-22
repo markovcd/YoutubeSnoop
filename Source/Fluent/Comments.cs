@@ -21,7 +21,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeComments Comments(params string[] ids)
         {
-            return Comments(new CommentApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
+            return Comments(new CommentApiRequestSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeComment Comment(string id)

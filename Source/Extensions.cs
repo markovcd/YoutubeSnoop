@@ -12,7 +12,12 @@ using YoutubeSnoop.Enums;
 namespace YoutubeSnoop
 {
     public static class Extensions
-    {       
+    {
+        public static string Aggregate<T>(this IEnumerable<T> items, char separator = ',')
+        {
+            return items.Select(i => i.ToString()).Aggregate((s1, s2) => $"{s1}{separator}{s2}");
+        }
+
         public static string GetDescription(this Enum value)
         {
             FieldInfo fieldInfo = value.GetType().GetField(value.ToString());
@@ -108,7 +113,7 @@ namespace YoutubeSnoop
             return s?.Split(',')
                      .Concat(items)
                      .Distinct()
-                     .Aggregate((s1, s2) => $"{s1},{s2}");
+                     .Aggregate();
         }
     }
 }

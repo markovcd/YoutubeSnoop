@@ -6,6 +6,10 @@ using YoutubeSnoop.Api.Entities;
 
 namespace YoutubeSnoop.Api
 {
+    /// <summary>
+    /// Enumerator for paged results of Youtube API response. Don't use directly - it is used by ApiRequest internally.
+    /// </summary>
+    /// <typeparam name="TItem"></typeparam>
     public class PagedResponseEnumerator<TItem> : IEnumerator<IPagedResponse<TItem>>
         where TItem : IResponse
     {

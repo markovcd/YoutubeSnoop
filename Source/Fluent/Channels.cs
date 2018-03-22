@@ -31,7 +31,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeChannels Channels(params string[] ids)
         {
-            return Channels(new ChannelApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
+            return Channels(new ChannelApiRequestSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeChannel Channel(string id)

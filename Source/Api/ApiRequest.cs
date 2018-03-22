@@ -7,6 +7,11 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Api
 {
+    /// <summary>
+    /// Core functionality class of YoutubeSnoop. 
+    /// </summary>
+    /// <typeparam name="TItem"></typeparam>
+    /// <typeparam name="TSettings"></typeparam>
     public class ApiRequest<TItem, TSettings> : IApiRequest<TItem, TSettings>
         where TItem : class, IResponse
         where TSettings : IApiRequestSettings

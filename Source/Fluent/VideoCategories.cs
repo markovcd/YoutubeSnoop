@@ -21,7 +21,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeVideoCategories VideoCategories(params string[] ids)
         {
-            return VideoCategories(new VideoCategoryApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
+            return VideoCategories(new VideoCategoryApiRequestSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeVideoCategory VideoCategory(string id)

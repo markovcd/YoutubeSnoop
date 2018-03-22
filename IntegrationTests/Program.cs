@@ -33,6 +33,8 @@ namespace IntegrationTests
             var vids = chan.Uploads().Take(10).ToList();
             var vid = vids.First().Details<YoutubeVideo>();
             Console.WriteLine(vid.Title);
+
+            var popular = Youtube.Videos().MostPopular().Take(2).ToList();
         }
     }
 }

@@ -31,7 +31,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeSubscriptions Subscriptions(params string[] ids)
         {
-            return Subscriptions(new SubscriptionApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
+            return Subscriptions(new SubscriptionApiRequestSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeSubscription Subscription(string id)

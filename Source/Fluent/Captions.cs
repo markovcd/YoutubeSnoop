@@ -21,7 +21,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeCaptions Captions(params string[] ids)
         {
-            return Captions(new CaptionApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
+            return Captions(new CaptionApiRequestSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeCaption Caption(string id)

@@ -17,13 +17,13 @@ namespace YoutubeSnoop.Api.Settings
         /// <summary>
         /// Specifies the earliest date and time that an activity could have occurred for that activity to be included in the API response. If the parameter value specifies a day, but not a time, then any activities that occurred that day will be included in the result set.
         /// </summary>
-        [ApiRequestConverter(typeof(DateTimeConverter))]
+        [ApiRequestConvertAttribute(typeof(DateTimeConverter))]
         public DateTime? PublishedAfter { get; set; }
 
         /// <summary>
         /// Specifies the date and time before which an activity must have occurred for that activity to be included in the API response. If the parameter value specifies a day, but not a time, then any activities that occurred that day will be excluded from the result set.
         /// </summary>
-        [ApiRequestConverter(typeof(DateTimeConverter))]
+        [ApiRequestConvertAttribute(typeof(DateTimeConverter))]
         public DateTime? PublishedBefore { get; set; }
 
         /// <summary>

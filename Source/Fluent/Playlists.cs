@@ -31,7 +31,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubePlaylists Playlists(params string[] ids)
         {
-            return Playlists(new PlaylistApiRequestSettings { Id = ids.Aggregate((s1, s2) => $"{s1},{s2}") });
+            return Playlists(new PlaylistApiRequestSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubePlaylist Playlist(string id)

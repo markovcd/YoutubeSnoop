@@ -2,6 +2,9 @@
 
 namespace YoutubeSnoop.Api.Attributes
 {
+    /// <summary>
+    /// Not currently used.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
     public sealed class ApiMappingAttribute : Attribute
     {

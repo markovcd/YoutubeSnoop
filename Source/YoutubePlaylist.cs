@@ -50,6 +50,10 @@ namespace YoutubeSnoop
         {
         }
 
+        public YoutubePlaylist(PlaylistApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        {
+        }
+
         protected override void SetProperties(Playlist response)
         {
             if (response == null) return;

@@ -38,6 +38,10 @@ namespace YoutubeSnoop
         {
         }
 
+        public YoutubeCommentThread(CommentThreadApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        {
+        }
+
         protected override void SetProperties(CommentThread response)
         {
             if (response == null) return;

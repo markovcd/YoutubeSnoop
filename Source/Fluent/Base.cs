@@ -11,27 +11,27 @@ namespace YoutubeSnoop.Fluent
     {
         public static int ResultsPerPage { get; set; } = 20;
 
-        private static IJsonDownloader GetDefaultJsonDownloader()
-        {
-            return new JsonDownloader();
-        }
+        //private static IJsonDownloader GetDefaultJsonDownloader()
+        //{
+        //    return new JsonDownloader();
+        //}
 
-        private static IPagedResponseDeserializer<TItem> DefaultDeserializer<TItem>() where TItem : IResponse
-        {
-            return new PagedResponseDeserializer<TItem>();
-        }
+        //private static IPagedResponseDeserializer<TItem> DefaultDeserializer<TItem>() where TItem : IResponse
+        //{
+        //    return new PagedResponseDeserializer<TItem>();
+        //}
 
-        private static IApiUrlFormatter GetDefaultUrlFormatter()
-        {
-            return new ApiUrlFormatter();
-        }
+        //private static IApiUrlFormatter GetDefaultUrlFormatter()
+        //{
+        //    return new ApiUrlFormatter();
+        //}
 
-        public static IApiRequest<TItem, TSettings> GetDefaultRequest<TItem, TSettings>(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage = 20)
-            where TItem : class, IResponse
-            where TSettings : IApiRequestSettings
-        {
-            return new ApiRequest<TItem, TSettings>(settings, partTypes, resultsPerPage, GetDefaultJsonDownloader(), DefaultDeserializer<TItem>(), GetDefaultUrlFormatter());
-        }
+        //public static IApiRequest<TItem, TSettings> GetDefaultRequest<TItem, TSettings>(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage = 20)
+        //    where TItem : class, IResponse
+        //    where TSettings : IApiRequestSettings
+        //{
+        //    return new ApiRequest<TItem, TSettings>(settings, partTypes, resultsPerPage, GetDefaultJsonDownloader(), DefaultDeserializer<TItem>(), GetDefaultUrlFormatter());
+        //}
 
         public static IApiRequest<TItem, TSettings> Clone<TItem, TSettings>(this IApiRequest<TItem, TSettings> request, IEnumerable<PartType> partTypes)
             where TItem : class, IResponse

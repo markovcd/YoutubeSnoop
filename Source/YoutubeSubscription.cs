@@ -45,6 +45,10 @@ namespace YoutubeSnoop
         {
         }
 
+        public YoutubeSubscription(SubscriptionApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        {
+        }
+
         protected override void SetProperties(Subscription response)
         {
             if (response == null) return;

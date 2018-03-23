@@ -75,6 +75,10 @@ namespace YoutubeSnoop
         {
         }
 
+        public YoutubeActivity(ActivityApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        {
+        }
+
         protected override void SetProperties(Activity response)
         {
             if (response == null) return;

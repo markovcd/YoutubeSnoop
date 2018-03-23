@@ -71,6 +71,10 @@ namespace YoutubeSnoop
         {
         }
 
+        public YoutubeVideo(VideoApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        {
+        }
+
         protected override void SetProperties(Video response)
         {
             if (response == null) return;

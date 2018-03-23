@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.Captions;
 using YoutubeSnoop.Api.Settings;
@@ -49,6 +50,10 @@ namespace YoutubeSnoop
         }
 
         public YoutubeCaption(Caption response) : base(response)
+        {
+        }
+
+        public YoutubeCaption(CaptionApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 

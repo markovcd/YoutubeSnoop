@@ -1,4 +1,5 @@
-﻿using YoutubeSnoop.Api;
+﻿using System.Collections.Generic;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.VideoCategories;
 using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
@@ -27,6 +28,10 @@ namespace YoutubeSnoop
         }
 
         public YoutubeVideoCategory(VideoCategory response) : base(response)
+        {
+        }
+
+        public YoutubeVideoCategory(VideoCategoryApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 

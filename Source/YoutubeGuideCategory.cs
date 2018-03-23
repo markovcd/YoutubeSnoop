@@ -1,4 +1,5 @@
-﻿using YoutubeSnoop.Api;
+﻿using System.Collections.Generic;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.GuideCategories;
 using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
@@ -24,6 +25,10 @@ namespace YoutubeSnoop
         }
 
         public YoutubeGuideCategory(GuideCategory response) : base(response)
+        {
+        }
+
+        public YoutubeGuideCategory(GuideCategoryApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 

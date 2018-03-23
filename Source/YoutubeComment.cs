@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.Comments;
 using YoutubeSnoop.Api.Settings;
@@ -52,6 +53,10 @@ namespace YoutubeSnoop
         }
 
         public YoutubeComment(Comment response) : base(response)
+        {
+        }
+
+        public YoutubeComment(CommentApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 

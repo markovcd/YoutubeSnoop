@@ -20,10 +20,11 @@ namespace YoutubeSnoop
             Request = request;
         }
 
-        protected YoutubeItem(TSettings settings = null, IEnumerable<PartType> partTypes = null) : this(ApiRequest.Create<TResponse, TSettings>(settings ?? Activator.CreateInstance<TSettings>(), partTypes, 1))
+        protected YoutubeItem(TSettings settings = null, IEnumerable<PartType> partTypes = null) 
+            : this(ApiRequest.Create<TResponse, TSettings>(settings ?? Activator.CreateInstance<TSettings>(), partTypes, 1))
         {
         }
-
+       
         protected YoutubeItem(TResponse response)
         {
 #pragma warning disable RECS0021 // Don't tell me how to live my life, fucker

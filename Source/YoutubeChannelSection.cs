@@ -44,6 +44,10 @@ namespace YoutubeSnoop
         {
         }
 
+        public YoutubeChannelSection(ChannelSectionApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        {
+        }
+
         protected override void SetProperties(ChannelSection response)
         {
             if (response == null) return;

@@ -9,10 +9,5 @@ namespace YoutubeSnoop
         public YoutubeVideoCategories(IApiRequest<VideoCategory, VideoCategoryApiRequestSettings> request) : base(request)
         {
         }
-
-        protected override YoutubeVideoCategory CreateItem(VideoCategory response)
-        {
-            return new YoutubeVideoCategory(response);
-        }
     }
 }

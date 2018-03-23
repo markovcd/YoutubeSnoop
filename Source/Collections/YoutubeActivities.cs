@@ -1,6 +1,8 @@
-﻿using YoutubeSnoop.Api;
+﻿using System.Collections.Generic;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.Activities;
 using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
@@ -10,9 +12,9 @@ namespace YoutubeSnoop
         {
         }
 
-        protected override YoutubeActivity CreateItem(Activity response)
+        public YoutubeActivities(ActivityApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20) 
+            : base(settings, partTypes, resultsPerPage)
         {
-            return new YoutubeActivity(response);
         }
     }
 }

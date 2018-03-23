@@ -9,10 +9,5 @@ namespace YoutubeSnoop
         public YoutubeCountries(IApiRequest<I18nRegion, I18nRegionApiRequestSettings> request) : base(request)
         {
         }
-
-        protected override YoutubeCountry CreateItem(I18nRegion response)
-        {
-            return new YoutubeCountry(response);
-        }
     }
 }

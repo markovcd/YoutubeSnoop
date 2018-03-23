@@ -9,10 +9,5 @@ namespace YoutubeSnoop
         public YoutubeGuideCategories(IApiRequest<GuideCategory, GuideCategoryApiRequestSettings> request) : base(request)
         {
         }
-
-        protected override YoutubeGuideCategory CreateItem(GuideCategory response)
-        {
-            return new YoutubeGuideCategory(response);
-        }
     }
 }

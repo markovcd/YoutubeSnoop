@@ -9,10 +9,5 @@ namespace YoutubeSnoop
         public YoutubePlaylists(IApiRequest<Playlist, PlaylistApiRequestSettings> request) : base(request)
         {
         }
-
-        protected override YoutubePlaylist CreateItem(Playlist response)
-        {
-            return new YoutubePlaylist(response);
-        }
     }
 }

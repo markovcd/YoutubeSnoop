@@ -9,10 +9,5 @@ namespace YoutubeSnoop
         public YoutubeVideos(IApiRequest<Video, VideoApiRequestSettings> request) : base(request)
         {
         }
-
-        protected override YoutubeVideo CreateItem(Video response)
-        {
-            return new YoutubeVideo(response);
-        }
     }
 }

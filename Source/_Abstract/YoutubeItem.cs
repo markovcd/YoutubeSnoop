@@ -1,12 +1,15 @@
-﻿using YoutubeSnoop.Api;
+﻿using System;
+using System.Collections.Generic;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
     public abstract class YoutubeItem<TResponse, TSettings>
-        where TResponse : IResponse
-        where TSettings : IApiRequestSettings
+        where TResponse : class, IResponse
+        where TSettings : class, IApiRequestSettings
     {
         private bool _propertiesSet;
 
@@ -15,6 +18,10 @@ namespace YoutubeSnoop
         protected YoutubeItem(IApiRequest<TResponse, TSettings> request)
         {
             Request = request;
+        }
+
+        protected YoutubeItem(TSettings settings = null, IEnumerable<PartType> partTypes = null) : this(ApiRequest.Create<TResponse, TSettings>(settings ?? Activator.CreateInstance<TSettings>(), partTypes, 1))
+        {
         }
 
         protected YoutubeItem(TResponse response)

@@ -9,10 +9,5 @@ namespace YoutubeSnoop
         public YoutubeCommentThreads(IApiRequest<CommentThread, CommentThreadApiRequestSettings> request) : base(request)
         {
         }
-
-        protected override YoutubeCommentThread CreateItem(CommentThread response)
-        {
-            return new YoutubeCommentThread(response);
-        }
     }
 }

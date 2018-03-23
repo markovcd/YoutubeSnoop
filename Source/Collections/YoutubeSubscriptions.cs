@@ -9,10 +9,5 @@ namespace YoutubeSnoop
         public YoutubeSubscriptions(IApiRequest<Subscription, SubscriptionApiRequestSettings> request) : base(request)
         {
         }
-
-        protected override YoutubeSubscription CreateItem(Subscription response)
-        {
-            return new YoutubeSubscription(response);
-        }
     }
 }

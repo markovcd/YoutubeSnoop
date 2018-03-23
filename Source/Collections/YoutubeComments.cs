@@ -9,10 +9,5 @@ namespace YoutubeSnoop
         public YoutubeComments(IApiRequest<Comment, CommentApiRequestSettings> request) : base(request)
         {
         }
-
-        protected override YoutubeComment CreateItem(Comment response)
-        {
-            return new YoutubeComment(response);
-        }
     }
 }

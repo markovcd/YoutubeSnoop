@@ -9,10 +9,5 @@ namespace YoutubeSnoop
         public YoutubeChannelSections(IApiRequest<ChannelSection, ChannelSectionApiRequestSettings> request) : base(request)
         {
         }
-
-        protected override YoutubeChannelSection CreateItem(ChannelSection response)
-        {
-            return new YoutubeChannelSection(response);
-        }
     }
 }

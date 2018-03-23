@@ -9,10 +9,5 @@ namespace YoutubeSnoop
         public YoutubeCaptions(IApiRequest<Caption, CaptionApiRequestSettings> request) : base(request)
         {
         }
-
-        protected override YoutubeCaption CreateItem(Caption response)
-        {
-            return new YoutubeCaption(response);
-        }
     }
 }

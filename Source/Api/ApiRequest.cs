@@ -15,6 +15,23 @@ namespace YoutubeSnoop.Api
         {
             return new ApiRequest<TItem, TSettings>(settings,partTypes, resultsPerPage, jsonDownloader, responseDeserializer, apiUrlFormatter);
         }
+
+        public static ApiRequest<TItem, TSettings> Create<TItem, TSettings>(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+            where TItem : class, IResponse
+            where TSettings : IApiRequestSettings
+        {
+            return Create<TItem, TSettings>(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<TItem>(), new ApiUrlFormatter());
+        }
+
+        public static ApiRequest<Entities.Activities.Activity, ActivityApiRequestSettings> Create(ActivityApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Activities.Activity>(), new ApiUrlFormatter());
+        }
+
+        public static ApiRequest<Entities.Captions.Caption, CaptionApiRequestSettings> Create(CaptionApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Captions.Caption>(), new ApiUrlFormatter());
+        }
     }
 
     /// <summary>

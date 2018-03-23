@@ -32,6 +32,41 @@ namespace YoutubeSnoop.Api
         {
             return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Captions.Caption>(), new ApiUrlFormatter());
         }
+
+
+        public static ApiRequest<Entities.PlaylistItems.PlaylistItem, PlaylistItemsApiRequestSettings> Create(PlaylistItemsApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.PlaylistItems.PlaylistItem>(), new ApiUrlFormatter());
+        }
+
+        public static ApiRequest<Entities.Playlists.Playlist, PlaylistApiRequestSettings> Create(PlaylistApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Playlists.Playlist>(), new ApiUrlFormatter());
+        }
+
+        public static ApiRequest<Entities.Search.SearchResult, SearchApiRequestSettings> Create(SearchApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Search.SearchResult>(), new ApiUrlFormatter());
+        }
+
+        public static ApiRequest<Entities.Subscriptions.Subscription, SubscriptionApiRequestSettings> Create(SubscriptionApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Subscriptions.Subscription>(), new ApiUrlFormatter());
+        }
+
+        public static ApiRequest<Entities.VideoCategories.VideoCategory, VideoCategoryApiRequestSettings> Create(VideoCategoryApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.VideoCategories.VideoCategory>(), new ApiUrlFormatter());
+        }
+
+        public static ApiRequest<Entities.Videos.Video, VideoApiRequestSettings> Create(VideoApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Videos.Video>(), new ApiUrlFormatter());
+        }
+
+        
+
+        
     }
 
     /// <summary>

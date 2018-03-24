@@ -51,11 +51,7 @@ namespace YoutubeSnoop
         private string _url;
         public string Url => Set(ref _url);
 
-        public YoutubeChannel(IApiRequest<Channel, ChannelApiRequestSettings> request) : base(request)
-        {
-        }
-
-        public YoutubeChannel(Channel response) : base(response)
+        internal YoutubeChannel(Channel response) : base(response)
         {
         }
 

@@ -1,6 +1,4 @@
-﻿using YoutubeSnoop.Api.Entities.I18nRegions;
-using YoutubeSnoop.Api.Settings;
-using YoutubeSnoop.Enums;
+﻿using YoutubeSnoop.Api.Settings;
 
 namespace YoutubeSnoop.Fluent
 {
@@ -8,9 +6,7 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubeCountries Countries(string languageCode = "")
         {
-            var settings = new I18nRegionApiRequestSettings { Hl = languageCode };
-            var request = GetDefaultRequest<I18nRegion, I18nRegionApiRequestSettings>(settings, new[] { PartType.Snippet });
-            return new YoutubeCountries(request);
+            return new YoutubeCountries(new I18nRegionApiRequestSettings { Hl = languageCode }, null, ResultsPerPage);
         }
     }
 }

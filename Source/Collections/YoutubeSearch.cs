@@ -8,10 +8,6 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeSearch : YoutubeCollection<YoutubeSearchResult, SearchResult, SearchApiRequestSettings>
     {
-        public YoutubeSearch(IApiRequest<SearchResult, SearchApiRequestSettings> request) : base(request)
-        {
-        }
-
         public YoutubeSearch(SearchApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
             : base(settings, partTypes, resultsPerPage)
         {

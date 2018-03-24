@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using YoutubeSnoop.Api.Entities;
@@ -11,16 +12,16 @@ namespace YoutubeSnoop.Api
     {
         public static ApiRequest<TItem, TSettings> Create<TItem, TSettings>(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TItem> responseDeserializer, IApiUrlFormatter apiUrlFormatter)
             where TItem : class, IResponse
-            where TSettings : IApiRequestSettings
+            where TSettings : class, IApiRequestSettings
         {
-            return new ApiRequest<TItem, TSettings>(settings,partTypes, resultsPerPage, jsonDownloader, responseDeserializer, apiUrlFormatter);
+            return new ApiRequest<TItem, TSettings>(settings, partTypes, resultsPerPage, jsonDownloader, responseDeserializer, apiUrlFormatter);
         }
 
         public static ApiRequest<TItem, TSettings> Create<TItem, TSettings>(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
             where TItem : class, IResponse
-            where TSettings : IApiRequestSettings
+            where TSettings : class, IApiRequestSettings
         {
-            return Create<TItem, TSettings>(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<TItem>(), new ApiUrlFormatter());
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<TItem>(), new ApiUrlFormatter());
         }
 
         public static ApiRequest<Entities.Activities.Activity, ActivityApiRequestSettings> Create(ActivityApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
@@ -76,7 +77,7 @@ namespace YoutubeSnoop.Api
     /// <typeparam name="TSettings"></typeparam>
     public class ApiRequest<TItem, TSettings> : IApiRequest<TItem, TSettings>
         where TItem : class, IResponse
-        where TSettings : IApiRequestSettings
+        where TSettings : class, IApiRequestSettings
     {
         private readonly IJsonDownloader _jsonDownloader;
         private readonly IPagedResponseDeserializer<TItem> _responseDeserializer;
@@ -98,7 +99,7 @@ namespace YoutubeSnoop.Api
             _apiUrlFormatter = apiUrlFormatter;
 
             ResultsPerPage = resultsPerPage;
-            Settings = settings;
+            Settings = settings ?? Activator.CreateInstance<TSettings>();
             PartTypes = partTypes == null || !partTypes.Any() ? new[] { PartType.Snippet } : partTypes;
 
             Items = this.SelectMany(i => i.Items);

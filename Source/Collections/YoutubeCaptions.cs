@@ -8,10 +8,6 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeCaptions : YoutubeCollection<YoutubeCaption, Caption, CaptionApiRequestSettings>
     {
-        public YoutubeCaptions(IApiRequest<Caption, CaptionApiRequestSettings> request) : base(request)
-        {
-        }
-
         public YoutubeCaptions(CaptionApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
             : base(settings, partTypes, resultsPerPage)
         {

@@ -42,11 +42,7 @@ namespace YoutubeSnoop
         private string _url;
         public string Url => Set(ref _url);
 
-        public YoutubePlaylist(IApiRequest<Playlist, PlaylistApiRequestSettings> request) : base(request)
-        {
-        }
-
-        public YoutubePlaylist(Playlist response) : base(response)
+        internal YoutubePlaylist(Playlist response) : base(response)
         {
         }
 

@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using YoutubeSnoop.Api.Entities.Videos;
 using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
@@ -9,24 +8,22 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubeVideos Videos(VideoApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = GetDefaultRequest<Video, VideoApiRequestSettings>(settings, partTypes);
-            return new YoutubeVideos(request);
+            return new YoutubeVideos(settings, partTypes, ResultsPerPage);
         }
 
         public static YoutubeVideo Video(VideoApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = GetDefaultRequest<Video, VideoApiRequestSettings>(settings, partTypes);
-            return new YoutubeVideo(request);
+            return new YoutubeVideo(settings, partTypes);
         }
 
         public static YoutubeVideos Videos(VideoApiRequestSettings settings = null)
         {
-            return Videos(settings ?? new VideoApiRequestSettings(), PartType.Snippet);
+            return Videos(settings, PartType.Snippet);
         }
 
         public static YoutubeVideo Video(VideoApiRequestSettings settings = null)
         {
-            return Video(settings ?? new VideoApiRequestSettings(), PartType.Snippet);
+            return Video(settings, PartType.Snippet);
         }
 
         public static YoutubeVideos Videos(params string[] ids)
@@ -41,18 +38,14 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeVideos RequestId(this YoutubeVideos videos, params string[] ids)
         {
-            var request = videos.Request.Clone();
-            if (request.Settings.Id == null) request.Settings.Id = "";
-
-            request.Settings.Id = request.Settings.Id.AddItems(ids);
-
-            return new YoutubeVideos(request);
+            var settings = videos.Settings.Clone();
+            settings.Id = settings.Id.AddItems(ids);
+            return Videos(settings, videos.PartTypes.ToArray());
         }
 
         public static YoutubeVideos RequestPart(this YoutubeVideos videos, PartType partType)
         {
-            var request = videos.Request.RequestPart(partType);
-            return new YoutubeVideos(request);
+            return Videos(videos.Settings.Clone(), videos.PartTypes.Append(partType).ToArray());
         }
 
         public static YoutubeVideos RequestContentDetails(this YoutubeVideos videos)
@@ -115,8 +108,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeVideo RequestPart(this YoutubeVideo video, PartType partType)
         {
-            var request = video.Request.RequestPart(partType);
-            return new YoutubeVideo(request);
+            return Video(video.Settings.Clone(), video.PartTypes.Append(partType).ToArray());
         }
 
         public static YoutubeVideo RequestContentDetails(this YoutubeVideo video)
@@ -189,9 +181,9 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeVideos MostPopular(this YoutubeVideos videos)
         {
-            var request = videos.Request.Clone();
-            request.Settings.Chart = Chart.MostPopular;
-            return new YoutubeVideos(request);
+            var settings = videos.Settings.Clone();
+            settings.Chart = Chart.MostPopular;
+            return Videos(settings, videos.PartTypes.ToArray());
         }
     }
 }

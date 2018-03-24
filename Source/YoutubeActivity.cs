@@ -67,11 +67,7 @@ namespace YoutubeSnoop
         private SocialType _socialType;
         public SocialType SocialType => Set(ref _socialType);
 
-        public YoutubeActivity(IApiRequest<Activity, ActivityApiRequestSettings> request) : base(request)
-        {
-        }
-
-        public YoutubeActivity(Activity response) : base(response)
+        internal YoutubeActivity(Activity response) : base(response)
         {
         }
 

@@ -8,10 +8,6 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeChannels : YoutubeCollection<YoutubeChannel, Channel, ChannelApiRequestSettings>
     {
-        public YoutubeChannels(IApiRequest<Channel, ChannelApiRequestSettings> request) : base(request)
-        {
-        }
-
         public YoutubeChannels(ChannelApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
             : base(settings, partTypes, resultsPerPage)
         {

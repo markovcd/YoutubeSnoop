@@ -1,5 +1,4 @@
 ﻿using System;
-using YoutubeSnoop.Api.Entities.Search;
 using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
@@ -9,8 +8,7 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubeSearch Search(SearchApiRequestSettings settings = null)
         {
-            var request = GetDefaultRequest<SearchResult, SearchApiRequestSettings>(settings ?? new SearchApiRequestSettings(), new[] { PartType.Snippet });
-            return new YoutubeSearch(request);
+            return new YoutubeSearch(settings, null, ResultsPerPage);
         }
 
         public static YoutubeSearch Search(string query)
@@ -18,33 +16,33 @@ namespace YoutubeSnoop.Fluent
             return Search(new SearchApiRequestSettings { Query = query });
         }
 
-        public static YoutubeSearch ForCountry(this YoutubeSearch search, YoutubeCountry country)
+        public static YoutubeSearch ForCountry(this YoutubeSearch search, string regionCode)
         {
-            var request = search.Request.Clone();
-            request.Settings.RegionCode = country.CountryCode;
-            return new YoutubeSearch(request);
+            var settings = search.Settings.Clone();
+            settings.RegionCode = regionCode;
+            return Search(settings);
         }
 
         public static YoutubeSearch ForChannelId(this YoutubeSearch search, string id)
         {
-            var request = search.Request.Clone();
-            request.Settings.ChannelId = id;
-            return new YoutubeSearch(request);
+            var settings = search.Settings.Clone();
+            settings.ChannelId = id;
+            return Search(settings);
         }
 
         public static YoutubeSearch RelatedToVideoId(this YoutubeSearch search, string id)
         {
-            var request = search.Request.Clone();
-            request.Settings.RelatedToVideoId = id;
-            request.Settings.Type = ResourceKind.Video;
-            return new YoutubeSearch(request);
+            var settings = search.Settings.Clone();
+            settings.RelatedToVideoId = id;
+            settings.Type = ResourceKind.Video;
+            return Search(settings);
         }
 
         public static YoutubeSearch OrderBy(this YoutubeSearch search, SearchOrder order)
         {
-            var request = search.Request.Clone();
-            request.Settings.Order = order;
-            return new YoutubeSearch(request);
+            var settings = search.Settings.Clone();
+            settings.Order = order;
+            return Search(settings);
         }
 
         public static YoutubeSearch OrderByDate(this YoutubeSearch search)
@@ -74,30 +72,32 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeSearch PublishedAfter(this YoutubeSearch search, DateTime d)
         {
-            var request = search.Request.Clone();
-            request.Settings.PublishedAfter = d;
-            return new YoutubeSearch(request);
+            var settings = search.Settings.Clone();
+            settings.PublishedAfter = d;
+            return Search(settings);
         }
 
         public static YoutubeSearch PublishedBefore(this YoutubeSearch search, DateTime d)
         {
-            var request = search.Request.Clone();
-            request.Settings.PublishedBefore = d;
-            return new YoutubeSearch(request);
+            var settings = search.Settings.Clone();
+            settings.PublishedBefore = d;
+            return Search(settings);
         }
 
         public static YoutubeSearch OfType(this YoutubeSearch search, ResourceKind t)
         {
-            var request = search.Request.Clone();
-            request.Settings.Type = t;
-            return new YoutubeSearch(request);
+            if (t != ResourceKind.Video && t != ResourceKind.Playlist && t != ResourceKind.Channel) throw new InvalidOperationException();
+
+            var settings = search.Settings.Clone();
+            settings.Type = t;
+            return Search(settings);
         }
 
         public static YoutubeSearch SafeSearch(this YoutubeSearch search, SafeSearch s)
         {
-            var request = search.Request.Clone();
-            request.Settings.SafeSearch = s;
-            return new YoutubeSearch(request);
+            var settings = search.Settings.Clone();
+            settings.SafeSearch = s;
+            return Search(settings);
         }
     }
 }

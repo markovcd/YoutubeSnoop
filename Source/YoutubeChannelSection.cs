@@ -36,11 +36,7 @@ namespace YoutubeSnoop
         private IReadOnlyList<string> _playlistIds;
         public IReadOnlyList<string> PlaylistIds => Set(ref _playlistIds);
 
-        public YoutubeChannelSection(IApiRequest<ChannelSection, ChannelSectionApiRequestSettings> request) : base(request)
-        {
-        }
-
-        public YoutubeChannelSection(ChannelSection response) : base(response)
+        internal YoutubeChannelSection(ChannelSection response) : base(response)
         {
         }
 

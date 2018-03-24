@@ -48,11 +48,7 @@ namespace YoutubeSnoop
         private string _parentId;
         public string ParentId => Set(ref _parentId);
 
-        public YoutubeComment(IApiRequest<Comment, CommentApiRequestSettings> request) : base(request)
-        {
-        }
-
-        public YoutubeComment(Comment response) : base(response)
+        internal YoutubeComment(Comment response) : base(response)
         {
         }
 

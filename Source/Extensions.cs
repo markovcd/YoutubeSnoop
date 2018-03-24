@@ -64,7 +64,7 @@ namespace YoutubeSnoop
             return new ReadOnlyDictionary<ThumbnailSize, Thumbnail>(t);
         }
 
-        public static IApiRequestSettings Clone(this IApiRequestSettings settings)
+        public static TSettings Clone<TSettings>(this TSettings settings) where TSettings : class, IApiRequestSettings
         {
             var type = settings?.GetType();
 
@@ -81,7 +81,7 @@ namespace YoutubeSnoop
                 property.SetValue(cloned, value);
             }
 
-            return (IApiRequestSettings)cloned;
+            return (TSettings)cloned;
         }
 
         public static ResourceKind ParseResourceKind(string s)
@@ -97,10 +97,15 @@ namespace YoutubeSnoop
 
         public static string AddItems(this string s, params string[] items)
         {
-            return s?.Split(',')
-                     .Concat(items)
-                     .Distinct()
-                     .Aggregate();
+            return (s ?? string.Empty).Split(',')
+                                      .Concat(items)
+                                      .Distinct()
+                                      .Aggregate();
+        }
+
+        public static IEnumerable<PartType> Append(this IEnumerable<PartType> partTypes, PartType partType)
+        {
+            return partTypes.Concat(new[] { partType }).Distinct();
         }
     }
 }

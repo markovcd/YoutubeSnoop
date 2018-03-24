@@ -1,5 +1,5 @@
 ﻿using System;
-using YoutubeSnoop.Api.Entities.Activities;
+using System.Linq;
 using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
@@ -9,30 +9,27 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubeActivities Activities(ActivityApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = GetDefaultRequest<Activity, ActivityApiRequestSettings>(settings, partTypes);
-            return new YoutubeActivities(request);
+            return new YoutubeActivities(settings, partTypes, ResultsPerPage);
         }
 
         public static YoutubeActivity Activity(ActivityApiRequestSettings settings, params PartType[] partTypes)
         {
-            var request = GetDefaultRequest<Activity, ActivityApiRequestSettings>(settings, partTypes);
-            return new YoutubeActivity(request);
+            return new YoutubeActivity(settings, partTypes);
         }
 
         public static YoutubeActivities Activities(ActivityApiRequestSettings settings = null)
         {
-            return Activities(settings ?? new ActivityApiRequestSettings(), PartType.Snippet);
+            return Activities(settings, PartType.Snippet);
         }
 
         public static YoutubeActivity Activity(ActivityApiRequestSettings settings = null)
         {
-            return Activity(settings ?? new ActivityApiRequestSettings(), PartType.Snippet);
+            return Activity(settings, PartType.Snippet);
         }
 
         public static YoutubeActivity RequestPart(this YoutubeActivity activity, PartType partType)
         {
-            var request = activity.Request.RequestPart(partType);
-            return new YoutubeActivity(request);
+            return Activity(activity.Settings.Clone(), activity.PartTypes.Append(partType).ToArray());
         }
 
         public static YoutubeActivity RequestContentDetails(this YoutubeActivity activity)
@@ -52,8 +49,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeActivities RequestPart(this YoutubeActivities activities, PartType partType)
         {
-            var request = activities.Request.RequestPart(partType);
-            return new YoutubeActivities(request);
+            return Activities(activities.Settings.Clone(), activities.PartTypes.Append(partType).ToArray());
         }
 
         public static YoutubeActivities RequestContentDetails(this YoutubeActivities activities)
@@ -73,23 +69,23 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeActivities ForChannelId(this YoutubeActivities activities, string id)
         {
-            var request = activities.Request.Clone();
-            request.Settings.ChannelId = id;
-            return new YoutubeActivities(request);
+            var settings = activities.Settings.Clone();
+            settings.ChannelId = id;
+            return Activities(settings, activities.PartTypes.ToArray());
         }
 
         public static YoutubeActivities PublishedBefore(this YoutubeActivities activities, DateTime d)
         {
-            var request = activities.Request.Clone();
-            request.Settings.PublishedBefore = d;
-            return new YoutubeActivities(request);
+            var settings = activities.Settings.Clone();
+            settings.PublishedBefore = d;
+            return Activities(settings, activities.PartTypes.ToArray());
         }
 
         public static YoutubeActivities PublishedAfter(this YoutubeActivities activities, DateTime d)
         {
-            var request = activities.Request.Clone();
-            request.Settings.PublishedAfter = d;
-            return new YoutubeActivities(request);
+            var settings = activities.Settings.Clone();
+            settings.PublishedAfter = d;
+            return Activities(settings, activities.PartTypes.ToArray());
         }
     }
 }

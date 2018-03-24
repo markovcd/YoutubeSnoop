@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Api.Settings;
@@ -13,15 +14,20 @@ namespace YoutubeSnoop
     {
         private bool _propertiesSet;
 
-        public IApiRequest<TResponse, TSettings> Request { get; }
+        protected IApiRequest<TResponse, TSettings> Request { get; }
+
+        public TSettings Settings { get; }
+        public IReadOnlyList<PartType> PartTypes { get; }
 
         protected YoutubeItem(IApiRequest<TResponse, TSettings> request)
         {
             Request = request;
+            PartTypes = request.PartTypes.ToList().AsReadOnly();
+            Settings = request.Settings.Clone();
         }
 
         protected YoutubeItem(TSettings settings = null, IEnumerable<PartType> partTypes = null) 
-            : this(ApiRequest.Create<TResponse, TSettings>(settings ?? Activator.CreateInstance<TSettings>(), partTypes, 1))
+            : this(ApiRequest.Create<TResponse, TSettings>(settings, partTypes, 1))
         {
         }
        

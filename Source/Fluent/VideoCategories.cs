@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using YoutubeSnoop.Api.Entities.VideoCategories;
-using YoutubeSnoop.Api.Settings;
-using YoutubeSnoop.Enums;
+﻿using YoutubeSnoop.Api.Settings;
 
 namespace YoutubeSnoop.Fluent
 {
@@ -9,14 +6,12 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubeVideoCategories VideoCategories(VideoCategoryApiRequestSettings settings = null)
         {
-            var request = GetDefaultRequest<VideoCategory, VideoCategoryApiRequestSettings>(settings ?? new VideoCategoryApiRequestSettings(), new[] { PartType.Snippet });
-            return new YoutubeVideoCategories(request);
+            return new YoutubeVideoCategories(settings, null, ResultsPerPage);
         }
 
         public static YoutubeVideoCategory VideoCategory(VideoCategoryApiRequestSettings settings = null)
         {
-            var request = GetDefaultRequest<VideoCategory, VideoCategoryApiRequestSettings>(settings ?? new VideoCategoryApiRequestSettings(), new[] { PartType.Snippet });
-            return new YoutubeVideoCategory(request);
+            return new YoutubeVideoCategory(settings, null);
         }
 
         public static YoutubeVideoCategories VideoCategories(params string[] ids)
@@ -31,19 +26,16 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeVideoCategories RequestId(this YoutubeVideoCategories videoCategories, params string[] ids)
         {
-            var request = videoCategories.Request.Clone();
-            if (request.Settings.Id == null) request.Settings.Id = "";
-
-            request.Settings.Id = request.Settings.Id.AddItems(ids);
-
-            return new YoutubeVideoCategories(request);
+            var settings = videoCategories.Settings.Clone();
+            settings.Id = settings.Id.AddItems(ids);
+            return VideoCategories(settings);
         }
 
         public static YoutubeVideoCategories ForCountry(this YoutubeVideoCategories videoCategories, string regionCode)
         {
-            var request = videoCategories.Request.Clone();
-            request.Settings.RegionCode = regionCode;
-            return new YoutubeVideoCategories(request);
+            var settings = videoCategories.Settings.Clone();
+            settings.RegionCode = regionCode;
+            return VideoCategories(settings);
         }
 
         public static YoutubeChannel Channel(this YoutubeVideoCategory videoCategory)

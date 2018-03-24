@@ -8,10 +8,6 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeComments : YoutubeCollection<YoutubeComment, Comment, CommentApiRequestSettings>
     {
-        public YoutubeComments(IApiRequest<Comment, CommentApiRequestSettings> request) : base(request)
-        {
-        }
-
         public YoutubeComments(CommentApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
             : base(settings, partTypes, resultsPerPage)
         {

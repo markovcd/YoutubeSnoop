@@ -14,15 +14,26 @@ namespace YoutubeSnoop
         where TResponse : class, IResponse
         where TSettings : class, IApiRequestSettings
     {
-        public IApiRequest<TResponse, TSettings> Request { get; }
+        protected IApiRequest<TResponse, TSettings> Request { get; }
+
+        public TSettings Settings { get; }
+        public IReadOnlyList<PartType> PartTypes { get; }
+
+        private int? _resultsPerPage;
+        public int? ResultsPerPage => _resultsPerPage; // TODO : will be set when first page is downloaded
+
+        private int? _totalResults;
+        public int? TotalResults => _totalResults; // TODO : will be set when first page is downloaded
 
         protected YoutubeCollection(IApiRequest<TResponse, TSettings> request)
         {
             Request = request;
+            PartTypes = request.PartTypes.ToList().AsReadOnly();
+            Settings = request.Settings.Clone();
         }
 
         protected YoutubeCollection(TSettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20) 
-            : this(ApiRequest.Create<TResponse, TSettings>(settings ?? Activator.CreateInstance<TSettings>(), partTypes, resultsPerPage))
+            : this(ApiRequest.Create<TResponse, TSettings>(settings, partTypes, resultsPerPage))
         {
         }
 

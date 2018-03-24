@@ -10,7 +10,7 @@ namespace YoutubeSnoop
         public string LanguageCode { get; }
         public string LanguageName { get; }
 
-        public YoutubeLanguage(I18nLanguage response)
+        internal YoutubeLanguage(I18nLanguage response)
         {
             if (response == null) return;
 
@@ -18,13 +18,6 @@ namespace YoutubeSnoop
             Id = response.Id;
             LanguageCode = response.Snippet?.Hl;
             LanguageName = response.Snippet?.Name;
-        }
-
-        public YoutubeLanguage(string languageCode, string languageName)
-        {
-            Kind = ResourceKind.I18nLanguage;
-            Id = LanguageCode = languageCode;
-            LanguageName = languageName;
         }
 
         public override string ToString()

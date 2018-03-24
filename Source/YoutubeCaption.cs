@@ -45,11 +45,7 @@ namespace YoutubeSnoop
         private string _videoId;
         public string VideoId => Set(ref _videoId);
 
-        public YoutubeCaption(IApiRequest<Caption, CaptionApiRequestSettings> request) : base(request)
-        {
-        }
-
-        public YoutubeCaption(Caption response) : base(response)
+        internal YoutubeCaption(Caption response) : base(response)
         {
         }
 

@@ -93,11 +93,42 @@ namespace YoutubeSnoop.Fluent
             return Search(settings);
         }
 
+        public static YoutubeSearch OfTypeVideo(this YoutubeSearch search)
+        {
+            return search.OfType(ResourceKind.Video);
+        }
+
+        public static YoutubeSearch OfTypeChannel(this YoutubeSearch search)
+        {
+            return search.OfType(ResourceKind.Channel);
+        }
+
+        public static YoutubeSearch OfTypePlaylist(this YoutubeSearch search)
+        {
+            return search.OfType(ResourceKind.Playlist);
+        }
+
         public static YoutubeSearch SafeSearch(this YoutubeSearch search, SafeSearch s)
         {
             var settings = search.Settings.Clone();
             settings.SafeSearch = s;
             return Search(settings);
+        }
+
+        public static IYoutubeItem Details(this YoutubeSearchResult searchResult)
+        {
+            switch (searchResult.ResultKind)
+            {
+                case ResourceKind.Video: return Video(searchResult.Id);
+                case ResourceKind.Playlist: return Playlist(searchResult.Id);
+                case ResourceKind.Channel: return Channel(searchResult.Id);
+                default: throw new InvalidOperationException();
+            }
+        }
+
+        public static TItem Details<TItem>(this YoutubeSearchResult searchResult) where TItem : class, IYoutubeItem
+        {
+            return Details(searchResult) as TItem;
         }
     }
 }

@@ -3,23 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities;
-using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
     public abstract class YoutubeItem<TResponse, TSettings>
         where TResponse : class, IResponse
-        where TSettings : class, IApiRequestSettings
+        where TSettings : class, ISettings
     {
         private bool _propertiesSet;
 
-        protected IApiRequest<TResponse, TSettings> Request { get; }
+        protected IRequest<TResponse, TSettings> Request { get; }
 
         public TSettings Settings { get; }
         public IReadOnlyList<PartType> PartTypes { get; }
 
-        protected YoutubeItem(IApiRequest<TResponse, TSettings> request)
+        protected YoutubeItem(IRequest<TResponse, TSettings> request)
         {
             Request = request;
             PartTypes = request.PartTypes.ToList().AsReadOnly();
@@ -27,7 +26,7 @@ namespace YoutubeSnoop
         }
 
         protected YoutubeItem(TSettings settings = null, IEnumerable<PartType> partTypes = null) 
-            : this(ApiRequest.Create<TResponse, TSettings>(settings, partTypes, 1))
+            : this(Api.Request.Create<TResponse, TSettings>(settings, partTypes, 1))
         {
         }
        

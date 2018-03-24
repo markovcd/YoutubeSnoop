@@ -3,29 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using YoutubeSnoop.Api.Attributes;
-using YoutubeSnoop.Api.Settings.Arguments;
+using YoutubeSnoop.Api.Arguments;
 using YoutubeSnoop.Enums;
 
-namespace YoutubeSnoop.Api.Settings
+namespace YoutubeSnoop.Api
 {
     /// <summary>
     /// Override this class to specify settings structure for API request.
     /// </summary>
-    public abstract class ApiRequestSettings : IApiRequestSettings
+    public abstract class Settings : ISettings
     {
-        [ApiRequestIgnore]
+        [IgnoreProperty]
         public abstract RequestType RequestType { get; }
 
-        public IEnumerable<ApiArgument> GetArguments()
+        public IEnumerable<Argument> GetArguments()
         {
             var properties = GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                                      .Where(p => !p.IsDefined(typeof(ApiRequestIgnoreAttribute)));
+                                      .Where(p => !p.IsDefined(typeof(IgnorePropertyAttribute)));
 
             foreach (var property in properties)
             {
-                var converter = property.GetCustomAttribute<ApiRequestConvertAttribute>(true)?.Converter;
+                var converter = property.GetCustomAttribute<ToStringConvertAttribute>(true)?.Converter;
 
-                var name = property.GetCustomAttribute<ApiRequestArgumentNameAttribute>(true)?.Name ?? property.Name.ToCamelCase();
+                var name = property.GetCustomAttribute<ArgumentNameAttribute>(true)?.Name ?? property.Name.ToCamelCase();
 
                 var valueObject = property.GetValue(this);
 
@@ -35,7 +35,7 @@ namespace YoutubeSnoop.Api.Settings
 
                 if (valueObject is Enum) value = value.ToCamelCase();
 
-                if (value != null) yield return new ApiArgument(name, value);
+                if (value != null) yield return new Argument(name, value);
             }
         }
     }

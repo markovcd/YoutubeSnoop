@@ -1,39 +1,39 @@
 ﻿using System.Linq;
-using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeChannelSections ChannelSections(ChannelSectionApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeChannelSections ChannelSections(ChannelSectionSettings settings, params PartType[] partTypes)
         {
             return new YoutubeChannelSections(settings, partTypes, ResultsPerPage);
         }
 
-        public static YoutubeChannelSection ChannelSection(ChannelSectionApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeChannelSection ChannelSection(ChannelSectionSettings settings, params PartType[] partTypes)
         {
             return new YoutubeChannelSection(settings, partTypes);
         }
 
-        public static YoutubeChannelSections ChannelSections(ChannelSectionApiRequestSettings settings = null)
+        public static YoutubeChannelSections ChannelSections(ChannelSectionSettings settings = null)
         {
             return ChannelSections(settings, PartType.Snippet);
         }
 
-        public static YoutubeChannelSection ChannelSection(ChannelSectionApiRequestSettings settings = null)
+        public static YoutubeChannelSection ChannelSection(ChannelSectionSettings settings = null)
         {
             return ChannelSection(settings, PartType.Snippet);
         }
 
         public static YoutubeChannelSections ChannelSections(params string[] ids)
         {
-            return ChannelSections(new ChannelSectionApiRequestSettings { Id = ids.Aggregate() });
+            return ChannelSections(new ChannelSectionSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeChannelSection ChannelSection(string id)
         {
-            return ChannelSection(new ChannelSectionApiRequestSettings { Id = id });
+            return ChannelSection(new ChannelSectionSettings { Id = id });
         }
 
         public static YoutubeChannelSection RequestPart(this YoutubeChannelSection channelSection, PartType partType)

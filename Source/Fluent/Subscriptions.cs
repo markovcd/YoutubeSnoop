@@ -1,39 +1,39 @@
 ﻿using System.Linq;
-using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeSubscriptions Subscriptions(SubscriptionApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeSubscriptions Subscriptions(SubscriptionSettings settings, params PartType[] partTypes)
         {
             return new YoutubeSubscriptions(settings, partTypes, ResultsPerPage);
         }
 
-        public static YoutubeSubscription Subscription(SubscriptionApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeSubscription Subscription(SubscriptionSettings settings, params PartType[] partTypes)
         {
             return new YoutubeSubscription(settings, partTypes);
         }
 
-        public static YoutubeSubscriptions Subscriptions(SubscriptionApiRequestSettings settings = null)
+        public static YoutubeSubscriptions Subscriptions(SubscriptionSettings settings = null)
         {
             return Subscriptions(settings, PartType.Snippet);
         }
 
-        public static YoutubeSubscription Subscription(SubscriptionApiRequestSettings settings = null)
+        public static YoutubeSubscription Subscription(SubscriptionSettings settings = null)
         {
             return Subscription(settings, PartType.Snippet);
         }
 
         public static YoutubeSubscriptions Subscriptions(params string[] ids)
         {
-            return Subscriptions(new SubscriptionApiRequestSettings { Id = ids.Aggregate() });
+            return Subscriptions(new SubscriptionSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeSubscription Subscription(string id)
         {
-            return Subscription(new SubscriptionApiRequestSettings { Id = id });
+            return Subscription(new SubscriptionSettings { Id = id });
         }
 
         public static YoutubeSubscriptions RequestId(this YoutubeSubscriptions subscriptions, params string[] ids)

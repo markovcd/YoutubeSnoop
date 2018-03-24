@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Api.Entities.Subscriptions;
-using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeSubscription : YoutubeItem<Subscription, SubscriptionApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubeSubscription : YoutubeItem<Subscription, SubscriptionSettings>, IYoutubeItem
     {
         private string _id;
         public string Id => Set(ref _id);
@@ -41,7 +40,7 @@ namespace YoutubeSnoop
         {
         }
 
-        public YoutubeSubscription(SubscriptionApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        public YoutubeSubscription(SubscriptionSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 

@@ -1,19 +1,19 @@
 ﻿using System;
-using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeSearch Search(SearchApiRequestSettings settings = null)
+        public static YoutubeSearch Search(SearchSettings settings = null)
         {
             return new YoutubeSearch(settings, null, ResultsPerPage);
         }
 
         public static YoutubeSearch Search(string query)
         {
-            return Search(new SearchApiRequestSettings { Query = query });
+            return Search(new SearchSettings { Query = query });
         }
 
         public static YoutubeSearch ForCountry(this YoutubeSearch search, string regionCode)

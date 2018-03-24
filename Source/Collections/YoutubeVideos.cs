@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.Videos;
-using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeVideos : YoutubeCollection<YoutubeVideo, Video, VideoApiRequestSettings>
+    public sealed class YoutubeVideos : YoutubeCollection<YoutubeVideo, Video, VideoSettings>
     {
-        public YoutubeVideos(VideoApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
+        public YoutubeVideos(VideoSettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
             : base(settings, partTypes, resultsPerPage)
         {
         }

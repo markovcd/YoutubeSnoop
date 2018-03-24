@@ -1,28 +1,28 @@
-﻿using YoutubeSnoop.Api.Settings;
+﻿using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeComments Comments(CommentApiRequestSettings settings = null)
+        public static YoutubeComments Comments(CommentSettings settings = null)
         {
             return new YoutubeComments(settings, null, ResultsPerPage);
         }
 
-        public static YoutubeComment Comment(CommentApiRequestSettings settings = null)
+        public static YoutubeComment Comment(CommentSettings settings = null)
         {
             return new YoutubeComment(settings);
         }
 
         public static YoutubeComments Comments(params string[] ids)
         {
-            return Comments(new CommentApiRequestSettings { Id = ids.Aggregate() });
+            return Comments(new CommentSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeComment Comment(string id)
         {
-            return Comment(new CommentApiRequestSettings { Id = id });
+            return Comment(new CommentSettings { Id = id });
         }
 
         public static YoutubeComments ForParentId(this YoutubeComments comments, string id)

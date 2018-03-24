@@ -2,7 +2,7 @@
 
 namespace YoutubeSnoop.Api.Converters
 {
-    public class EnumDescriptionConverter : ApiRequestConverter<Enum>
+    public class EnumDescriptionConverter : ToStringConverter<Enum>
     {
         public override string Convert(Enum value)
         {

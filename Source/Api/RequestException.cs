@@ -5,20 +5,20 @@ using System.IO;
 using System.Net;
 using YoutubeSnoop.Api.Entities;
 
-namespace YoutubeSnoop.Api.Exceptions
+namespace YoutubeSnoop.Api
 {
-    public class ApiException : Exception
+    public class RequestException : Exception
     {
         public IList<Error> Errors { get; set; }
         public HttpStatusCode Code { get; set; }
         public new string Message { get; set; }
 
-        public static ApiException FromJson(string json)
+        public static RequestException FromJson(string json)
         {
-            return JObject.Parse(json).SelectToken("error").ToObject<ApiException>();
+            return JObject.Parse(json).SelectToken("error").ToObject<RequestException>();
         }
 
-        public static ApiException FromWebException(WebException ex)
+        public static RequestException FromWebException(WebException ex)
         {
             string errorJson;
 

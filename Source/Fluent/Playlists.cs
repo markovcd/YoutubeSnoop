@@ -1,39 +1,39 @@
 ﻿using System.Linq;
-using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubePlaylists Playlists(PlaylistApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubePlaylists Playlists(PlaylistSettings settings, params PartType[] partTypes)
         {
             return new YoutubePlaylists(settings, partTypes, ResultsPerPage);
         }
 
-        public static YoutubePlaylist Playlist(PlaylistApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubePlaylist Playlist(PlaylistSettings settings, params PartType[] partTypes)
         {
             return new YoutubePlaylist(settings, partTypes);
         }
 
-        public static YoutubePlaylists Playlists(PlaylistApiRequestSettings settings = null)
+        public static YoutubePlaylists Playlists(PlaylistSettings settings = null)
         {
             return Playlists(settings, PartType.Snippet);
         }
 
-        public static YoutubePlaylist Playlist(PlaylistApiRequestSettings settings = null)
+        public static YoutubePlaylist Playlist(PlaylistSettings settings = null)
         {
             return Playlist(settings, PartType.Snippet);
         }
 
         public static YoutubePlaylists Playlists(params string[] ids)
         {
-            return Playlists(new PlaylistApiRequestSettings { Id = ids.Aggregate() });
+            return Playlists(new PlaylistSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubePlaylist Playlist(string id)
         {
-            return Playlist(new PlaylistApiRequestSettings { Id = id });
+            return Playlist(new PlaylistSettings { Id = id });
         }
 
         public static YoutubePlaylists RequestId(this YoutubePlaylists playlists, params string[] ids)

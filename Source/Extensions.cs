@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using YoutubeSnoop.Api.Attributes;
 using YoutubeSnoop.Api.Entities;
-using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
@@ -64,14 +64,14 @@ namespace YoutubeSnoop
             return new ReadOnlyDictionary<ThumbnailSize, Thumbnail>(t);
         }
 
-        public static TSettings Clone<TSettings>(this TSettings settings) where TSettings : class, IApiRequestSettings
+        public static TSettings Clone<TSettings>(this TSettings settings) where TSettings : class, ISettings
         {
             var type = settings?.GetType();
 
             if (type == null) return null;
 
             var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                                  .Where(p => !p.IsDefined(typeof(ApiRequestIgnoreAttribute)));
+                                  .Where(p => !p.IsDefined(typeof(IgnorePropertyAttribute)));
 
             var cloned = Activator.CreateInstance(type);
 

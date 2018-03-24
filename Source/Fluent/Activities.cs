@@ -1,28 +1,28 @@
 ﻿using System;
 using System.Linq;
-using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeActivities Activities(ActivityApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeActivities Activities(ActivitySettings settings, params PartType[] partTypes)
         {
             return new YoutubeActivities(settings, partTypes, ResultsPerPage);
         }
 
-        public static YoutubeActivity Activity(ActivityApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeActivity Activity(ActivitySettings settings, params PartType[] partTypes)
         {
             return new YoutubeActivity(settings, partTypes);
         }
 
-        public static YoutubeActivities Activities(ActivityApiRequestSettings settings = null)
+        public static YoutubeActivities Activities(ActivitySettings settings = null)
         {
             return Activities(settings, PartType.Snippet);
         }
 
-        public static YoutubeActivity Activity(ActivityApiRequestSettings settings = null)
+        public static YoutubeActivity Activity(ActivitySettings settings = null)
         {
             return Activity(settings, PartType.Snippet);
         }

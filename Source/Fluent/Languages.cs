@@ -1,4 +1,4 @@
-﻿using YoutubeSnoop.Api.Settings;
+﻿using YoutubeSnoop.Api;
 
 namespace YoutubeSnoop.Fluent
 {
@@ -6,7 +6,7 @@ namespace YoutubeSnoop.Fluent
     {
         public static YoutubeLanguages Languages(string languageCode = "")
         {
-            return new YoutubeLanguages(new I18nLanguageApiRequestSettings { Hl = languageCode }, null, ResultsPerPage);
+            return new YoutubeLanguages(new I18nLanguageSettings { Hl = languageCode }, null, ResultsPerPage);
         }
     }
 }

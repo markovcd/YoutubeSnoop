@@ -2,12 +2,11 @@
 using System.Linq;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.ChannelSections;
-using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeChannelSection : YoutubeItem<ChannelSection, ChannelSectionApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubeChannelSection : YoutubeItem<ChannelSection, ChannelSectionSettings>, IYoutubeItem
     {
         private string _id;
         public string Id => Set(ref _id);
@@ -40,7 +39,7 @@ namespace YoutubeSnoop
         {
         }
 
-        public YoutubeChannelSection(ChannelSectionApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        public YoutubeChannelSection(ChannelSectionSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 

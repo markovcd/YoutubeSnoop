@@ -1,8 +1,8 @@
 ﻿using YoutubeSnoop.Enums;
 
-namespace YoutubeSnoop.Api.Settings
+namespace YoutubeSnoop.Api
 {
-    public sealed class VideoApiRequestSettings : ApiRequestSettings
+    public sealed class VideoSettings : Settings
     {
         public override RequestType RequestType => RequestType.Videos;
 

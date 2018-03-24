@@ -1,8 +1,8 @@
 ﻿using YoutubeSnoop.Enums;
 
-namespace YoutubeSnoop.Api.Settings
+namespace YoutubeSnoop.Api
 {
-    public sealed class I18nLanguageApiRequestSettings : ApiRequestSettings
+    public sealed class I18nLanguageSettings : Settings
     {
         public override RequestType RequestType => RequestType.I18nLanguages;
 

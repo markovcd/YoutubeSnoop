@@ -1,39 +1,39 @@
 ﻿using System.Linq;
-using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeCommentThreads CommentThreads(CommentThreadApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeCommentThreads CommentThreads(CommentThreadSettings settings, params PartType[] partTypes)
         {
             return new YoutubeCommentThreads(settings, partTypes, ResultsPerPage);
         }
 
-        public static YoutubeCommentThread CommentThread(CommentThreadApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeCommentThread CommentThread(CommentThreadSettings settings, params PartType[] partTypes)
         {
             return new YoutubeCommentThread(settings, partTypes);
         }
 
-        public static YoutubeCommentThreads CommentThreads(CommentThreadApiRequestSettings settings = null)
+        public static YoutubeCommentThreads CommentThreads(CommentThreadSettings settings = null)
         {
             return CommentThreads(settings, PartType.Snippet, PartType.Replies);
         }
 
-        public static YoutubeCommentThread CommentThread(CommentThreadApiRequestSettings settings = null)
+        public static YoutubeCommentThread CommentThread(CommentThreadSettings settings = null)
         {
             return CommentThread(settings, PartType.Snippet, PartType.Replies);
         }
 
         public static YoutubeCommentThreads CommentThreads(params string[] ids)
         {
-            return CommentThreads(new CommentThreadApiRequestSettings { Id = ids.Aggregate() });
+            return CommentThreads(new CommentThreadSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeCommentThread CommentThread(string id)
         {
-            return CommentThread(new CommentThreadApiRequestSettings { Id = id });
+            return CommentThread(new CommentThreadSettings { Id = id });
         }
 
         public static YoutubeCommentThreads RequestId(this YoutubeCommentThreads commentThreads, params string[] ids)

@@ -3,9 +3,9 @@ using YoutubeSnoop.Api.Attributes;
 using YoutubeSnoop.Api.Converters;
 using YoutubeSnoop.Enums;
 
-namespace YoutubeSnoop.Api.Settings
+namespace YoutubeSnoop.Api
 {
-    public sealed class SearchApiRequestSettings : ApiRequestSettings
+    public sealed class SearchSettings : Settings
     {
         public override RequestType RequestType => RequestType.Search;
 
@@ -15,7 +15,7 @@ namespace YoutubeSnoop.Api.Settings
         /// <remarks>
         /// Your request can also use the Boolean NOT (-) and OR (|) operators to exclude videos or to find videos that are associated with one of several search terms. For example, to search for videos matching either "boating" or "sailing", set the q parameter value to boating|sailing. Similarly, to search for videos matching either "boating" or "sailing" but not "fishing", set the q parameter value to boating|sailing -fishing. Note that the pipe character must be URL-escaped when it is sent in your API request. The URL-escaped value for the pipe character is %7C.
         /// </remarks>
-        [ApiRequestArgumentName("q")]
+        [ArgumentName("q")]
         public string Query { get; set; }
 
         /// <summary>
@@ -57,13 +57,13 @@ namespace YoutubeSnoop.Api.Settings
         /// <summary>
         /// Indicates that the API response should only contain resources created at or after the specified time.
         /// </summary>
-        [ApiRequestConvert(typeof(DateTimeConverter))]
+        [ToStringConvertAttribute(typeof(DateTimeConverter))]
         public DateTime? PublishedAfter { get; set; }
 
         /// <summary>
         /// Indicates that the API response should only contain resources created before or at the specified time.
         /// </summary>
-        [ApiRequestConvert(typeof(DateTimeConverter))]
+        [ToStringConvertAttribute(typeof(DateTimeConverter))]
         public DateTime? PublishedBefore { get; set; }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace YoutubeSnoop.Api.Settings
         /// <summary>
         /// Lets you restrict a search to only retrieve 2D or 3D videos. If you specify a value for this parameter, you must also set the type parameter's value to video.
         /// </summary>
-        [ApiRequestConvert(typeof(EnumDescriptionConverter))]
+        [ToStringConvertAttribute(typeof(EnumDescriptionConverter))]
         public Dimension? VideoDimension { get; set; }
 
         /// <summary>

@@ -1,39 +1,39 @@
 ﻿using System.Linq;
-using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeChannels Channels(ChannelApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeChannels Channels(ChannelSettings settings, params PartType[] partTypes)
         {
             return new YoutubeChannels(settings, partTypes, ResultsPerPage);
         }
 
-        public static YoutubeChannel Channel(ChannelApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeChannel Channel(ChannelSettings settings, params PartType[] partTypes)
         {
             return new YoutubeChannel(settings, partTypes);
         }
 
-        public static YoutubeChannels Channels(ChannelApiRequestSettings settings = null)
+        public static YoutubeChannels Channels(ChannelSettings settings = null)
         {
             return Channels(settings, PartType.Snippet, PartType.ContentDetails);
         }
 
-        public static YoutubeChannel Channel(ChannelApiRequestSettings settings = null)
+        public static YoutubeChannel Channel(ChannelSettings settings = null)
         {
             return Channel(settings, PartType.Snippet, PartType.ContentDetails);
         }
 
         public static YoutubeChannels Channels(params string[] ids)
         {
-            return Channels(new ChannelApiRequestSettings { Id = ids.Aggregate() });
+            return Channels(new ChannelSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeChannel Channel(string id)
         {
-            return Channel(new ChannelApiRequestSettings { Id = id });
+            return Channel(new ChannelSettings { Id = id });
         }
 
         public static YoutubeChannel ForUsername(this YoutubeChannel channel, string username)

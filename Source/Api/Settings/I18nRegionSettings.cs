@@ -1,8 +1,8 @@
 ﻿using YoutubeSnoop.Enums;
 
-namespace YoutubeSnoop.Api.Settings
+namespace YoutubeSnoop.Api
 {
-    public sealed class I18nRegionApiRequestSettings : ApiRequestSettings
+    public sealed class I18nRegionSettings : Settings
     {
         public override RequestType RequestType => RequestType.I18nRegions;
 

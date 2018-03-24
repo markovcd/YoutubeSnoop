@@ -1,8 +1,8 @@
 ﻿using YoutubeSnoop.Enums;
 
-namespace YoutubeSnoop.Api.Settings
+namespace YoutubeSnoop.Api
 {
-    public sealed class CommentThreadApiRequestSettings : ApiRequestSettings
+    public sealed class CommentThreadSettings : Settings
     {
         public override RequestType RequestType => RequestType.CommentThreads;
 

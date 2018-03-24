@@ -1,11 +1,11 @@
 ﻿namespace YoutubeSnoop.Api.Converters
 {
-    public interface IApiRequestConverter<T> : IApiRequestConverter
+    public interface IToStringConverter<T> : IToStringConverter
     {
         string Convert(T value);
     }
 
-    public interface IApiRequestConverter
+    public interface IToStringConverter
     {
         string Convert(object value);
     }

@@ -1,8 +1,8 @@
 ﻿using YoutubeSnoop.Enums;
 
-namespace YoutubeSnoop.Api.Settings
+namespace YoutubeSnoop.Api
 {
-    public sealed class CaptionApiRequestSettings : ApiRequestSettings
+    public sealed class CaptionSettings : Settings
     {
         public override RequestType RequestType => RequestType.Captions;
 

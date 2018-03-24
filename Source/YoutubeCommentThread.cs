@@ -2,12 +2,11 @@
 using System.Linq;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.CommentThreads;
-using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeCommentThread : YoutubeItem<CommentThread, CommentThreadApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubeCommentThread : YoutubeItem<CommentThread, CommentThreadSettings>, IYoutubeItem
     {
         private string _id;
         public string Id => Set(ref _id);
@@ -34,7 +33,7 @@ namespace YoutubeSnoop
         {
         }
 
-        public YoutubeCommentThread(CommentThreadApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        public YoutubeCommentThread(CommentThreadSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 

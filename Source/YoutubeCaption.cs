@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.Captions;
-using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeCaption : YoutubeItem<Caption, CaptionApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubeCaption : YoutubeItem<Caption, CaptionSettings>, IYoutubeItem
     {
         private string _id;
         public string Id => Set(ref _id);
@@ -49,7 +48,7 @@ namespace YoutubeSnoop
         {
         }
 
-        public YoutubeCaption(CaptionApiRequestSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        public YoutubeCaption(CaptionSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 

@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace YoutubeSnoop.Api.Settings.Arguments
+namespace YoutubeSnoop.Api.Arguments
 {
-    public class ApiArgument
+    public class Argument
     {
         public string Name { get; }
         public string Value { get; }
 
-        public ApiArgument(string argumentName, string argumentValue)
+        public Argument(string argumentName, string argumentValue)
         {
             if (string.IsNullOrWhiteSpace(argumentName)) throw new ArgumentNullException(nameof(argumentName));
 
@@ -22,11 +22,11 @@ namespace YoutubeSnoop.Api.Settings.Arguments
         }
     }
 
-    public class ApiArgument<T> : ApiArgument
+    public class Argument<T> : Argument
     {
         public new T Value { get; }
 
-        public ApiArgument(string name, T value) : base(name, value?.ToString().ToCamelCase())
+        public Argument(string name, T value) : base(name, value?.ToString().ToCamelCase())
         {
             Value = value;
         }

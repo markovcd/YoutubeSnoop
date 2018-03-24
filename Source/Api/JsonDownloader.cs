@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using YoutubeSnoop.Api.Exceptions;
 
 namespace YoutubeSnoop.Api
 {
@@ -17,7 +16,7 @@ namespace YoutubeSnoop.Api
             }
             catch (WebException ex)
             {
-                throw ApiException.FromWebException(ex);
+                throw RequestException.FromWebException(ex);
             }
         }
 

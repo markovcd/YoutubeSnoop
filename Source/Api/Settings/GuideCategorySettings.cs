@@ -1,8 +1,8 @@
 ﻿using YoutubeSnoop.Enums;
 
-namespace YoutubeSnoop.Api.Settings
+namespace YoutubeSnoop.Api
 {
-    public sealed class GuideCategoryApiRequestSettings : ApiRequestSettings
+    public sealed class GuideCategorySettings : Settings
     {
         public override RequestType RequestType => RequestType.GuideCategories;
 

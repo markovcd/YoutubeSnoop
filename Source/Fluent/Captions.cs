@@ -1,27 +1,27 @@
-﻿using YoutubeSnoop.Api.Settings;
+﻿using YoutubeSnoop.Api;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeCaptions Captions(CaptionApiRequestSettings settings = null)
+        public static YoutubeCaptions Captions(CaptionSettings settings = null)
         {
             return new YoutubeCaptions(settings, null, ResultsPerPage);
         }
 
-        public static YoutubeCaption Caption(CaptionApiRequestSettings settings = null)
+        public static YoutubeCaption Caption(CaptionSettings settings = null)
         {
             return new YoutubeCaption(settings);
         }
 
         public static YoutubeCaptions Captions(params string[] ids)
         {
-            return Captions(new CaptionApiRequestSettings { Id = ids.Aggregate() });
+            return Captions(new CaptionSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeCaption Caption(string id)
         {
-            return Caption(new CaptionApiRequestSettings { Id = id });
+            return Caption(new CaptionSettings { Id = id });
         }
 
         public static YoutubeCaptions RequestId(this YoutubeCaptions captions, params string[] ids)

@@ -1,8 +1,8 @@
 ﻿using YoutubeSnoop.Enums;
 
-namespace YoutubeSnoop.Api.Settings
+namespace YoutubeSnoop.Api
 {
-    public sealed class ChannelApiRequestSettings : ApiRequestSettings
+    public sealed class ChannelSettings : Settings
     {
         public override RequestType RequestType => RequestType.Channels;
 

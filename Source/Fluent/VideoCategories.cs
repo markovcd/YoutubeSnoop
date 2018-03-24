@@ -1,27 +1,27 @@
-﻿using YoutubeSnoop.Api.Settings;
+﻿using YoutubeSnoop.Api;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeVideoCategories VideoCategories(VideoCategoryApiRequestSettings settings = null)
+        public static YoutubeVideoCategories VideoCategories(VideoCategorySettings settings = null)
         {
             return new YoutubeVideoCategories(settings, null, ResultsPerPage);
         }
 
-        public static YoutubeVideoCategory VideoCategory(VideoCategoryApiRequestSettings settings = null)
+        public static YoutubeVideoCategory VideoCategory(VideoCategorySettings settings = null)
         {
             return new YoutubeVideoCategory(settings, null);
         }
 
         public static YoutubeVideoCategories VideoCategories(params string[] ids)
         {
-            return VideoCategories(new VideoCategoryApiRequestSettings { Id = ids.Aggregate() });
+            return VideoCategories(new VideoCategorySettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeVideoCategory VideoCategory(string id)
         {
-            return VideoCategory(new VideoCategoryApiRequestSettings { Id = id });
+            return VideoCategory(new VideoCategorySettings { Id = id });
         }
 
         public static YoutubeVideoCategories RequestId(this YoutubeVideoCategories videoCategories, params string[] ids)

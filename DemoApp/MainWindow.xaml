@@ -13,6 +13,6 @@
         
     </Window.Resources>
     <Grid>
-        <ListBox ItemsSource="{Binding Videos}" ItemTemplateSelector="{StaticResource TemplateSelector.Youtube}"/>
+        <ListBox ItemsSource="{Binding Videos}" ItemTemplateSelector="{StaticResource TemplateSelector.Youtube}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
     </Grid>
 </Window>

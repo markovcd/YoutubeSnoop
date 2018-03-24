@@ -37,7 +37,7 @@ namespace YoutubeSnoop
         private IReadOnlyDictionary<ThumbnailSize, Thumbnail> _thumbnails;
         public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails => Set(ref _thumbnails);
 
-        internal YoutubeSubscription(Subscription response) : base(response)
+        public YoutubeSubscription(Subscription response) : base(response)
         {
         }
 

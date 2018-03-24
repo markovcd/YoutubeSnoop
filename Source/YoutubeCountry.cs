@@ -10,7 +10,7 @@ namespace YoutubeSnoop
         public string CountryCode { get; }
         public string CountryName { get; }
 
-        internal YoutubeCountry(I18nRegion response)
+        public YoutubeCountry(I18nRegion response)
         {
             if (response == null) return;
 

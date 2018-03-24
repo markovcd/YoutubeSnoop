@@ -19,7 +19,7 @@ namespace YoutubeSnoop
         public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails { get; }
         public string Url { get; }
 
-        internal YoutubeSearchResult(SearchResult response)
+        public YoutubeSearchResult(SearchResult response)
         {
             if (response == null) return;
 

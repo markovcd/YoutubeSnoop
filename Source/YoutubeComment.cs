@@ -48,7 +48,7 @@ namespace YoutubeSnoop
         private string _parentId;
         public string ParentId => Set(ref _parentId);
 
-        internal YoutubeComment(Comment response) : base(response)
+        public YoutubeComment(Comment response) : base(response)
         {
         }
 

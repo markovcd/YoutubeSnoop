@@ -22,7 +22,7 @@ namespace YoutubeSnoop
         public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails { get; }
         public string Url { get; }
 
-        internal YoutubePlaylistItem(PlaylistItem response)
+        public YoutubePlaylistItem(PlaylistItem response)
         {
             if (response == null) return;
 

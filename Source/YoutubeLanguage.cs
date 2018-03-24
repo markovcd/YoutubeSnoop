@@ -10,7 +10,7 @@ namespace YoutubeSnoop
         public string LanguageCode { get; }
         public string LanguageName { get; }
 
-        internal YoutubeLanguage(I18nLanguage response)
+        public YoutubeLanguage(I18nLanguage response)
         {
             if (response == null) return;
 

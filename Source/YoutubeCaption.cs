@@ -45,7 +45,7 @@ namespace YoutubeSnoop
         private string _videoId;
         public string VideoId => Set(ref _videoId);
 
-        internal YoutubeCaption(Caption response) : base(response)
+        public YoutubeCaption(Caption response) : base(response)
         {
         }
 

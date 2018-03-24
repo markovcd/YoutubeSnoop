@@ -20,7 +20,7 @@ namespace YoutubeSnoop
         private string _channelId;
         public string ChannelId => Set(ref _channelId);
 
-        internal YoutubeGuideCategory(GuideCategory response) : base(response)
+        public YoutubeGuideCategory(GuideCategory response) : base(response)
         {
         }
 

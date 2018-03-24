@@ -30,7 +30,7 @@ namespace YoutubeSnoop
         private string _videoId;
         public string VideoId => Set(ref _videoId);
 
-        internal YoutubeCommentThread(CommentThread response) : base(response)
+        public YoutubeCommentThread(CommentThread response) : base(response)
         {
         }
 

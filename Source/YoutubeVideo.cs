@@ -63,7 +63,7 @@ namespace YoutubeSnoop
         private string _url;
         public string Url => Set(ref _url);
 
-        internal YoutubeVideo(Video response) : base(response)
+        public YoutubeVideo(Video response) : base(response)
         {
         }
 

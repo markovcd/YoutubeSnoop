@@ -51,7 +51,7 @@ namespace YoutubeSnoop
         private string _url;
         public string Url => Set(ref _url);
 
-        internal YoutubeChannel(Channel response) : base(response)
+        public YoutubeChannel(Channel response) : base(response)
         {
         }
 

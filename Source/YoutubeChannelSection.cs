@@ -36,7 +36,7 @@ namespace YoutubeSnoop
         private IReadOnlyList<string> _playlistIds;
         public IReadOnlyList<string> PlaylistIds => Set(ref _playlistIds);
 
-        internal YoutubeChannelSection(ChannelSection response) : base(response)
+        public YoutubeChannelSection(ChannelSection response) : base(response)
         {
         }
 

@@ -23,7 +23,7 @@ namespace YoutubeSnoop
         private bool _assignable;
         public bool Assignable => Set(ref _assignable);
 
-        internal YoutubeVideoCategory(VideoCategory response) : base(response)
+        public YoutubeVideoCategory(VideoCategory response) : base(response)
         {
         }
 

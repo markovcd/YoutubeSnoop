@@ -42,7 +42,7 @@ namespace YoutubeSnoop
         private string _url;
         public string Url => Set(ref _url);
 
-        internal YoutubePlaylist(Playlist response) : base(response)
+        public YoutubePlaylist(Playlist response) : base(response)
         {
         }
 

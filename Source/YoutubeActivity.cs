@@ -67,7 +67,7 @@ namespace YoutubeSnoop
         private SocialType _socialType;
         public SocialType SocialType => Set(ref _socialType);
 
-        internal YoutubeActivity(Activity response) : base(response)
+        public YoutubeActivity(Activity response) : base(response)
         {
         }
 

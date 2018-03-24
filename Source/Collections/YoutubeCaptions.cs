@@ -7,7 +7,7 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeCaptions : YoutubeCollection<YoutubeCaption, Caption, CaptionSettings>
     {
-        public YoutubeCaptions(CaptionSettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
+        public YoutubeCaptions(CaptionSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
             : base(settings, partTypes, resultsPerPage)
         {
         }

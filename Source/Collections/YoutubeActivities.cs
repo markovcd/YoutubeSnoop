@@ -7,7 +7,7 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeActivities : YoutubeCollection<YoutubeActivity, Activity, ActivitySettings>
     {
-        public YoutubeActivities(ActivitySettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20) 
+        public YoutubeActivities(ActivitySettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20) 
             : base(settings, partTypes, resultsPerPage)
         {
         }

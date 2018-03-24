@@ -25,7 +25,7 @@ namespace YoutubeSnoop
             Settings = request.Settings.Clone();
         }
 
-        protected YoutubeItem(TSettings settings = null, IEnumerable<PartType> partTypes = null) 
+        protected YoutubeItem(TSettings settings, IEnumerable<PartType> partTypes = null) 
             : this(Api.Request.Create<TResponse, TSettings>(settings, partTypes, 1))
         {
         }

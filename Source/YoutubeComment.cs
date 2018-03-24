@@ -51,7 +51,7 @@ namespace YoutubeSnoop
         {
         }
 
-        public YoutubeComment(CommentSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        public YoutubeComment(CommentSettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 

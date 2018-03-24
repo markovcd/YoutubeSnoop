@@ -7,7 +7,7 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeVideoCategories : YoutubeCollection<YoutubeVideoCategory, VideoCategory, VideoCategorySettings>
     {
-        public YoutubeVideoCategories(VideoCategorySettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
+        public YoutubeVideoCategories(VideoCategorySettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
             : base(settings, partTypes, resultsPerPage)
         {
         }

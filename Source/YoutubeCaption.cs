@@ -48,7 +48,7 @@ namespace YoutubeSnoop
         {
         }
 
-        public YoutubeCaption(CaptionSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        public YoutubeCaption(CaptionSettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 

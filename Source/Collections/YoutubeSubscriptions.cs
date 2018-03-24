@@ -7,7 +7,7 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeSubscriptions : YoutubeCollection<YoutubeSubscription, Subscription, SubscriptionSettings>
     {
-        public YoutubeSubscriptions(SubscriptionSettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
+        public YoutubeSubscriptions(SubscriptionSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
             : base(settings, partTypes, resultsPerPage)
         {
         }

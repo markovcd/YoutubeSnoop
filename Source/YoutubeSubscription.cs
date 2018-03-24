@@ -40,7 +40,7 @@ namespace YoutubeSnoop
         {
         }
 
-        public YoutubeSubscription(SubscriptionSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        public YoutubeSubscription(SubscriptionSettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 

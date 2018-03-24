@@ -26,7 +26,7 @@ namespace YoutubeSnoop
         {
         }
 
-        public YoutubeVideoCategory(VideoCategorySettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        public YoutubeVideoCategory(VideoCategorySettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 

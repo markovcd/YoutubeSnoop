@@ -7,7 +7,7 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeSearch : YoutubeCollection<YoutubeSearchResult, SearchResult, SearchSettings>
     {
-        public YoutubeSearch(SearchSettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
+        public YoutubeSearch(SearchSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
             : base(settings, partTypes, resultsPerPage)
         {
         }

@@ -33,7 +33,7 @@ namespace YoutubeSnoop
         {
         }
 
-        public YoutubeCommentThread(CommentThreadSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        public YoutubeCommentThread(CommentThreadSettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 

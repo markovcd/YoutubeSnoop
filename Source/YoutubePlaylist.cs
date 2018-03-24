@@ -45,7 +45,7 @@ namespace YoutubeSnoop
         {
         }
 
-        public YoutubePlaylist(PlaylistSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        public YoutubePlaylist(PlaylistSettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 

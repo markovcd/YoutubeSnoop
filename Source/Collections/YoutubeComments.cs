@@ -7,7 +7,7 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeComments : YoutubeCollection<YoutubeComment, Comment, CommentSettings>
     {
-        public YoutubeComments(CommentSettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
+        public YoutubeComments(CommentSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
             : base(settings, partTypes, resultsPerPage)
         {
         }

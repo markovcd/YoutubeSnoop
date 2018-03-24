@@ -7,7 +7,7 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubePlaylistItems : YoutubeCollection<YoutubePlaylistItem, PlaylistItem, PlaylistItemSettings>
     {
-        public YoutubePlaylistItems(PlaylistItemSettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
+        public YoutubePlaylistItems(PlaylistItemSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
             : base(settings, partTypes, resultsPerPage)
         {
         }

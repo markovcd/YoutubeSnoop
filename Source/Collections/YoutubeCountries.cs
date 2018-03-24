@@ -7,7 +7,7 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeCountries : YoutubeCollection<YoutubeCountry, I18nRegion, I18nRegionSettings>
     {
-        public YoutubeCountries(I18nRegionSettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
+        public YoutubeCountries(I18nRegionSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
             : base(settings, partTypes, resultsPerPage)
         {
         }

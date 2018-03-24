@@ -23,7 +23,7 @@ namespace YoutubeSnoop
         {
         }
 
-        public YoutubeGuideCategory(GuideCategorySettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        public YoutubeGuideCategory(GuideCategorySettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 

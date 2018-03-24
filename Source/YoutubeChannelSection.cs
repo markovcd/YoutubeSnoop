@@ -39,7 +39,7 @@ namespace YoutubeSnoop
         {
         }
 
-        public YoutubeChannelSection(ChannelSectionSettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        public YoutubeChannelSection(ChannelSectionSettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 

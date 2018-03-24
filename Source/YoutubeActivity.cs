@@ -70,7 +70,7 @@ namespace YoutubeSnoop
         {
         }
 
-        public YoutubeActivity(ActivitySettings settings = null, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
+        public YoutubeActivity(ActivitySettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 

@@ -17,57 +17,87 @@ namespace YoutubeSnoop.Api
             return new ApiRequest<TItem, TSettings>(settings, partTypes, resultsPerPage, jsonDownloader, responseDeserializer, apiUrlFormatter);
         }
 
-        public static ApiRequest<TItem, TSettings> Create<TItem, TSettings>(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        public static ApiRequest<TItem, TSettings> Create<TItem, TSettings>(TSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
             where TItem : class, IResponse
             where TSettings : class, IApiRequestSettings
         {
             return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<TItem>(), new ApiUrlFormatter());
         }
 
-        public static ApiRequest<Entities.Activities.Activity, ActivityApiRequestSettings> Create(ActivityApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        public static ApiRequest<Entities.Activities.Activity, ActivityApiRequestSettings> Create(ActivityApiRequestSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
         {
             return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Activities.Activity>(), new ApiUrlFormatter());
         }
 
-        public static ApiRequest<Entities.Captions.Caption, CaptionApiRequestSettings> Create(CaptionApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        public static ApiRequest<Entities.Captions.Caption, CaptionApiRequestSettings> Create(CaptionApiRequestSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
         {
             return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Captions.Caption>(), new ApiUrlFormatter());
         }
 
+        public static ApiRequest<Entities.Channels.Channel, ChannelApiRequestSettings> Create(ChannelApiRequestSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Channels.Channel>(), new ApiUrlFormatter());
+        }
 
-        public static ApiRequest<Entities.PlaylistItems.PlaylistItem, PlaylistItemsApiRequestSettings> Create(PlaylistItemsApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        public static ApiRequest<Entities.ChannelSections.ChannelSection, ChannelSectionApiRequestSettings> Create(ChannelSectionApiRequestSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.ChannelSections.ChannelSection>(), new ApiUrlFormatter());
+        }
+
+        public static ApiRequest<Entities.Comments.Comment, CommentApiRequestSettings> Create(CommentApiRequestSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Comments.Comment>(), new ApiUrlFormatter());
+        }
+
+        public static ApiRequest<Entities.CommentThreads.CommentThread, CommentThreadApiRequestSettings> Create(CommentThreadApiRequestSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.CommentThreads.CommentThread>(), new ApiUrlFormatter());
+        }
+
+        public static ApiRequest<Entities.GuideCategories.GuideCategory, GuideCategoryApiRequestSettings> Create(GuideCategoryApiRequestSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.GuideCategories.GuideCategory>(), new ApiUrlFormatter());
+        }
+
+        public static ApiRequest<Entities.I18nLanguages.I18nLanguage, I18nLanguageApiRequestSettings> Create(I18nLanguageApiRequestSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.I18nLanguages.I18nLanguage>(), new ApiUrlFormatter());
+        }
+
+        public static ApiRequest<Entities.I18nRegions.I18nRegion, I18nRegionApiRequestSettings> Create(I18nRegionApiRequestSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.I18nRegions.I18nRegion>(), new ApiUrlFormatter());
+        }
+
+        public static ApiRequest<Entities.PlaylistItems.PlaylistItem, PlaylistItemsApiRequestSettings> Create(PlaylistItemsApiRequestSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
         {
             return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.PlaylistItems.PlaylistItem>(), new ApiUrlFormatter());
         }
 
-        public static ApiRequest<Entities.Playlists.Playlist, PlaylistApiRequestSettings> Create(PlaylistApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        public static ApiRequest<Entities.Playlists.Playlist, PlaylistApiRequestSettings> Create(PlaylistApiRequestSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
         {
             return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Playlists.Playlist>(), new ApiUrlFormatter());
         }
 
-        public static ApiRequest<Entities.Search.SearchResult, SearchApiRequestSettings> Create(SearchApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        public static ApiRequest<Entities.Search.SearchResult, SearchApiRequestSettings> Create(SearchApiRequestSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
         {
             return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Search.SearchResult>(), new ApiUrlFormatter());
         }
 
-        public static ApiRequest<Entities.Subscriptions.Subscription, SubscriptionApiRequestSettings> Create(SubscriptionApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        public static ApiRequest<Entities.Subscriptions.Subscription, SubscriptionApiRequestSettings> Create(SubscriptionApiRequestSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
         {
             return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Subscriptions.Subscription>(), new ApiUrlFormatter());
         }
 
-        public static ApiRequest<Entities.VideoCategories.VideoCategory, VideoCategoryApiRequestSettings> Create(VideoCategoryApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        public static ApiRequest<Entities.VideoCategories.VideoCategory, VideoCategoryApiRequestSettings> Create(VideoCategoryApiRequestSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
         {
             return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.VideoCategories.VideoCategory>(), new ApiUrlFormatter());
         }
 
-        public static ApiRequest<Entities.Videos.Video, VideoApiRequestSettings> Create(VideoApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        public static ApiRequest<Entities.Videos.Video, VideoApiRequestSettings> Create(VideoApiRequestSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
         {
             return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Videos.Video>(), new ApiUrlFormatter());
-        }
-
-        
-
-        
+        }   
     }
 
     /// <summary>

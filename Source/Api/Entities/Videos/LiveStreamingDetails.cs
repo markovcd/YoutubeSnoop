@@ -32,6 +32,6 @@ namespace YoutubeSnoop.Api.Entities.Videos
         /// <summary>
         /// The ID of the currently active live chat attached to this video. This field is filled only if the video is a currently live broadcast that has live chat. Once the broadcast transitions to complete this field will be removed and the live chat closed down. For persistent broadcasts that live chat id will no longer be tied to this video but rather to the new video being displayed at the persistent page.
         /// </summary>
-        public long? ActiveLiveChatId { get; set; }
+        public string ActiveLiveChatId { get; set; }
     }
 }

@@ -11,6 +11,9 @@ namespace YoutubeSnoop
     {
         private const string _videoUrl = @"https://www.youtube.com/watch?v={0}";
 
+        private Video _rawData;
+        public Video RawData => Set(ref _rawData);
+
         private string _id;
         public string Id => Set(ref _id);
 
@@ -74,6 +77,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
             _url = GetUrl(response.Id);

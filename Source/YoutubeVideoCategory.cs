@@ -7,6 +7,9 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeVideoCategory : YoutubeItem<VideoCategory, VideoCategorySettings>, IYoutubeItem
     {
+        private VideoCategory _rawData;
+        public VideoCategory RawData => Set(ref _rawData);
+
         private string _id;
         public string Id => Set(ref _id);
 
@@ -34,6 +37,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
 

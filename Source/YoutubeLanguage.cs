@@ -5,6 +5,7 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeLanguage : IYoutubeItem
     {
+        public I18nLanguage RawData { get; }
         public ResourceKind Kind { get; }
         public string Id { get; }
         public string LanguageCode { get; }
@@ -14,6 +15,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            RawData = response;
             Kind = response.Kind;
             Id = response.Id;
             LanguageCode = response.Snippet?.Hl;

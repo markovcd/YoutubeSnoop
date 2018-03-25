@@ -11,6 +11,9 @@ namespace YoutubeSnoop
     {
         private const string _playlistUrl = @"https://www.youtube.com/playlist?list={0}";
 
+        private Playlist _rawData;
+        public Playlist RawData => Set(ref _rawData);
+
         private string _id;
         public string Id => Set(ref _id);
 
@@ -53,6 +56,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
             _url = GetUrl(response.Id);

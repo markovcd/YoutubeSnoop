@@ -5,6 +5,7 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeCountry : IYoutubeItem
     {
+        public I18nRegion RawData { get; }
         public ResourceKind Kind { get; }
         public string Id { get; }
         public string CountryCode { get; }
@@ -14,6 +15,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            RawData = response;
             Kind = response.Kind;
             Id = response.Id;
             CountryCode = response.Snippet?.Gl;

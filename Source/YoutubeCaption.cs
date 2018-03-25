@@ -8,6 +8,9 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeCaption : YoutubeItem<Caption, CaptionSettings>, IYoutubeItem
     {
+        private Caption _rawData;
+        public Caption RawData => Set(ref _rawData);
+
         private string _id;
         public string Id => Set(ref _id);
 
@@ -56,6 +59,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
 

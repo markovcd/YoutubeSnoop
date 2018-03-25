@@ -9,6 +9,9 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeActivity : YoutubeItem<Activity, ActivitySettings>, IYoutubeItem
     {
+        private Activity _rawData;
+        public Activity RawData => Set(ref _rawData);
+
         private string _id;
         public string Id => Set(ref _id);
 
@@ -78,6 +81,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
 

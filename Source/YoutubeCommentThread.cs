@@ -8,6 +8,9 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeCommentThread : YoutubeItem<CommentThread, CommentThreadSettings>, IYoutubeItem
     {
+        private CommentThread _rawData;
+        public CommentThread RawData => Set(ref _rawData);
+
         private string _id;
         public string Id => Set(ref _id);
 
@@ -41,6 +44,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
             _replies = response.Replies?.Comments.Select(c => new YoutubeComment(c)).ToList().AsReadOnly();

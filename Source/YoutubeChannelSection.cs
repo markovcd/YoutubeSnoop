@@ -11,6 +11,9 @@ namespace YoutubeSnoop
         private string _id;
         public string Id => Set(ref _id);
 
+        private ChannelSection _rawData;
+        public ChannelSection RawData => Set(ref _rawData);
+
         private ResourceKind _kind;
         public ResourceKind Kind => Set(ref _kind);
 
@@ -47,6 +50,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
 

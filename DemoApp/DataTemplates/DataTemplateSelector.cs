@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using YoutubeSnoop;
 
-namespace DemoApp
+namespace DemoApp.DataTemplates
 {
     class YoutubeTemplateSelector : DataTemplateSelector
     {

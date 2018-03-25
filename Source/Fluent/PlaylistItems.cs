@@ -42,20 +42,20 @@ namespace YoutubeSnoop.Fluent
             return playlistItems.RequestPart(PartType.Status);
         }
 
-        public static IYoutubeItem Details(this YoutubePlaylistItem playlistItem)
+        public static YoutubePlaylistItems RequestAllParts(this YoutubePlaylistItems playlistItems)
+        {
+            return playlistItems.RequestContentDetails().RequestSnippet().RequestStatus();
+        }
+
+        public static YoutubeVideo Details(this YoutubePlaylistItem playlistItem)
         {
             switch (playlistItem.ItemKind)
             {
                 case ResourceKind.Video: return Video(playlistItem.ItemId);
-                case ResourceKind.Playlist: return Playlist(playlistItem.ItemId);
-                case ResourceKind.Channel: return Channel(playlistItem.ItemId);
+                case ResourceKind.Playlist: return null;
+                case ResourceKind.Channel: return null;
                 default: throw new InvalidOperationException();
             }
-        }
-
-        public static TItem Details<TItem>(this YoutubePlaylistItem playlistItem) where TItem : class, IYoutubeItem
-        {
-            return Details(playlistItem) as TItem;
         }
     }
 }

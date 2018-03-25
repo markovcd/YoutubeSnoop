@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:y="clr-namespace:YoutubeSnoop;assembly=YoutubeSnoop">
+
+    <DataTemplate x:Key="Template.Details.Video" DataType="{x:Type y:YoutubeVideo}">
+
+        <StackPanel>
+            <ContentControl ContentTemplate="{DynamicResource Template.List.Video}" Content="{Binding}"/>
+
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Url}" Tag="Url:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding PublishedAt}" Tag="Published at:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Description}" Tag="Description:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ChannelTitle}" Tag="Channel title:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ViewCount}" Tag="View count:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding CommentCount}" Tag="Comment count:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding LikeCount}" Tag="Like count:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding DislikeCount}" Tag="Dislike count:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Duration}" Tag="Duration:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Definition}" Tag="Definition:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ChannelId}" Tag="Channel Id:"/>
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>

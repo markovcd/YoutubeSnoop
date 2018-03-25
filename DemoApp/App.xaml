@@ -5,7 +5,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="DataTemplates.xaml"/>
+                <ResourceDictionary Source="DataTemplates/TemplateSelector.Details.xaml"/>
+                <ResourceDictionary Source="DataTemplates/TemplateSelector.List.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

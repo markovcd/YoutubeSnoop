@@ -5,6 +5,6 @@ namespace YoutubeSnoop.Api
 {
     public interface IUrlFormatter
     {
-        string Format(ISettings settings, IEnumerable<PartType> partTypes, string pageToken, int resultsPerPage);
+        string Format(ISettings settings, IEnumerable<PartType> partTypes, string pageToken, int resultsPerPage, string key);
     }
 }

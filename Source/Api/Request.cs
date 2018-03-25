@@ -9,11 +9,13 @@ namespace YoutubeSnoop.Api
 {
     public static class Request
     {
+        public static string ApiKey { get; set; } = null;
+
         public static Request<TItem, TSettings> Create<TItem, TSettings>(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TItem> responseDeserializer, IUrlFormatter apiUrlFormatter)
             where TItem : class, IResponse
             where TSettings : class, ISettings
         {
-            return new Request<TItem, TSettings>(settings, partTypes, resultsPerPage, jsonDownloader, responseDeserializer, apiUrlFormatter);
+            return new Request<TItem, TSettings>(settings, partTypes, resultsPerPage, jsonDownloader, responseDeserializer, apiUrlFormatter, ApiKey);
         }
 
         public static Request<TItem, TSettings> Create<TItem, TSettings>(TSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
@@ -108,6 +110,10 @@ namespace YoutubeSnoop.Api
         where TItem : class, IResponse
         where TSettings : class, ISettings
     {
+        private const string _defaultApiKey = "AIzaSyAHVb6LDoO5aARmDlUe9PIeU_U1et1bWd8"; // default project Api key, do not touch!
+
+        private readonly string _apiKey;
+
         private readonly IJsonDownloader _jsonDownloader;
         private readonly IPagedResponseDeserializer<TItem> _responseDeserializer;
         private readonly IUrlFormatter _apiUrlFormatter;
@@ -121,11 +127,12 @@ namespace YoutubeSnoop.Api
 
         public IEnumerable<PartType> PartTypes { get; }
 
-        public Request(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TItem> responseDeserializer, IUrlFormatter apiUrlFormatter)
+        public Request(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TItem> responseDeserializer, IUrlFormatter apiUrlFormatter, string apiKey = null)
         {
             _jsonDownloader = jsonDownloader;
             _responseDeserializer = responseDeserializer;
             _apiUrlFormatter = apiUrlFormatter;
+            _apiKey = apiKey ?? _defaultApiKey;
 
             ResultsPerPage = resultsPerPage;
             Settings = settings ?? Activator.CreateInstance<TSettings>();
@@ -136,13 +143,13 @@ namespace YoutubeSnoop.Api
 
         public IPagedResponse<TItem> Deserialize(string pageToken = null)
         {
-            return Deserialize(_apiUrlFormatter, _jsonDownloader, _responseDeserializer, Settings, PartTypes, ResultsPerPage, pageToken);
+            return Deserialize(_apiUrlFormatter, _jsonDownloader, _responseDeserializer, Settings, PartTypes, ResultsPerPage, pageToken, _apiKey);
         }
 
         public static IPagedResponse<TItem> Deserialize(IUrlFormatter apiUrlFormatter, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TItem> responseDeserializer,
-                                                        TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, string pageToken = null)
+                                                        TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, string pageToken = null, string apiKey = null)
         {
-            var requestUrl = apiUrlFormatter.Format(settings, partTypes, pageToken, resultsPerPage);
+            var requestUrl = apiUrlFormatter.Format(settings, partTypes, pageToken, resultsPerPage, apiKey ?? _defaultApiKey);
             var json = jsonDownloader.Download(requestUrl);
             return responseDeserializer.Deserialize(json);
         }

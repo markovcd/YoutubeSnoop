@@ -34,36 +34,62 @@ namespace DemoApp
             get => _isSearching;
             set => SetProperty(ref _isSearching, value);
         }
-
         public ICommand SearchCommand => new RelayCommand(Search, CanSearch);
         public ICommand ShowSearchResultDetailsCommand => new RelayCommand<YoutubeSearchResult>(ShowSearchResultDetails, CanShowSearchResultDetails);
-        public ICommand ShowPlaylistItemsCommand => new RelayCommand<YoutubePlaylist>(ShowPlaylistItems, CanShowPlaylistItemsCommand);
+        public ICommand ShowPlaylistItemDetailsCommand => new RelayCommand<YoutubePlaylistItem>(ShowPlaylistItemDetails, CanShowPlaylistItemDetails);
+        public ICommand ShowPlaylistItemsCommand => new RelayCommand<YoutubePlaylist>(ShowPlaylistItems, CanShowPlaylistItems);
+        public ICommand ShowRelatedVideosCommand => new RelayCommand<YoutubeVideo>(ShowRelatedVideos, CanShowRelatedVideos);
+        public ICommand ShowVideoCommentThreadsCommand => new RelayCommand<YoutubeVideo>(ShowVideoCommentThreads, CanShowVideoCommentThreads);
 
-        private bool CanShowPlaylistItemsCommand(YoutubePlaylist playlist)
+        private bool CanSearch()
+        {
+            return !string.IsNullOrEmpty(SearchQuery) && !IsSearching;
+        }
+
+        private bool CanShowPlaylistItems(YoutubePlaylist playlist)
         {
             return playlist != null && !IsSearching;
         }
 
-        private void ShowPlaylistItems(YoutubePlaylist playlist)
-        {            
-            Items.Clear();
-            SearchQuery = null;
-            IsSearching = true;
+        private bool CanShowPlaylistItemDetails(YoutubePlaylistItem playlistItem)
+        {
+            return playlistItem != null;
+        }
 
-            Task.Run(() =>
-            {
-                foreach (var playlistItem in playlist.Items().RequestAllParts())
-                {
-                    App.Current.Dispatcher.BeginInvoke((Action)(() => Items.Add(playlistItem)));
-                }
-
-                App.Current.Dispatcher.BeginInvoke((Action)(() => IsSearching = false));
-            });
+        private bool CanShowRelatedVideos(YoutubeVideo video)
+        {
+            return video != null && !IsSearching;
         }
 
         private bool CanShowSearchResultDetails(YoutubeSearchResult searchResult)
         {
             return searchResult != null;
+        }
+
+        private bool CanShowVideoCommentThreads(YoutubeVideo video)
+        {
+            return video != null && !IsSearching;
+        }
+
+        private void Search()
+        {
+            var searchQuery = SearchQuery;
+            FillList(Youtube.Search(searchQuery).Take(50));
+        }
+
+        private void ShowPlaylistItems(YoutubePlaylist playlist)
+        {            
+            FillList(playlist.Items().RequestAllParts().Take(50));
+        }
+
+        private void ShowPlaylistItemDetails(YoutubePlaylistItem playlistItem)
+        {
+            SelectedItem = playlistItem.Details().RequestAllParts();
+        }
+
+        private void ShowRelatedVideos(YoutubeVideo video)
+        {
+            FillList(video.RelatedVideos().Take(50));
         }
 
         private void ShowSearchResultDetails(YoutubeSearchResult searchResult)
@@ -77,28 +103,26 @@ namespace DemoApp
             SelectedItem = details;
         }
 
-        private bool CanSearch()
+        private void ShowVideoCommentThreads(YoutubeVideo video)
         {
-            return !string.IsNullOrEmpty(SearchQuery) && !IsSearching;
+            FillList(video.Comments().RequestAllParts().Take(50));
         }
 
-        private void Search()
+        private void FillList(IEnumerable<IYoutubeItem> items)
         {
             Items.Clear();
-            var searchQuery = SearchQuery;
             SearchQuery = null;
             IsSearching = true;
 
             Task.Run(() =>
             {
-                foreach (var searchResult in Youtube.Search(searchQuery).Take(50))
+                foreach (var item in items)
                 {
-                    App.Current.Dispatcher.BeginInvoke((Action)(() => Items.Add(searchResult)));              
+                    App.Current.Dispatcher.BeginInvoke((Action)(() => Items.Add(item)));
                 }
 
                 App.Current.Dispatcher.BeginInvoke((Action)(() => IsSearching = false));
             });
-            
         }
 
         public MainViewModel()

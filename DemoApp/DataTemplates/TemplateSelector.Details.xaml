@@ -5,7 +5,10 @@
         <ResourceDictionary Source="Details/Default.xaml"/>
 
         <ResourceDictionary Source="Details/Channel.xaml"/>
+        <ResourceDictionary Source="Details/Comment.xaml"/>
+        <ResourceDictionary Source="Details/CommentThread.xaml"/>
         <ResourceDictionary Source="Details/Playlist.xaml"/>
+        <ResourceDictionary Source="Details/PlaylistItem.xaml"/>
         <ResourceDictionary Source="Details/SearchResult.xaml"/>
         <ResourceDictionary Source="Details/Video.xaml"/>
         <ResourceDictionary Source="Details/Property.xaml"/>
@@ -16,6 +19,9 @@
                                    
                                    VideoTemplate="{StaticResource Template.Details.Video}" 
                                    ChannelTemplate="{StaticResource Template.Details.Channel}" 
+                                   CommentTemplate="{StaticResource Template.Details.Comment}" 
+                                   CommentThreadTemplate="{StaticResource Template.Details.CommentThread}" 
                                    SearchResultTemplate="{StaticResource Template.Details.SearchResult}" 
-                                   PlaylistTemplate="{StaticResource Template.Details.Playlist}"/>
+                                   PlaylistTemplate="{StaticResource Template.Details.Playlist}"
+                                   PlaylistItemTemplate="{StaticResource Template.Details.PlaylistItem}"/>
 </ResourceDictionary>

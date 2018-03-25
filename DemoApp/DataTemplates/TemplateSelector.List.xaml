@@ -5,7 +5,10 @@
         <ResourceDictionary Source="List/Default.xaml"/>
 
         <ResourceDictionary Source="List/Channel.xaml"/>
+        <ResourceDictionary Source="List/Comment.xaml"/>
+        <ResourceDictionary Source="List/CommentThread.xaml"/>
         <ResourceDictionary Source="List/Playlist.xaml"/>
+        <ResourceDictionary Source="List/PlaylistItem.xaml"/>
         <ResourceDictionary Source="List/SearchResult.xaml"/>
         <ResourceDictionary Source="List/Video.xaml"/>
     </ResourceDictionary.MergedDictionaries>
@@ -15,6 +18,9 @@
                                    
                                    VideoTemplate="{StaticResource Template.List.Video}" 
                                    ChannelTemplate="{StaticResource Template.List.Channel}" 
+                                   CommentTemplate="{StaticResource Template.List.Comment}" 
+                                   CommentThreadTemplate="{StaticResource Template.List.CommentThread}" 
                                    SearchResultTemplate="{StaticResource Template.List.SearchResult}" 
-                                   PlaylistTemplate="{StaticResource Template.List.Playlist}"/>
+                                   PlaylistTemplate="{StaticResource Template.List.Playlist}"
+                                   PlaylistItemTemplate="{StaticResource Template.List.PlaylistItem}"/>
 </ResourceDictionary>

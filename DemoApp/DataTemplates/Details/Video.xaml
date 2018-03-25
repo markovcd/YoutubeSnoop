@@ -7,6 +7,14 @@
         <StackPanel>
             <ContentControl ContentTemplate="{DynamicResource Template.List.Video}" Content="{Binding}"/>
 
+            <TextBlock Margin="5">
+                <Hyperlink Command="{Binding DataContext.ShowRelatedVideosCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">Related videos</Hyperlink>
+            </TextBlock>
+
+            <TextBlock Margin="5">
+                <Hyperlink Command="{Binding DataContext.ShowVideoCommentThreadsCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">Comments</Hyperlink>
+            </TextBlock>
+
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Url}" Tag="Url:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding PublishedAt}" Tag="Published at:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Description}" Tag="Description:"/>

@@ -3,12 +3,12 @@
                     xmlns:y="clr-namespace:YoutubeSnoop;assembly=YoutubeSnoop"
                     xmlns:c="clr-namespace:DemoApp.Converters">
 
-    <DataTemplate x:Key="Template.Details.Playlist" DataType="{x:Type y:YoutubePlaylist}">
+    <DataTemplate x:Key="Template.Details.PlaylistItem" DataType="{x:Type y:YoutubePlaylistItem}">
         <StackPanel>
-            <ContentControl ContentTemplate="{DynamicResource Template.List.Playlist}" Content="{Binding}"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.List.PlaylistItem}" Content="{Binding}"/>
 
             <TextBlock Margin="5">
-                <Hyperlink Command="{Binding DataContext.ShowPlaylistItemsCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">Get items</Hyperlink>
+                <Hyperlink Command="{Binding DataContext.ShowPlaylistItemDetailsCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">Details</Hyperlink>
             </TextBlock>
 
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Url}" Tag="Url:"/>
@@ -16,7 +16,8 @@
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Description}" Tag="Description:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ChannelTitle}" Tag="Channel title:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ChannelId}" Tag="Channel ID:"/>
-            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ItemCount}" Tag="Item count:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding PlaylistId}" Tag="Playlist ID:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Position}" Tag="Position:"/>
         </StackPanel>
 
     </DataTemplate>

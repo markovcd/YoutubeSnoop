@@ -34,16 +34,30 @@ namespace DemoApp
             get => _isSearching;
             set => SetProperty(ref _isSearching, value);
         }
+
         public ICommand SearchCommand => new RelayCommand(Search, CanSearch);
+        public ICommand ShowCommentThreadDetailsCommand => new RelayCommand<YoutubeCommentThread>(ShowCommentThreadDetails, CanShowCommentThreadDetails);
+        public ICommand ShowCommentThreadRepliesCommand => new RelayCommand<YoutubeCommentThread>(ShowCommentThreadReplies, CanShowCommentThreadReplies);
         public ICommand ShowSearchResultDetailsCommand => new RelayCommand<YoutubeSearchResult>(ShowSearchResultDetails, CanShowSearchResultDetails);
         public ICommand ShowPlaylistItemDetailsCommand => new RelayCommand<YoutubePlaylistItem>(ShowPlaylistItemDetails, CanShowPlaylistItemDetails);
         public ICommand ShowPlaylistItemsCommand => new RelayCommand<YoutubePlaylist>(ShowPlaylistItems, CanShowPlaylistItems);
         public ICommand ShowRelatedVideosCommand => new RelayCommand<YoutubeVideo>(ShowRelatedVideos, CanShowRelatedVideos);
         public ICommand ShowVideoCommentThreadsCommand => new RelayCommand<YoutubeVideo>(ShowVideoCommentThreads, CanShowVideoCommentThreads);
+        public ICommand ShowVideoChannelCommand => new RelayCommand<YoutubeVideo>(ShowVideoChannel, CanShowVideoChannel);
 
         private bool CanSearch()
         {
             return !string.IsNullOrEmpty(SearchQuery) && !IsSearching;
+        }
+
+        private bool CanShowCommentThreadDetails(YoutubeCommentThread commentThread)
+        {
+            return commentThread != null;
+        }
+
+        private bool CanShowCommentThreadReplies(YoutubeCommentThread commentThread)
+        {
+            return commentThread != null && commentThread.TotalReplyCount != 0;
         }
 
         private bool CanShowPlaylistItems(YoutubePlaylist playlist)
@@ -68,13 +82,28 @@ namespace DemoApp
 
         private bool CanShowVideoCommentThreads(YoutubeVideo video)
         {
-            return video != null && !IsSearching;
+            return video != null && !IsSearching && video.CommentCount != 0;
+        }
+
+        private bool CanShowVideoChannel(YoutubeVideo video)
+        {
+            return video != null && !string.IsNullOrEmpty(video.ChannelId);
         }
 
         private void Search()
         {
             var searchQuery = SearchQuery;
             FillList(Youtube.Search(searchQuery).Take(50));
+        }
+
+        private void ShowCommentThreadDetails(YoutubeCommentThread commentThread)
+        {
+            SelectedItem = commentThread.TopLevelComment;
+        }
+
+        private void ShowCommentThreadReplies(YoutubeCommentThread commentThread)
+        {
+            FillList(commentThread.Replies);
         }
 
         private void ShowPlaylistItems(YoutubePlaylist playlist)
@@ -106,6 +135,11 @@ namespace DemoApp
         private void ShowVideoCommentThreads(YoutubeVideo video)
         {
             FillList(video.Comments().RequestAllParts().Take(50));
+        }
+
+        private void ShowVideoChannel(YoutubeVideo video)
+        {
+            SelectedItem = video.Channel();
         }
 
         private void FillList(IEnumerable<IYoutubeItem> items)

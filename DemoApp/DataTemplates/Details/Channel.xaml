@@ -4,20 +4,22 @@
                     xmlns:c="clr-namespace:DemoApp.Converters">
     
     <DataTemplate x:Key="Template.Details.Channel" DataType="{x:Type y:YoutubeChannel}">
-        <Grid HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <StackPanel>
+            <ContentControl ContentTemplate="{DynamicResource Template.List.Channel}" Content="{Binding}"/>
 
-            <Image Grid.Column="0" Source="{Binding Thumbnails, Mode=OneWay, IsAsync=True, Converter={c:ThumbnailsToImageSourceConverter}}" />
+            <!--<TextBlock Margin="5">
+                <Hyperlink Command="{Binding DataContext.ShowPlaylistItemsCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">Get items</Hyperlink>
+            </TextBlock>-->
 
-            <TextBlock Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" Margin="10">
-                    <Run Text="Channel:" FontWeight="Bold"/>
-                    <Run Text="{Binding Title, Mode=OneWay}"/>
-            </TextBlock>
-
-        </Grid>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Url}" Tag="URL:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding CustomUrl}" Tag="Custom URL:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Description}" Tag="Description:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding PublishedAt}" Tag="Published at:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding SubscriberCount}" Tag="Subscriber count:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding UploadsCount}" Tag="Uploads count:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ViewCount}" Tag="View count:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding CommentCount}" Tag="Comment count:"/>
+        </StackPanel>
 
     </DataTemplate>
 </ResourceDictionary>

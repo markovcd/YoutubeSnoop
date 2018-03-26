@@ -179,6 +179,11 @@ namespace YoutubeSnoop.Fluent
             return CommentThreads().ForVideoId(video.Id);
         }
 
+        public static YoutubeChannel Channel(this YoutubeVideo video)
+        {
+            return Channel(video.ChannelId);
+        }
+
         public static YoutubeVideos MostPopular(this YoutubeVideos videos)
         {
             var settings = videos.Settings.Clone();

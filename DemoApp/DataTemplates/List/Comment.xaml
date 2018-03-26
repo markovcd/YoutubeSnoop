@@ -10,14 +10,14 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!--<StackPanel Grid.Column="0">
-                <Image Source="{Binding TopLevelComment.AuthorProfileImageUrl, Mode=OneWay, IsAsync=True}" Stretch="None" HorizontalAlignment="Center" />
-                <TextBlock Text="{Binding TopLevelComment.AuthorDisplayName, Mode=OneWay}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Center"/>
+            <StackPanel Grid.Column="0">
+                <Image Source="{Binding AuthorProfileImageUrl, Mode=OneWay, IsAsync=True}" Stretch="None" HorizontalAlignment="Center" />
+                <TextBlock Text="{Binding AuthorDisplayName, Mode=OneWay}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Center"/>
             </StackPanel>
             <TextBlock Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" Margin="10">
-                <Run Text="{Binding TotalReplyCount, Mode=OneWay, StringFormat=Comment thread ({0}):}" FontWeight="Bold"/>
-                <Run Text="{Binding TopLevelComment.TextDisplay, Mode=OneWay}"/>
-            </TextBlock>-->
+                <Run Text="Commen:" FontWeight="Bold"/>
+                <Run Text="{Binding TextDisplay, Mode=OneWay}"/>
+            </TextBlock>
 
         </Grid>
 

@@ -10,6 +10,7 @@ namespace YoutubeSnoop
     public sealed class YoutubeChannel : YoutubeItem<Channel, ChannelSettings>, IYoutubeItem
     {
         private const string _channelUrl = @"https://www.youtube.com/channel/{0}";
+        private const string _channelUrlCustom = @"https://www.youtube.com/{0}";
 
         private Channel _rawData;
         public Channel RawData => Set(ref _rawData);
@@ -74,7 +75,7 @@ namespace YoutubeSnoop
             {
                 _title = response.Snippet.Title;
                 _description = response.Snippet.Description;
-                _customUrl = response.Snippet.CustomUrl;
+                _customUrl = GetUrl(response.Snippet.CustomUrl, true);
                 _publishedAt = response.Snippet.PublishedAt.GetValueOrDefault();
                 _thumbnails = response.Snippet.Thumbnails?.Clone();
             }
@@ -93,9 +94,9 @@ namespace YoutubeSnoop
             }
         }
 
-        public static string GetUrl(string id)
+        public static string GetUrl(string id, bool isCustom = false)
         {
-            return string.Format(_channelUrl, id);
+            return string.Format(isCustom ? _channelUrlCustom : _channelUrl, id);
         }
     }
 }

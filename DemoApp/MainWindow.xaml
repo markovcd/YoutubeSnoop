@@ -32,7 +32,7 @@
         <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Items, IsAsync=True}" SelectedItem="{Binding SelectedItem}" ItemTemplateSelector="{StaticResource TemplateSelector.List}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
 
         <ScrollViewer Grid.Row="1" Grid.Column="1" HorizontalScrollBarVisibility="Disabled">
-            <ContentControl ContentTemplateSelector="{StaticResource TemplateSelector.Details}" Content="{Binding SelectedItem}"/>
+            <ContentControl Margin="5" ContentTemplateSelector="{StaticResource TemplateSelector.Details}" Content="{Binding SelectedItem}"/>
         </ScrollViewer>
     </Grid>
 </Window>

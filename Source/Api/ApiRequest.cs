@@ -32,6 +32,59 @@ namespace YoutubeSnoop.Api
         {
             return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Captions.Caption>(), new ApiUrlFormatter());
         }
+
+        public static ApiRequest<Entities.Channels.Channel, ChannelApiRequestSettings> Create(ChannelApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Channels.Channel>(), new ApiUrlFormatter());
+        }
+        public static ApiRequest<Entities.ChannelSections.ChannelSection, ChannelSectionApiRequestSettings> Create(ChannelSectionApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.ChannelSections.ChannelSection>(), new ApiUrlFormatter());
+        }
+        public static ApiRequest<Entities.Comments.Comment, CommentApiRequestSettings> Create(CommentApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Comments.Comment>(), new ApiUrlFormatter());
+        }
+        public static ApiRequest<Entities.CommentThreads.CommentThread, CommentThreadApiRequestSettings> Create(CommentThreadApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.CommentThreads.CommentThread>(), new ApiUrlFormatter());
+        }
+        public static ApiRequest<Entities.GuideCategories.GuideCategory, GuideCategoryApiRequestSettings> Create(GuideCategoryApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.GuideCategories.GuideCategory>(), new ApiUrlFormatter());
+        }
+        public static ApiRequest<Entities.I18nLanguages.I18nLanguage, CaptionApiRequestSettings> Create(CaptionApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Captions.Caption>(), new ApiUrlFormatter());
+        }
+        public static ApiRequest<Entities.Captions.Caption, CaptionApiRequestSettings> Create(CaptionApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Captions.Caption>(), new ApiUrlFormatter());
+        }
+        public static ApiRequest<Entities.Captions.Caption, CaptionApiRequestSettings> Create(CaptionApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Captions.Caption>(), new ApiUrlFormatter());
+        }
+        public static ApiRequest<Entities.Captions.Caption, CaptionApiRequestSettings> Create(CaptionApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Captions.Caption>(), new ApiUrlFormatter());
+        }
+        public static ApiRequest<Entities.Captions.Caption, CaptionApiRequestSettings> Create(CaptionApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Captions.Caption>(), new ApiUrlFormatter());
+        }
+        public static ApiRequest<Entities.Captions.Caption, CaptionApiRequestSettings> Create(CaptionApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Captions.Caption>(), new ApiUrlFormatter());
+        }
+        public static ApiRequest<Entities.Captions.Caption, CaptionApiRequestSettings> Create(CaptionApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Captions.Caption>(), new ApiUrlFormatter());
+        }
+        public static ApiRequest<Entities.Captions.Caption, CaptionApiRequestSettings> Create(CaptionApiRequestSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage)
+        {
+            return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Captions.Caption>(), new ApiUrlFormatter());
+        }
     }
 
     /// <summary>

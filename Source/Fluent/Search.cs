@@ -1,50 +1,48 @@
 ﻿using System;
-using YoutubeSnoop.Api.Entities.Search;
-using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeSearch Search(SearchApiRequestSettings settings = null)
+        public static YoutubeSearch Search(SearchSettings settings = null)
         {
-            var request = GetDefaultRequest<SearchResult, SearchApiRequestSettings>(settings ?? new SearchApiRequestSettings(), new[] { PartType.Snippet });
-            return new YoutubeSearch(request);
+            return new YoutubeSearch(settings, null, ResultsPerPage);
         }
 
         public static YoutubeSearch Search(string query)
         {
-            return Search(new SearchApiRequestSettings { Query = query });
+            return Search(new SearchSettings { Query = query });
         }
 
-        public static YoutubeSearch ForCountry(this YoutubeSearch search, YoutubeCountry country)
+        public static YoutubeSearch ForCountry(this YoutubeSearch search, string regionCode)
         {
-            var request = search.Request.Clone();
-            request.Settings.RegionCode = country.CountryCode;
-            return new YoutubeSearch(request);
+            var settings = search.Settings.Clone();
+            settings.RegionCode = regionCode;
+            return Search(settings);
         }
 
         public static YoutubeSearch ForChannelId(this YoutubeSearch search, string id)
         {
-            var request = search.Request.Clone();
-            request.Settings.ChannelId = id;
-            return new YoutubeSearch(request);
+            var settings = search.Settings.Clone();
+            settings.ChannelId = id;
+            return Search(settings);
         }
 
         public static YoutubeSearch RelatedToVideoId(this YoutubeSearch search, string id)
         {
-            var request = search.Request.Clone();
-            request.Settings.RelatedToVideoId = id;
-            request.Settings.Type = ResourceKind.Video;
-            return new YoutubeSearch(request);
+            var settings = search.Settings.Clone();
+            settings.RelatedToVideoId = id;
+            settings.Type = ResourceKind.Video;
+            return Search(settings);
         }
 
         public static YoutubeSearch OrderBy(this YoutubeSearch search, SearchOrder order)
         {
-            var request = search.Request.Clone();
-            request.Settings.Order = order;
-            return new YoutubeSearch(request);
+            var settings = search.Settings.Clone();
+            settings.Order = order;
+            return Search(settings);
         }
 
         public static YoutubeSearch OrderByDate(this YoutubeSearch search)
@@ -74,30 +72,63 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeSearch PublishedAfter(this YoutubeSearch search, DateTime d)
         {
-            var request = search.Request.Clone();
-            request.Settings.PublishedAfter = d;
-            return new YoutubeSearch(request);
+            var settings = search.Settings.Clone();
+            settings.PublishedAfter = d;
+            return Search(settings);
         }
 
         public static YoutubeSearch PublishedBefore(this YoutubeSearch search, DateTime d)
         {
-            var request = search.Request.Clone();
-            request.Settings.PublishedBefore = d;
-            return new YoutubeSearch(request);
+            var settings = search.Settings.Clone();
+            settings.PublishedBefore = d;
+            return Search(settings);
         }
 
         public static YoutubeSearch OfType(this YoutubeSearch search, ResourceKind t)
         {
-            var request = search.Request.Clone();
-            request.Settings.Type = t;
-            return new YoutubeSearch(request);
+            if (t != ResourceKind.Video && t != ResourceKind.Playlist && t != ResourceKind.Channel) throw new InvalidOperationException();
+
+            var settings = search.Settings.Clone();
+            settings.Type = t;
+            return Search(settings);
+        }
+
+        public static YoutubeSearch OfTypeVideo(this YoutubeSearch search)
+        {
+            return search.OfType(ResourceKind.Video);
+        }
+
+        public static YoutubeSearch OfTypeChannel(this YoutubeSearch search)
+        {
+            return search.OfType(ResourceKind.Channel);
+        }
+
+        public static YoutubeSearch OfTypePlaylist(this YoutubeSearch search)
+        {
+            return search.OfType(ResourceKind.Playlist);
         }
 
         public static YoutubeSearch SafeSearch(this YoutubeSearch search, SafeSearch s)
         {
-            var request = search.Request.Clone();
-            request.Settings.SafeSearch = s;
-            return new YoutubeSearch(request);
+            var settings = search.Settings.Clone();
+            settings.SafeSearch = s;
+            return Search(settings);
+        }
+
+        public static IYoutubeItem Details(this YoutubeSearchResult searchResult)
+        {
+            switch (searchResult.ResultKind)
+            {
+                case ResourceKind.Video: return Video(searchResult.Id);
+                case ResourceKind.Playlist: return Playlist(searchResult.Id);
+                case ResourceKind.Channel: return Channel(searchResult.Id);
+                default: throw new InvalidOperationException();
+            }
+        }
+
+        public static TItem Details<TItem>(this YoutubeSearchResult searchResult) where TItem : class, IYoutubeItem
+        {
+            return Details(searchResult) as TItem;
         }
     }
 }

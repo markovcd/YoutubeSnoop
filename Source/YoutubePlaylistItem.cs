@@ -8,6 +8,7 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubePlaylistItem : IYoutubeItem
     {
+        public PlaylistItem RawData { get; }
         public ResourceKind Kind { get; }
         public ResourceKind ItemKind { get; }
         public string Id { get; }
@@ -26,6 +27,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            RawData = response;
             Id = response.Id;
             Kind = response.Kind;
 

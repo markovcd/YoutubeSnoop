@@ -1,12 +1,15 @@
-﻿using YoutubeSnoop.Api;
+﻿using System.Collections.Generic;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.VideoCategories;
-using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeVideoCategory : YoutubeItem<VideoCategory, VideoCategoryApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubeVideoCategory : YoutubeItem<VideoCategory, VideoCategorySettings>, IYoutubeItem
     {
+        private VideoCategory _rawData;
+        public VideoCategory RawData => Set(ref _rawData);
+
         private string _id;
         public string Id => Set(ref _id);
 
@@ -22,11 +25,11 @@ namespace YoutubeSnoop
         private bool _assignable;
         public bool Assignable => Set(ref _assignable);
 
-        public YoutubeVideoCategory(IApiRequest<VideoCategory, VideoCategoryApiRequestSettings> request) : base(request)
+        public YoutubeVideoCategory(VideoCategory response) : base(response)
         {
         }
 
-        public YoutubeVideoCategory(VideoCategory response) : base(response)
+        public YoutubeVideoCategory(VideoCategorySettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 
@@ -34,6 +37,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
 

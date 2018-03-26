@@ -1,49 +1,41 @@
-﻿using System.Linq;
-using YoutubeSnoop.Api.Entities.Captions;
-using YoutubeSnoop.Api.Settings;
-using YoutubeSnoop.Enums;
+﻿using YoutubeSnoop.Api;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeCaptions Captions(CaptionApiRequestSettings settings = null)
+        public static YoutubeCaptions Captions(CaptionSettings settings = null)
         {
-            var request = GetDefaultRequest<Caption, CaptionApiRequestSettings>(settings ?? new CaptionApiRequestSettings(), new[] { PartType.Snippet });
-            return new YoutubeCaptions(request);
+            return new YoutubeCaptions(settings, null, ResultsPerPage);
         }
 
-        public static YoutubeCaption Caption(CaptionApiRequestSettings settings = null)
+        public static YoutubeCaption Caption(CaptionSettings settings = null)
         {
-            var request = GetDefaultRequest<Caption, CaptionApiRequestSettings>(settings ?? new CaptionApiRequestSettings(), new[] { PartType.Snippet });
-            return new YoutubeCaption(request);
+            return new YoutubeCaption(settings);
         }
 
         public static YoutubeCaptions Captions(params string[] ids)
         {
-            return Captions(new CaptionApiRequestSettings { Id = ids.Aggregate() });
+            return Captions(new CaptionSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeCaption Caption(string id)
         {
-            return Caption(new CaptionApiRequestSettings { Id = id });
+            return Caption(new CaptionSettings { Id = id });
         }
 
         public static YoutubeCaptions RequestId(this YoutubeCaptions captions, params string[] ids)
         {
-            var request = captions.Request.Clone();
-            if (request.Settings.Id == null) request.Settings.Id = "";
-
-            request.Settings.Id = request.Settings.Id.AddItems(ids);
-
-            return new YoutubeCaptions(request);
+            var settings = captions.Settings.Clone();
+            settings.Id = settings.Id.AddItems(ids);
+            return Captions(settings);
         }
 
         public static YoutubeCaptions ForVideoId(this YoutubeCaptions captions, string id)
         {
-            var request = captions.Request.Clone();
-            request.Settings.VideoId = id;
-            return new YoutubeCaptions(request);
+            var settings = captions.Settings.Clone();
+            settings.VideoId = id;
+            return Captions(settings);
         }
     }
 }

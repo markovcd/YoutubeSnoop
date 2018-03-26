@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:y="clr-namespace:YoutubeSnoop;assembly=YoutubeSnoop"
+                    xmlns:c="clr-namespace:DemoApp.Converters">
+
+    <DataTemplate x:Key="Template.Details.PlaylistItem" DataType="{x:Type y:YoutubePlaylistItem}">
+        <StackPanel>
+            <ContentControl ContentTemplate="{DynamicResource Template.List.PlaylistItem}" Content="{Binding}"/>
+
+            <TextBlock Margin="5">
+                <Hyperlink Command="{Binding DataContext.ShowPlaylistItemDetailsCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">Details</Hyperlink>
+            </TextBlock>
+
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Url}" Tag="Url:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding PublishedAt}" Tag="Published at:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Description}" Tag="Description:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ChannelTitle}" Tag="Channel title:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ChannelId}" Tag="Channel ID:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding PlaylistId}" Tag="Playlist ID:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Position}" Tag="Position:"/>
+        </StackPanel>
+
+    </DataTemplate>
+</ResourceDictionary>

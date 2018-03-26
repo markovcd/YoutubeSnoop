@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:DemoApp.DataTemplates">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="List/Default.xaml"/>
+
+        <ResourceDictionary Source="List/Channel.xaml"/>
+        <ResourceDictionary Source="List/Comment.xaml"/>
+        <ResourceDictionary Source="List/CommentThread.xaml"/>
+        <ResourceDictionary Source="List/Playlist.xaml"/>
+        <ResourceDictionary Source="List/PlaylistItem.xaml"/>
+        <ResourceDictionary Source="List/SearchResult.xaml"/>
+        <ResourceDictionary Source="List/Video.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <local:YoutubeTemplateSelector x:Key="TemplateSelector.List" 
+                                   DefaultTemplate="{StaticResource Template.List.Default}" 
+                                   
+                                   VideoTemplate="{StaticResource Template.List.Video}" 
+                                   ChannelTemplate="{StaticResource Template.List.Channel}" 
+                                   CommentTemplate="{StaticResource Template.List.Comment}" 
+                                   CommentThreadTemplate="{StaticResource Template.List.CommentThread}" 
+                                   SearchResultTemplate="{StaticResource Template.List.SearchResult}" 
+                                   PlaylistTemplate="{StaticResource Template.List.Playlist}"
+                                   PlaylistItemTemplate="{StaticResource Template.List.PlaylistItem}"/>
+</ResourceDictionary>

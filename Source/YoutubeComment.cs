@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.Comments;
-using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeComment : YoutubeItem<Comment, CommentApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubeComment : YoutubeItem<Comment, CommentSettings>, IYoutubeItem
     {
+        private Comment _rawData;
+        public Comment RawData => Set(ref _rawData);
+
         private string _id;
         public string Id => Set(ref _id);
 
@@ -47,11 +50,11 @@ namespace YoutubeSnoop
         private string _parentId;
         public string ParentId => Set(ref _parentId);
 
-        public YoutubeComment(IApiRequest<Comment, CommentApiRequestSettings> request) : base(request)
+        public YoutubeComment(Comment response) : base(response)
         {
         }
 
-        public YoutubeComment(Comment response) : base(response)
+        public YoutubeComment(CommentSettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 
@@ -59,6 +62,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
 

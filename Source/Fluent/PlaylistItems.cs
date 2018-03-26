@@ -1,32 +1,30 @@
 ﻿using System;
-using YoutubeSnoop.Api.Entities.PlaylistItems;
-using YoutubeSnoop.Api.Settings;
+using System.Linq;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubePlaylistItems PlaylistItems(PlaylistItemsApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubePlaylistItems PlaylistItems(PlaylistItemSettings settings, params PartType[] partTypes)
         {
-            var request = GetDefaultRequest<PlaylistItem, PlaylistItemsApiRequestSettings>(settings, partTypes);
-            return new YoutubePlaylistItems(request);
+            return new YoutubePlaylistItems(settings, partTypes, ResultsPerPage);
         }
 
-        public static YoutubePlaylistItems PlaylistItems(PlaylistItemsApiRequestSettings settings = null)
+        public static YoutubePlaylistItems PlaylistItems(PlaylistItemSettings settings = null)
         {
-            return PlaylistItems(settings ?? new PlaylistItemsApiRequestSettings(), PartType.Snippet);
+            return PlaylistItems(settings, PartType.Snippet);
         }
 
         public static YoutubePlaylistItems PlaylistItems(string playlistId)
         {
-            return PlaylistItems(new PlaylistItemsApiRequestSettings { PlaylistId = playlistId });
+            return PlaylistItems(new PlaylistItemSettings { PlaylistId = playlistId });
         }
 
         public static YoutubePlaylistItems RequestPart(this YoutubePlaylistItems playlistItems, PartType partType)
         {
-            var request = playlistItems.Request.RequestPart(partType);
-            return new YoutubePlaylistItems(request);
+            return PlaylistItems(playlistItems.Settings.Clone(), playlistItems.PartTypes.Append(partType).ToArray());
         }
 
         public static YoutubePlaylistItems RequestSnippet(this YoutubePlaylistItems playlistItems)
@@ -44,20 +42,20 @@ namespace YoutubeSnoop.Fluent
             return playlistItems.RequestPart(PartType.Status);
         }
 
-        public static IYoutubeItem Details(this YoutubePlaylistItem playlistItem)
+        public static YoutubePlaylistItems RequestAllParts(this YoutubePlaylistItems playlistItems)
+        {
+            return playlistItems.RequestContentDetails().RequestSnippet().RequestStatus();
+        }
+
+        public static YoutubeVideo Details(this YoutubePlaylistItem playlistItem)
         {
             switch (playlistItem.ItemKind)
             {
                 case ResourceKind.Video: return Video(playlistItem.ItemId);
-                case ResourceKind.Playlist: return Playlist(playlistItem.ItemId);
-                case ResourceKind.Channel: return Channel(playlistItem.ItemId);
+                case ResourceKind.Playlist: return null;
+                case ResourceKind.Channel: return null;
                 default: throw new InvalidOperationException();
             }
-        }
-
-        public static TItem Details<TItem>(this YoutubePlaylistItem playlistItem) where TItem : class, IYoutubeItem
-        {
-            return Details(playlistItem) as TItem;
         }
     }
 }

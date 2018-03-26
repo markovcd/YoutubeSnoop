@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Api.Entities.Channels;
-using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeChannel : YoutubeItem<Channel, ChannelApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubeChannel : YoutubeItem<Channel, ChannelSettings>, IYoutubeItem
     {
         private const string _channelUrl = @"https://www.youtube.com/channel/{0}";
+
+        private Channel _rawData;
+        public Channel RawData => Set(ref _rawData);
 
         private string _id;
         public string Id => Set(ref _id);
@@ -51,11 +53,11 @@ namespace YoutubeSnoop
         private string _url;
         public string Url => Set(ref _url);
 
-        public YoutubeChannel(IApiRequest<Channel, ChannelApiRequestSettings> request) : base(request)
+        public YoutubeChannel(Channel response) : base(response)
         {
         }
 
-        public YoutubeChannel(Channel response) : base(response)
+        public YoutubeChannel(ChannelSettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 
@@ -63,6 +65,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
             _url = GetUrl(response.Id);

@@ -1,53 +1,49 @@
-﻿using System.Linq;
-using YoutubeSnoop.Api.Entities.Comments;
-using YoutubeSnoop.Api.Settings;
+﻿using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeComments Comments(CommentApiRequestSettings settings = null)
+        public static YoutubeComments Comments(CommentSettings settings = null)
         {
-            var request = GetDefaultRequest<Comment, CommentApiRequestSettings>(settings, new[] { PartType.Snippet });
-            return new YoutubeComments(request);
+            return new YoutubeComments(settings, null, ResultsPerPage);
         }
 
-        public static YoutubeComment Comment(CommentApiRequestSettings settings = null)
+        public static YoutubeComment Comment(CommentSettings settings = null)
         {
-            var request = GetDefaultRequest<Comment, CommentApiRequestSettings>(settings, new[] { PartType.Snippet });
-            return new YoutubeComment(request);
+            return new YoutubeComment(settings);
         }
 
         public static YoutubeComments Comments(params string[] ids)
         {
-            return Comments(new CommentApiRequestSettings { Id = ids.Aggregate() });
+            return Comments(new CommentSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeComment Comment(string id)
         {
-            return Comment(new CommentApiRequestSettings { Id = id });
+            return Comment(new CommentSettings { Id = id });
         }
 
         public static YoutubeComments ForParentId(this YoutubeComments comments, string id)
         {
-            var request = comments.Request.Clone();
-            request.Settings.ParentId = id;
-            return new YoutubeComments(request);
+            var settings = comments.Settings.Clone();
+            settings.ParentId = id;
+            return Comments(settings);
         }
 
         public static YoutubeComments TextFormat(this YoutubeComments comments, TextFormat f)
         {
-            var request = comments.Request.Clone();
-            request.Settings.TextFormat = f;
-            return new YoutubeComments(request);
+            var settings = comments.Settings.Clone();
+            settings.TextFormat = f;
+            return Comments(settings);
         }
 
         public static YoutubeComment TextFormat(this YoutubeComment comment, TextFormat f)
         {
-            var request = comment.Request.Clone();
-            request.Settings.TextFormat = f;
-            return new YoutubeComment(request);
+            var settings = comment.Settings.Clone();
+            settings.TextFormat = f;
+            return Comment(settings);
         }
 
         public static YoutubeComment FormatHtml(this YoutubeComment comment)
@@ -72,12 +68,9 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeComments RequestId(this YoutubeComments comments, params string[] ids)
         {
-            var request = comments.Request.Clone();
-            if (request.Settings.Id == null) request.Settings.Id = "";
-
-            request.Settings.Id = request.Settings.Id.AddItems(ids);
-
-            return new YoutubeComments(request);
+            var settings = comments.Settings.Clone();
+            settings.Id = settings.Id.AddItems(ids);
+            return Comments(settings);
         }
 
         public static YoutubeComments Replies(this YoutubeComment comment)

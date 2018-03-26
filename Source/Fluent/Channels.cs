@@ -1,72 +1,65 @@
 ﻿using System.Linq;
-using YoutubeSnoop.Api.Entities.Channels;
-using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeChannels Channels(ChannelApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeChannels Channels(ChannelSettings settings, params PartType[] partTypes)
         {
-            var request = GetDefaultRequest<Channel, ChannelApiRequestSettings>(settings, partTypes);
-            return new YoutubeChannels(request);
+            return new YoutubeChannels(settings, partTypes, ResultsPerPage);
         }
 
-        public static YoutubeChannel Channel(ChannelApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeChannel Channel(ChannelSettings settings, params PartType[] partTypes)
         {
-            var request = GetDefaultRequest<Channel, ChannelApiRequestSettings>(settings, partTypes);
-            return new YoutubeChannel(request);
+            return new YoutubeChannel(settings, partTypes);
         }
 
-        public static YoutubeChannels Channels(ChannelApiRequestSettings settings = null)
+        public static YoutubeChannels Channels(ChannelSettings settings = null)
         {
-            return Channels(settings ?? new ChannelApiRequestSettings(), PartType.Snippet, PartType.ContentDetails);
+            return Channels(settings, PartType.Snippet, PartType.ContentDetails);
         }
 
-        public static YoutubeChannel Channel(ChannelApiRequestSettings settings = null)
+        public static YoutubeChannel Channel(ChannelSettings settings = null)
         {
-            return Channel(settings ?? new ChannelApiRequestSettings(), PartType.Snippet, PartType.ContentDetails);
+            return Channel(settings, PartType.Snippet, PartType.ContentDetails);
         }
 
         public static YoutubeChannels Channels(params string[] ids)
         {
-            return Channels(new ChannelApiRequestSettings { Id = ids.Aggregate() });
+            return Channels(new ChannelSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeChannel Channel(string id)
         {
-            return Channel(new ChannelApiRequestSettings { Id = id });
+            return Channel(new ChannelSettings { Id = id });
         }
 
         public static YoutubeChannel ForUsername(this YoutubeChannel channel, string username)
         {
-            var request = channel.Request.Clone();
-            request.Settings.ForUsername = username;
-            return new YoutubeChannel(request);
+            var settings = channel.Settings.Clone();
+            settings.ForUsername = username;
+            return Channel(settings, channel.PartTypes.ToArray());
         }
 
         public static YoutubeChannels ForUsername(this YoutubeChannels channels, string username)
         {
-            var request = channels.Request.Clone();
-            request.Settings.ForUsername = username;
-            return new YoutubeChannels(request);
+            var settings = channels.Settings.Clone();
+            settings.ForUsername = username;
+            return Channels(settings, channels.PartTypes.ToArray());
         }
 
         public static YoutubeChannels RequestId(this YoutubeChannels channels, params string[] ids)
         {
-            var request = channels.Request.Clone();
-            if (request.Settings.Id == null) request.Settings.Id = "";
-
-            request.Settings.Id = request.Settings.Id.AddItems(ids);
-
-            return new YoutubeChannels(request);
+            var settings = channels.Settings.Clone();
+            settings.Id = settings.Id.AddItems(ids);
+            return Channels(settings, channels.PartTypes.ToArray());
         }
 
         public static YoutubeChannel RequestPart(this YoutubeChannel channel, PartType partType)
         {
-            var request = channel.Request.RequestPart(partType);
-            return new YoutubeChannel(request);
+            return Channel(channel.Settings.Clone(), channel.PartTypes.Append(partType).ToArray());
         }
 
         public static YoutubeChannel RequestContentDetails(this YoutubeChannel channel)
@@ -123,8 +116,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeChannels RequestPart(this YoutubeChannels channels, PartType partType)
         {
-            var request = channels.Request.RequestPart(partType);
-            return new YoutubeChannels(request);
+            return Channels(channels.Settings.Clone(), channels.PartTypes.Append(partType).ToArray());
         }
 
         public static YoutubeChannels RequestContentDetails(this YoutubeChannels channels)

@@ -2,15 +2,17 @@
 using System.Linq;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.ChannelSections;
-using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeChannelSection : YoutubeItem<ChannelSection, ChannelSectionApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubeChannelSection : YoutubeItem<ChannelSection, ChannelSectionSettings>, IYoutubeItem
     {
         private string _id;
         public string Id => Set(ref _id);
+
+        private ChannelSection _rawData;
+        public ChannelSection RawData => Set(ref _rawData);
 
         private ResourceKind _kind;
         public ResourceKind Kind => Set(ref _kind);
@@ -36,11 +38,11 @@ namespace YoutubeSnoop
         private IReadOnlyList<string> _playlistIds;
         public IReadOnlyList<string> PlaylistIds => Set(ref _playlistIds);
 
-        public YoutubeChannelSection(IApiRequest<ChannelSection, ChannelSectionApiRequestSettings> request) : base(request)
+        public YoutubeChannelSection(ChannelSection response) : base(response)
         {
         }
 
-        public YoutubeChannelSection(ChannelSection response) : base(response)
+        public YoutubeChannelSection(ChannelSectionSettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 
@@ -48,6 +50,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
 

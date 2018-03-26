@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using YoutubeSnoop.Api.Attributes;
 using YoutubeSnoop.Api.Entities;
-using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
@@ -64,14 +64,14 @@ namespace YoutubeSnoop
             return new ReadOnlyDictionary<ThumbnailSize, Thumbnail>(t);
         }
 
-        public static IApiRequestSettings Clone(this IApiRequestSettings settings)
+        public static TSettings Clone<TSettings>(this TSettings settings) where TSettings : class, ISettings
         {
             var type = settings?.GetType();
 
             if (type == null) return null;
 
             var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                                  .Where(p => !p.IsDefined(typeof(ApiRequestIgnoreAttribute)));
+                                  .Where(p => !p.IsDefined(typeof(IgnorePropertyAttribute)));
 
             var cloned = Activator.CreateInstance(type);
 
@@ -81,7 +81,7 @@ namespace YoutubeSnoop
                 property.SetValue(cloned, value);
             }
 
-            return (IApiRequestSettings)cloned;
+            return (TSettings)cloned;
         }
 
         public static ResourceKind ParseResourceKind(string s)
@@ -97,10 +97,15 @@ namespace YoutubeSnoop
 
         public static string AddItems(this string s, params string[] items)
         {
-            return s?.Split(',')
-                     .Concat(items)
-                     .Distinct()
-                     .Aggregate();
+            return (s ?? string.Empty).Split(',')
+                                      .Concat(items)
+                                      .Distinct()
+                                      .Aggregate();
+        }
+
+        public static IEnumerable<PartType> Append(this IEnumerable<PartType> partTypes, PartType partType)
+        {
+            return partTypes.Concat(new[] { partType }).Distinct();
         }
     }
 }

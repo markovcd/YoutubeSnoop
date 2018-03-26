@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Api.Entities.Subscriptions;
-using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeSubscription : YoutubeItem<Subscription, SubscriptionApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubeSubscription : YoutubeItem<Subscription, SubscriptionSettings>, IYoutubeItem
     {
+        private Subscription _rawData;
+        public Subscription RawData => Set(ref _rawData);
+
         private string _id;
         public string Id => Set(ref _id);
 
@@ -37,11 +39,11 @@ namespace YoutubeSnoop
         private IReadOnlyDictionary<ThumbnailSize, Thumbnail> _thumbnails;
         public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails => Set(ref _thumbnails);
 
-        public YoutubeSubscription(IApiRequest<Subscription, SubscriptionApiRequestSettings> request) : base(request)
+        public YoutubeSubscription(Subscription response) : base(response)
         {
         }
 
-        public YoutubeSubscription(Subscription response) : base(response)
+        public YoutubeSubscription(SubscriptionSettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 
@@ -49,6 +51,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
 

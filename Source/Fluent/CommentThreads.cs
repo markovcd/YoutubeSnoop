@@ -1,58 +1,51 @@
 ﻿using System.Linq;
-using YoutubeSnoop.Api.Entities.CommentThreads;
-using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeCommentThreads CommentThreads(CommentThreadApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeCommentThreads CommentThreads(CommentThreadSettings settings, params PartType[] partTypes)
         {
-            var request = GetDefaultRequest<CommentThread, CommentThreadApiRequestSettings>(settings, partTypes);
-            return new YoutubeCommentThreads(request);
+            return new YoutubeCommentThreads(settings, partTypes, ResultsPerPage);
         }
 
-        public static YoutubeCommentThread CommentThread(CommentThreadApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeCommentThread CommentThread(CommentThreadSettings settings, params PartType[] partTypes)
         {
-            var request = GetDefaultRequest<CommentThread, CommentThreadApiRequestSettings>(settings, partTypes);
-            return new YoutubeCommentThread(request);
+            return new YoutubeCommentThread(settings, partTypes);
         }
 
-        public static YoutubeCommentThreads CommentThreads(CommentThreadApiRequestSettings settings = null)
+        public static YoutubeCommentThreads CommentThreads(CommentThreadSettings settings = null)
         {
-            return CommentThreads(settings ?? new CommentThreadApiRequestSettings(), PartType.Snippet, PartType.Replies);
+            return CommentThreads(settings, PartType.Snippet, PartType.Replies);
         }
 
-        public static YoutubeCommentThread CommentThread(CommentThreadApiRequestSettings settings = null)
+        public static YoutubeCommentThread CommentThread(CommentThreadSettings settings = null)
         {
-            return CommentThread(settings ?? new CommentThreadApiRequestSettings(), PartType.Snippet, PartType.Replies);
+            return CommentThread(settings, PartType.Snippet, PartType.Replies);
         }
 
         public static YoutubeCommentThreads CommentThreads(params string[] ids)
         {
-            return CommentThreads(new CommentThreadApiRequestSettings { Id = ids.Aggregate() });
+            return CommentThreads(new CommentThreadSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeCommentThread CommentThread(string id)
         {
-            return CommentThread(new CommentThreadApiRequestSettings { Id = id });
+            return CommentThread(new CommentThreadSettings { Id = id });
         }
 
         public static YoutubeCommentThreads RequestId(this YoutubeCommentThreads commentThreads, params string[] ids)
         {
-            var request = commentThreads.Request.Clone();
-            if (request.Settings.Id == null) request.Settings.Id = "";
-
-            request.Settings.Id = request.Settings.Id.AddItems(ids);
-
-            return new YoutubeCommentThreads(request);
+            var settings = commentThreads.Settings.Clone();
+            settings.Id = settings.Id.AddItems(ids);
+            return CommentThreads(settings, commentThreads.PartTypes.ToArray());
         }
 
         public static YoutubeCommentThreads RequestPart(this YoutubeCommentThreads commentThreads, PartType partType)
         {
-            var request = commentThreads.Request.RequestPart(partType);
-            return new YoutubeCommentThreads(request);
+            return CommentThreads(commentThreads.Settings.Clone(), commentThreads.PartTypes.Append(partType).ToArray());
         }
 
         public static YoutubeCommentThreads RequestReplies(this YoutubeCommentThreads commentThreads)
@@ -72,8 +65,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeCommentThread RequestPart(this YoutubeCommentThread commentThread, PartType partType)
         {
-            var request = commentThread.Request.RequestPart(partType);
-            return new YoutubeCommentThread(request);
+            return CommentThread(commentThread.Settings.Clone(), commentThread.PartTypes.Append(partType).ToArray());
         }
 
         public static YoutubeCommentThread RequestReplies(this YoutubeCommentThread commentThread)
@@ -93,30 +85,30 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeCommentThreads ForChannelId(this YoutubeCommentThreads commentThreads, string id)
         {
-            var request = commentThreads.Request.Clone();
-            request.Settings.ChannelId = id;
-            return new YoutubeCommentThreads(request);
+            var settings = commentThreads.Settings.Clone();
+            settings.ChannelId = id;
+            return CommentThreads(settings, commentThreads.PartTypes.ToArray());
         }
 
         public static YoutubeCommentThreads ForVideoId(this YoutubeCommentThreads commentThreads, string id)
         {
-            var request = commentThreads.Request.Clone();
-            request.Settings.VideoId = id;
-            return new YoutubeCommentThreads(request);
+            var settings = commentThreads.Settings.Clone();
+            settings.VideoId = id;
+            return CommentThreads(settings, commentThreads.PartTypes.ToArray());
         }
 
         public static YoutubeCommentThreads ForChannelIdAll(this YoutubeCommentThreads commentThreads, string id)
         {
-            var request = commentThreads.Request.Clone();
-            request.Settings.AllThreadsRelatedToChannelId = id;
-            return new YoutubeCommentThreads(request);
+            var settings = commentThreads.Settings.Clone();
+            settings.AllThreadsRelatedToChannelId = id;
+            return CommentThreads(settings, commentThreads.PartTypes.ToArray());
         }
 
         public static YoutubeCommentThreads OrderBy(this YoutubeCommentThreads commentThreads, CommentOrder order)
         {
-            var request = commentThreads.Request.Clone();
-            request.Settings.Order = order;
-            return new YoutubeCommentThreads(request);
+            var settings = commentThreads.Settings.Clone();
+            settings.Order = order;
+            return CommentThreads(settings, commentThreads.PartTypes.ToArray());
         }
 
         public static YoutubeCommentThreads OrderByTime(this YoutubeCommentThreads commentThreads)
@@ -131,30 +123,30 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeCommentThreads SearchTerms(this YoutubeCommentThreads commentThreads, string s)
         {
-            var request = commentThreads.Request.Clone();
-            request.Settings.SearchTerms = s;
-            return new YoutubeCommentThreads(request);
+            var settings = commentThreads.Settings.Clone();
+            settings.SearchTerms = s;
+            return CommentThreads(settings, commentThreads.PartTypes.ToArray());
         }
 
         public static YoutubeCommentThread SearchTerms(this YoutubeCommentThread commentThread, string s)
         {
-            var request = commentThread.Request.Clone();
-            request.Settings.SearchTerms = s;
-            return new YoutubeCommentThread(request);
+            var settings = commentThread.Settings.Clone();
+            settings.SearchTerms = s;
+            return CommentThread(settings, commentThread.PartTypes.ToArray());
         }
 
         public static YoutubeCommentThread TextFormat(this YoutubeCommentThread commentThread, TextFormat format)
         {
-            var request = commentThread.Request.Clone();
-            request.Settings.TextFormat = format;
-            return new YoutubeCommentThread(request);
+            var settings = commentThread.Settings.Clone();
+            settings.TextFormat = format;
+            return CommentThread(settings, commentThread.PartTypes.ToArray());
         }
 
         public static YoutubeCommentThreads TextFormat(this YoutubeCommentThreads commentThreads, TextFormat format)
         {
-            var request = commentThreads.Request.Clone();
-            request.Settings.TextFormat = format;
-            return new YoutubeCommentThreads(request);
+            var settings = commentThreads.Settings.Clone();
+            settings.TextFormat = format;
+            return CommentThreads(settings, commentThreads.PartTypes.ToArray());
         }
 
         public static YoutubeCommentThread FormatHtml(this YoutubeCommentThread commentThread)

@@ -1,12 +1,15 @@
-﻿using YoutubeSnoop.Api;
+﻿using System.Collections.Generic;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.GuideCategories;
-using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeGuideCategory : YoutubeItem<GuideCategory, GuideCategoryApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubeGuideCategory : YoutubeItem<GuideCategory, GuideCategorySettings>, IYoutubeItem
     {
+        private GuideCategory _rawData;
+        public GuideCategory RawData => Set(ref _rawData);
+
         private string _id;
         public string Id => Set(ref _id);
 
@@ -19,11 +22,11 @@ namespace YoutubeSnoop
         private string _channelId;
         public string ChannelId => Set(ref _channelId);
 
-        public YoutubeGuideCategory(IApiRequest<GuideCategory, GuideCategoryApiRequestSettings> request) : base(request)
+        public YoutubeGuideCategory(GuideCategory response) : base(response)
         {
         }
 
-        public YoutubeGuideCategory(GuideCategory response) : base(response)
+        public YoutubeGuideCategory(GuideCategorySettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 
@@ -31,6 +34,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
 

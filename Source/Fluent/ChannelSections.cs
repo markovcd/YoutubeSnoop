@@ -1,48 +1,44 @@
 ﻿using System.Linq;
-using YoutubeSnoop.Api.Entities.ChannelSections;
-using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeChannelSections ChannelSections(ChannelSectionApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeChannelSections ChannelSections(ChannelSectionSettings settings, params PartType[] partTypes)
         {
-            var request = GetDefaultRequest<ChannelSection, ChannelSectionApiRequestSettings>(settings, partTypes);
-            return new YoutubeChannelSections(request);
+            return new YoutubeChannelSections(settings, partTypes, ResultsPerPage);
         }
 
-        public static YoutubeChannelSection ChannelSection(ChannelSectionApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeChannelSection ChannelSection(ChannelSectionSettings settings, params PartType[] partTypes)
         {
-            var request = GetDefaultRequest<ChannelSection, ChannelSectionApiRequestSettings>(settings, partTypes);
-            return new YoutubeChannelSection(request);
+            return new YoutubeChannelSection(settings, partTypes);
         }
 
-        public static YoutubeChannelSections ChannelSections(ChannelSectionApiRequestSettings settings = null)
+        public static YoutubeChannelSections ChannelSections(ChannelSectionSettings settings = null)
         {
-            return ChannelSections(settings ?? new ChannelSectionApiRequestSettings(), PartType.Snippet);
+            return ChannelSections(settings, PartType.Snippet);
         }
 
-        public static YoutubeChannelSection ChannelSection(ChannelSectionApiRequestSettings settings = null)
+        public static YoutubeChannelSection ChannelSection(ChannelSectionSettings settings = null)
         {
-            return ChannelSection(settings ?? new ChannelSectionApiRequestSettings(), PartType.Snippet);
+            return ChannelSection(settings, PartType.Snippet);
         }
 
         public static YoutubeChannelSections ChannelSections(params string[] ids)
         {
-            return ChannelSections(new ChannelSectionApiRequestSettings { Id = ids.Aggregate() });
+            return ChannelSections(new ChannelSectionSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeChannelSection ChannelSection(string id)
         {
-            return ChannelSection(new ChannelSectionApiRequestSettings { Id = id });
+            return ChannelSection(new ChannelSectionSettings { Id = id });
         }
 
         public static YoutubeChannelSection RequestPart(this YoutubeChannelSection channelSection, PartType partType)
         {
-            var request = channelSection.Request.RequestPart(partType);
-            return new YoutubeChannelSection(request);
+            return ChannelSection(channelSection.Settings.Clone(), channelSection.PartTypes.Append(partType).ToArray());
         }
 
         public static YoutubeChannelSection RequestContentDetails(this YoutubeChannelSection channelSection)
@@ -75,8 +71,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeChannelSections RequestPart(this YoutubeChannelSections channelSections, PartType partType)
         {
-            var request = channelSections.Request.RequestPart(partType);
-            return new YoutubeChannelSections(request);
+            return ChannelSections(channelSections.Settings.Clone(), channelSections.PartTypes.Append(partType).ToArray());
         }
 
         public static YoutubeChannelSections RequestContentDetails(this YoutubeChannelSections channelSections)
@@ -109,19 +104,16 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeChannelSections RequestId(this YoutubeChannelSections channelSections, params string[] ids)
         {
-            var request = channelSections.Request.Clone();
-            if (request.Settings.Id == null) request.Settings.Id = "";
-
-            request.Settings.Id = request.Settings.Id.AddItems(ids);
-
-            return new YoutubeChannelSections(request);
+            var settings = channelSections.Settings.Clone();
+            settings.Id = settings.Id.AddItems(ids);
+            return ChannelSections(settings, channelSections.PartTypes.ToArray());
         }
 
         public static YoutubeChannelSections ForChannelId(this YoutubeChannelSections channelSections, string id)
         {
-            var request = channelSections.Request.Clone();
-            request.Settings.ChannelId = id;
-            return new YoutubeChannelSections(request);
+            var settings = channelSections.Settings.Clone();
+            settings.ChannelId = id;
+            return ChannelSections(settings, channelSections.PartTypes.ToArray());
         }
 
         public static YoutubeChannels Channels(this YoutubeChannelSection channelSection)

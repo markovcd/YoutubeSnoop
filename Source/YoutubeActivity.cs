@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Api.Entities.Activities;
-using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeActivity : YoutubeItem<Activity, ActivityApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubeActivity : YoutubeItem<Activity, ActivitySettings>, IYoutubeItem
     {
+        private Activity _rawData;
+        public Activity RawData => Set(ref _rawData);
+
         private string _id;
         public string Id => Set(ref _id);
 
@@ -67,11 +69,11 @@ namespace YoutubeSnoop
         private SocialType _socialType;
         public SocialType SocialType => Set(ref _socialType);
 
-        public YoutubeActivity(IApiRequest<Activity, ActivityApiRequestSettings> request) : base(request)
+        public YoutubeActivity(Activity response) : base(response)
         {
         }
 
-        public YoutubeActivity(Activity response) : base(response)
+        public YoutubeActivity(ActivitySettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 
@@ -79,6 +81,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
 

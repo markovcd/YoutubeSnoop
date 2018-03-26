@@ -1,58 +1,51 @@
 ﻿using System.Linq;
-using YoutubeSnoop.Api.Entities.Playlists;
-using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubePlaylists Playlists(PlaylistApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubePlaylists Playlists(PlaylistSettings settings, params PartType[] partTypes)
         {
-            var request = GetDefaultRequest<Playlist, PlaylistApiRequestSettings>(settings, partTypes);
-            return new YoutubePlaylists(request);
+            return new YoutubePlaylists(settings, partTypes, ResultsPerPage);
         }
 
-        public static YoutubePlaylist Playlist(PlaylistApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubePlaylist Playlist(PlaylistSettings settings, params PartType[] partTypes)
         {
-            var request = GetDefaultRequest<Playlist, PlaylistApiRequestSettings>(settings, partTypes);
-            return new YoutubePlaylist(request);
+            return new YoutubePlaylist(settings, partTypes);
         }
 
-        public static YoutubePlaylists Playlists(PlaylistApiRequestSettings settings = null)
+        public static YoutubePlaylists Playlists(PlaylistSettings settings = null)
         {
-            return Playlists(settings ?? new PlaylistApiRequestSettings(), PartType.Snippet);
+            return Playlists(settings, PartType.Snippet);
         }
 
-        public static YoutubePlaylist Playlist(PlaylistApiRequestSettings settings = null)
+        public static YoutubePlaylist Playlist(PlaylistSettings settings = null)
         {
-            return Playlist(settings ?? new PlaylistApiRequestSettings(), PartType.Snippet);
+            return Playlist(settings, PartType.Snippet);
         }
 
         public static YoutubePlaylists Playlists(params string[] ids)
         {
-            return Playlists(new PlaylistApiRequestSettings { Id = ids.Aggregate() });
+            return Playlists(new PlaylistSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubePlaylist Playlist(string id)
         {
-            return Playlist(new PlaylistApiRequestSettings { Id = id });
+            return Playlist(new PlaylistSettings { Id = id });
         }
 
         public static YoutubePlaylists RequestId(this YoutubePlaylists playlists, params string[] ids)
         {
-            var request = playlists.Request.Clone();
-            if (request.Settings.Id == null) request.Settings.Id = "";
-
-            request.Settings.Id = request.Settings.Id.AddItems(ids);
-
-            return new YoutubePlaylists(request);
+            var settings = playlists.Settings.Clone();
+            settings.Id = settings.Id.AddItems(ids);
+            return Playlists(settings, playlists.PartTypes.ToArray());
         }
 
         public static YoutubePlaylists RequestPart(this YoutubePlaylists playlists, PartType partType)
         {
-            var request = playlists.Request.RequestPart(partType);
-            return new YoutubePlaylists(request);
+            return Playlists(playlists.Settings.Clone(), playlists.PartTypes.Append(partType).ToArray());
         }
 
         public static YoutubePlaylists RequestContentDetails(this YoutubePlaylists playlists)
@@ -91,8 +84,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubePlaylist RequestPart(this YoutubePlaylist playlist, PartType partType)
         {
-            var request = playlist.Request.RequestPart(partType);
-            return new YoutubePlaylist(request);
+            return Playlist(playlist.Settings.Clone(), playlist.PartTypes.Append(partType).ToArray());
         }
 
         public static YoutubePlaylist RequestContentDetails(this YoutubePlaylist playlist)
@@ -136,9 +128,9 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubePlaylists ForChannelId(this YoutubePlaylists playlists, string id)
         {
-            var request = playlists.Request.Clone();
-            request.Settings.ChannelId = id;
-            return new YoutubePlaylists(request);
+            var settings = playlists.Settings.Clone();
+            settings.ChannelId = id;
+            return Playlists(settings, playlists.PartTypes.ToArray());
         }
     }
 }

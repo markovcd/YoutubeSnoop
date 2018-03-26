@@ -2,13 +2,15 @@
 using System.Linq;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.CommentThreads;
-using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeCommentThread : YoutubeItem<CommentThread, CommentThreadApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubeCommentThread : YoutubeItem<CommentThread, CommentThreadSettings>, IYoutubeItem
     {
+        private CommentThread _rawData;
+        public CommentThread RawData => Set(ref _rawData);
+
         private string _id;
         public string Id => Set(ref _id);
 
@@ -30,11 +32,11 @@ namespace YoutubeSnoop
         private string _videoId;
         public string VideoId => Set(ref _videoId);
 
-        public YoutubeCommentThread(IApiRequest<CommentThread, CommentThreadApiRequestSettings> request) : base(request)
+        public YoutubeCommentThread(CommentThread response) : base(response)
         {
         }
 
-        public YoutubeCommentThread(CommentThread response) : base(response)
+        public YoutubeCommentThread(CommentThreadSettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 
@@ -42,6 +44,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
             _replies = response.Replies?.Comments.Select(c => new YoutubeComment(c)).ToList().AsReadOnly();

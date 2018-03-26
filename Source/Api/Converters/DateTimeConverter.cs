@@ -3,7 +3,7 @@ using System.Xml;
 
 namespace YoutubeSnoop.Api.Converters
 {
-    public class DateTimeConverter : ApiRequestConverter<DateTime?>
+    public class DateTimeConverter : ToStringConverter<DateTime?>
     {
         public override string Convert(DateTime? value)
         {

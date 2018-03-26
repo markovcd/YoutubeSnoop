@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:y="clr-namespace:YoutubeSnoop;assembly=YoutubeSnoop"
+                    xmlns:c="clr-namespace:DemoApp.Converters">
+    
+    <DataTemplate x:Key="Template.Details.Comment" DataType="{x:Type y:YoutubeComment}">
+        <StackPanel>
+            <ContentControl ContentTemplate="{DynamicResource Template.List.CommentThread}" Content="{Binding}"/>
+
+            <!--<TextBlock Margin="5">
+                <Hyperlink Command="{Binding DataContext.ShowPlaylistItemsCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">Get items</Hyperlink>
+            </TextBlock>-->
+
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Id}" Tag="ID:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding PublishedAt}" Tag="Published at:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ChannelId}" Tag="Channel ID:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding VideoId}" Tag="Video ID:"/>
+        </StackPanel>
+
+
+    </DataTemplate>
+</ResourceDictionary>

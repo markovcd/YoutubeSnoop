@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Api.Entities.Playlists;
-using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubePlaylist : YoutubeItem<Playlist, PlaylistApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubePlaylist : YoutubeItem<Playlist, PlaylistSettings>, IYoutubeItem
     {
         private const string _playlistUrl = @"https://www.youtube.com/playlist?list={0}";
+
+        private Playlist _rawData;
+        public Playlist RawData => Set(ref _rawData);
 
         private string _id;
         public string Id => Set(ref _id);
@@ -42,11 +44,11 @@ namespace YoutubeSnoop
         private string _url;
         public string Url => Set(ref _url);
 
-        public YoutubePlaylist(IApiRequest<Playlist, PlaylistApiRequestSettings> request) : base(request)
+        public YoutubePlaylist(Playlist response) : base(response)
         {
         }
 
-        public YoutubePlaylist(Playlist response) : base(response)
+        public YoutubePlaylist(PlaylistSettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 
@@ -54,6 +56,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
             _url = GetUrl(response.Id);

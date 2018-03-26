@@ -1,39 +1,34 @@
-﻿using System.Linq;
-using YoutubeSnoop.Api.Entities.GuideCategories;
-using YoutubeSnoop.Api.Settings;
-using YoutubeSnoop.Enums;
+﻿using YoutubeSnoop.Api;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeGuideCategories GuideCategories(GuideCategoryApiRequestSettings settings = null)
+        public static YoutubeGuideCategories GuideCategories(GuideCategorySettings settings = null)
         {
-            var request = GetDefaultRequest<GuideCategory, GuideCategoryApiRequestSettings>(settings ?? new GuideCategoryApiRequestSettings(), new[] { PartType.Snippet });
-            return new YoutubeGuideCategories(request);
+            return new YoutubeGuideCategories(settings, null, ResultsPerPage);
         }
 
-        public static YoutubeGuideCategory GuideCategory(GuideCategoryApiRequestSettings settings = null)
+        public static YoutubeGuideCategory GuideCategory(GuideCategorySettings settings = null)
         {
-            var request = GetDefaultRequest<GuideCategory, GuideCategoryApiRequestSettings>(settings ?? new GuideCategoryApiRequestSettings(), new[] { PartType.Snippet });
-            return new YoutubeGuideCategory(request);
+           return new YoutubeGuideCategory(settings);
         }
 
         public static YoutubeGuideCategories GuideCategories(params string[] ids)
         {
-            return GuideCategories(new GuideCategoryApiRequestSettings { Id = ids.Aggregate() });
+            return GuideCategories(new GuideCategorySettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeGuideCategory GuideCategory(string id)
         {
-            return GuideCategory(new GuideCategoryApiRequestSettings { Id = id });
+            return GuideCategory(new GuideCategorySettings { Id = id });
         }
 
         public static YoutubeGuideCategories ForRegion(this YoutubeGuideCategories guideCategories, string regionCode)
         {
-            var request = guideCategories.Request.Clone();
-            request.Settings.RegionCode = regionCode;
-            return new YoutubeGuideCategories(request);
+            var settings = guideCategories.Settings.Clone();
+            settings.RegionCode = regionCode;
+            return GuideCategories(settings);
         }
 
         public static YoutubeChannel Channel(this YoutubeGuideCategory guideCategory)

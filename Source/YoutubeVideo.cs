@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Api.Entities.Videos;
-using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeVideo : YoutubeItem<Video, VideoApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubeVideo : YoutubeItem<Video, VideoSettings>, IYoutubeItem
     {
         private const string _videoUrl = @"https://www.youtube.com/watch?v={0}";
+
+        private Video _rawData;
+        public Video RawData => Set(ref _rawData);
 
         private string _id;
         public string Id => Set(ref _id);
@@ -63,11 +65,11 @@ namespace YoutubeSnoop
         private string _url;
         public string Url => Set(ref _url);
 
-        public YoutubeVideo(IApiRequest<Video, VideoApiRequestSettings> request) : base(request)
+        public YoutubeVideo(Video response) : base(response)
         {
         }
 
-        public YoutubeVideo(Video response) : base(response)
+        public YoutubeVideo(VideoSettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 
@@ -75,6 +77,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
             _url = GetUrl(response.Id);

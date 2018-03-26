@@ -1,58 +1,51 @@
 ﻿using System.Linq;
-using YoutubeSnoop.Api.Entities.Subscriptions;
-using YoutubeSnoop.Api.Settings;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
-        public static YoutubeSubscriptions Subscriptions(SubscriptionApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeSubscriptions Subscriptions(SubscriptionSettings settings, params PartType[] partTypes)
         {
-            var request = GetDefaultRequest<Subscription, SubscriptionApiRequestSettings>(settings, partTypes);
-            return new YoutubeSubscriptions(request);
+            return new YoutubeSubscriptions(settings, partTypes, ResultsPerPage);
         }
 
-        public static YoutubeSubscription Subscription(SubscriptionApiRequestSettings settings, params PartType[] partTypes)
+        public static YoutubeSubscription Subscription(SubscriptionSettings settings, params PartType[] partTypes)
         {
-            var request = GetDefaultRequest<Subscription, SubscriptionApiRequestSettings>(settings, partTypes);
-            return new YoutubeSubscription(request);
+            return new YoutubeSubscription(settings, partTypes);
         }
 
-        public static YoutubeSubscriptions Subscriptions(SubscriptionApiRequestSettings settings = null)
+        public static YoutubeSubscriptions Subscriptions(SubscriptionSettings settings = null)
         {
-            return Subscriptions(settings ?? new SubscriptionApiRequestSettings(), PartType.Snippet);
+            return Subscriptions(settings, PartType.Snippet);
         }
 
-        public static YoutubeSubscription Subscription(SubscriptionApiRequestSettings settings = null)
+        public static YoutubeSubscription Subscription(SubscriptionSettings settings = null)
         {
-            return Subscription(settings ?? new SubscriptionApiRequestSettings(), PartType.Snippet);
+            return Subscription(settings, PartType.Snippet);
         }
 
         public static YoutubeSubscriptions Subscriptions(params string[] ids)
         {
-            return Subscriptions(new SubscriptionApiRequestSettings { Id = ids.Aggregate() });
+            return Subscriptions(new SubscriptionSettings { Id = ids.Aggregate() });
         }
 
         public static YoutubeSubscription Subscription(string id)
         {
-            return Subscription(new SubscriptionApiRequestSettings { Id = id });
+            return Subscription(new SubscriptionSettings { Id = id });
         }
 
         public static YoutubeSubscriptions RequestId(this YoutubeSubscriptions subscriptions, params string[] ids)
         {
-            var request = subscriptions.Request.Clone();
-            if (request.Settings.Id == null) request.Settings.Id = "";
-
-            request.Settings.Id = request.Settings.Id.AddItems(ids);
-
-            return new YoutubeSubscriptions(request);
+            var settings = subscriptions.Settings.Clone();
+            settings.Id = settings.Id.AddItems(ids);
+            return Subscriptions(settings, subscriptions.PartTypes.ToArray());
         }
 
         public static YoutubeSubscription RequestPart(this YoutubeSubscription subscription, PartType partType)
         {
-            var request = subscription.Request.RequestPart(partType);
-            return new YoutubeSubscription(request);
+            return Subscription(subscription.Settings.Clone(), subscription.PartTypes.Append(partType).ToArray());
         }
 
         public static YoutubeSubscription RequestContentDetails(this YoutubeSubscription subscription)
@@ -77,8 +70,7 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeSubscriptions RequestPart(this YoutubeSubscriptions subscriptions, PartType partType)
         {
-            var request = subscriptions.Request.RequestPart(partType);
-            return new YoutubeSubscriptions(request);
+            return Subscriptions(subscriptions.Settings.Clone(), subscriptions.PartTypes.Append(partType).ToArray());
         }
 
         public static YoutubeSubscriptions RequestContentDetails(this YoutubeSubscriptions subscriptions)
@@ -103,16 +95,31 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeSubscriptions ForChannelId(this YoutubeSubscriptions subscriptions, string id)
         {
-            var request = subscriptions.Request.Clone();
-            request.Settings.ChannelId = id;
-            return new YoutubeSubscriptions(request);
+            var settings = subscriptions.Settings.Clone();
+            settings.ChannelId = id;
+            return Subscriptions(settings, subscriptions.PartTypes.ToArray());
         }
 
         public static YoutubeSubscriptions OrderBy(this YoutubeSubscriptions subscriptions, SubscriptionOrder order)
         {
-            var request = subscriptions.Request.Clone();
-            request.Settings.Order = order;
-            return new YoutubeSubscriptions(request);
+            var settings = subscriptions.Settings.Clone();
+            settings.Order = order;
+            return Subscriptions(settings, subscriptions.PartTypes.ToArray());
+        }
+
+        public static YoutubeSubscriptions OrderByName(this YoutubeSubscriptions subscriptions)
+        {
+            return subscriptions.OrderBy(SubscriptionOrder.Alphabetical);
+        }
+
+        public static YoutubeSubscriptions OrderByRelevance(this YoutubeSubscriptions subscriptions)
+        {
+            return subscriptions.OrderBy(SubscriptionOrder.Relevance);
+        }
+
+        public static YoutubeSubscriptions OrderByUnread(this YoutubeSubscriptions subscriptions)
+        {
+            return subscriptions.OrderBy(SubscriptionOrder.Unread);
         }
     }
 }

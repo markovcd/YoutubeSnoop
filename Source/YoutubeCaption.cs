@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Api.Entities.Captions;
-using YoutubeSnoop.Api.Settings;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeCaption : YoutubeItem<Caption, CaptionApiRequestSettings>, IYoutubeItem
+    public sealed class YoutubeCaption : YoutubeItem<Caption, CaptionSettings>, IYoutubeItem
     {
+        private Caption _rawData;
+        public Caption RawData => Set(ref _rawData);
+
         private string _id;
         public string Id => Set(ref _id);
 
@@ -44,11 +47,11 @@ namespace YoutubeSnoop
         private string _videoId;
         public string VideoId => Set(ref _videoId);
 
-        public YoutubeCaption(IApiRequest<Caption, CaptionApiRequestSettings> request) : base(request)
+        public YoutubeCaption(Caption response) : base(response)
         {
         }
 
-        public YoutubeCaption(Caption response) : base(response)
+        public YoutubeCaption(CaptionSettings settings, IEnumerable<PartType> partTypes = null) : base(settings, partTypes)
         {
         }
 
@@ -56,6 +59,7 @@ namespace YoutubeSnoop
         {
             if (response == null) return;
 
+            _rawData = response;
             _id = response.Id;
             _kind = response.Kind;
 

@@ -8,6 +8,9 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeComment : YoutubeItem<Comment, CommentSettings>, IYoutubeItem
     {
+        private const string _videoCommentUrl = "https://www.youtube.com/watch?v={0}&lc={1}.{2}";
+        private const string _videoCommentThreadUrl = "https://www.youtube.com/watch?v={0}&lc={1}";
+
         private Comment _rawData;
         public Comment RawData => Set(ref _rawData);
 
@@ -50,6 +53,9 @@ namespace YoutubeSnoop
         private string _parentId;
         public string ParentId => Set(ref _parentId);
 
+        private string _url;
+        public string Url => Set(ref _url);
+
         public YoutubeComment(Comment response) : base(response)
         {
         }
@@ -79,11 +85,22 @@ namespace YoutubeSnoop
             _textDisplay = response.Snippet.TextDisplay;
             _updatedAt = response.Snippet.UpdatedAt.GetValueOrDefault();
             _videoId = response.Snippet.VideoId;
+
+            _url = GetUrl(_videoId, _parentId, _id);
         }
 
         public override string ToString()
         {
             return _textDisplay ?? base.ToString();
+        }
+
+        public static string GetUrl(string videoId, string parentId, string id)
+        {
+            if (string.IsNullOrEmpty(videoId) || string.IsNullOrEmpty(id)) return null;
+
+            if (string.IsNullOrEmpty(parentId)) return string.Format(_videoCommentThreadUrl, videoId, id);
+
+            return string.Format(_videoCommentUrl, videoId, parentId, id);           
         }
     }
 }

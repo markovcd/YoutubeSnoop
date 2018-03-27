@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,7 @@ namespace DemoApp
             set => SetProperty(ref _isSearching, value);
         }
 
+        public ICommand OpenUrlCommand => new RelayCommand<string>(OpenUrl, CanOpenUrl);
         public ICommand SearchCommand => new RelayCommand(Search, CanSearch);
         public ICommand ShowCommentThreadDetailsCommand => new RelayCommand<YoutubeCommentThread>(ShowCommentThreadDetails, CanShowCommentThreadDetails);
         public ICommand ShowCommentThreadRepliesCommand => new RelayCommand<YoutubeCommentThread>(ShowCommentThreadReplies, CanShowCommentThreadReplies);
@@ -44,6 +46,11 @@ namespace DemoApp
         public ICommand ShowRelatedVideosCommand => new RelayCommand<YoutubeVideo>(ShowRelatedVideos, CanShowRelatedVideos);
         public ICommand ShowVideoCommentThreadsCommand => new RelayCommand<YoutubeVideo>(ShowVideoCommentThreads, CanShowVideoCommentThreads);
         public ICommand ShowVideoChannelCommand => new RelayCommand<YoutubeVideo>(ShowVideoChannel, CanShowVideoChannel);
+
+        private bool CanOpenUrl(string url)
+        {
+            return !string.IsNullOrEmpty(url); 
+        }
 
         private bool CanSearch()
         {
@@ -88,6 +95,11 @@ namespace DemoApp
         private bool CanShowVideoChannel(YoutubeVideo video)
         {
             return video != null && !string.IsNullOrEmpty(video.ChannelId);
+        }
+
+        private void OpenUrl(string url)
+        {
+            Process.Start(new ProcessStartInfo(url));
         }
 
         private void Search()

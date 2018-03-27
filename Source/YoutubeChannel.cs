@@ -96,6 +96,7 @@ namespace YoutubeSnoop
 
         public static string GetUrl(string id, bool isCustom = false)
         {
+            if (string.IsNullOrEmpty(id)) return null;
             return string.Format(isCustom ? _channelUrlCustom : _channelUrl, id);
         }
     }

@@ -32,6 +32,9 @@ namespace YoutubeSnoop
         private string _videoId;
         public string VideoId => Set(ref _videoId);
 
+        private string _url;
+        public string Url => Set(ref _url);
+
         public YoutubeCommentThread(CommentThread response) : base(response)
         {
         }
@@ -55,6 +58,8 @@ namespace YoutubeSnoop
             _topLevelComment = new YoutubeComment(response.Snippet.TopLevelComment);
             _totalReplyCount = response.Snippet.TotalReplyCount.GetValueOrDefault();
             _videoId = response.Snippet.VideoId;
+
+            _url = YoutubeComment.GetUrl(_videoId, null, _id);
         }
     }
 }

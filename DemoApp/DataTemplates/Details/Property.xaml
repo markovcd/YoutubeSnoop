@@ -15,4 +15,21 @@
         </Grid>
 
     </DataTemplate>
+
+    <DataTemplate x:Key="Template.Details.Property.Url">
+        <Grid HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Margin="5" Grid.Column="0" Text="{Binding Tag, Mode=OneWay, RelativeSource={RelativeSource AncestorType=ContentControl}}"/>
+            <TextBlock  Margin="5" Grid.Column="1">
+                <Hyperlink Command="{Binding DataContext.OpenUrlCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">
+                    <Run Text="{Binding ., Mode=OneWay}"/>
+                </Hyperlink>
+            </TextBlock>
+        </Grid>
+
+    </DataTemplate>
 </ResourceDictionary>

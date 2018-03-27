@@ -8,8 +8,7 @@ namespace YoutubeSnoop
 {
     public sealed class YoutubeComment : YoutubeItem<Comment, CommentSettings>, IYoutubeItem
     {
-        private const string _videoCommentUrl = "https://www.youtube.com/watch?v={0}&lc={1}.{2}";
-        private const string _videoCommentThreadUrl = "https://www.youtube.com/watch?v={0}&lc={1}";
+        private const string _commentUrl = "&lc={0}";
 
         private Comment _rawData;
         public Comment RawData => Set(ref _rawData);
@@ -56,6 +55,9 @@ namespace YoutubeSnoop
         private string _url;
         public string Url => Set(ref _url);
 
+        private string _parentUrl;
+        public string ParentUrl => Set(ref _parentUrl);
+
         public YoutubeComment(Comment response) : base(response)
         {
         }
@@ -86,7 +88,8 @@ namespace YoutubeSnoop
             _updatedAt = response.Snippet.UpdatedAt.GetValueOrDefault();
             _videoId = response.Snippet.VideoId;
 
-            _url = GetUrl(_videoId, _parentId, _id);
+            _url = GetUrl(_videoId, _id);
+            _parentUrl = GetUrl(_videoId, _parentId);
         }
 
         public override string ToString()
@@ -94,13 +97,11 @@ namespace YoutubeSnoop
             return _textDisplay ?? base.ToString();
         }
 
-        public static string GetUrl(string videoId, string parentId, string id)
+        public static string GetUrl(string videoId, string id)
         {
-            if (string.IsNullOrEmpty(videoId) || string.IsNullOrEmpty(id)) return null;
-
-            if (string.IsNullOrEmpty(parentId)) return string.Format(_videoCommentThreadUrl, videoId, id);
-
-            return string.Format(_videoCommentUrl, videoId, parentId, id);           
+            if (string.IsNullOrEmpty(videoId)) return null;
+            var lc = string.IsNullOrEmpty(id) ? string.Empty : string.Format(_commentUrl, id);
+            return YoutubeVideo.GetUrl(videoId) + lc;           
         }
     }
 }

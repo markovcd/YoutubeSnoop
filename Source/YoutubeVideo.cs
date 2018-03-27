@@ -111,6 +111,7 @@ namespace YoutubeSnoop
 
         public static string GetUrl(string id)
         {
+            if (id == null) return null;
             return string.Format(_videoUrl, id);
         }
     }

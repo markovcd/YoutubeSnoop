@@ -15,7 +15,7 @@
                 <Hyperlink Command="{Binding DataContext.ShowCommentThreadRepliesCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">Replies</Hyperlink>
             </TextBlock>
 
-            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Id}" Tag="ID:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property.Url}" Content="{Binding Url}" Tag="Url:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding TopLevelComment.PublishedAt}" Tag="Published at:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ChannelId}" Tag="Channel ID:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding VideoId}" Tag="Video ID:"/>

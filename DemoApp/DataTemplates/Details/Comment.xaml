@@ -11,13 +11,12 @@
                 <Hyperlink Command="{Binding DataContext.ShowPlaylistItemsCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">Get items</Hyperlink>
             </TextBlock>-->
 
-            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Id}" Tag="ID:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property.Url}" Content="{Binding Url}" Tag="Url:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property.Url}" Content="{Binding AuthorChannelUrl}" Tag="Author channel URL:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding PublishedAt}" Tag="Published at:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding UpdatedAt}" Tag="Updated at:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ChannelId}" Tag="Channel ID:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding VideoId}" Tag="Video ID:"/>
-            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding AuthorChannelId}" Tag="Author channel ID:"/>
-            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding AuthorChannelUrl}" Tag="Author channel URL:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding LikeCount}" Tag="Like count:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ParentId}" Tag="Parent ID:"/>
         </StackPanel>

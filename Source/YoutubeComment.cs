@@ -58,6 +58,9 @@ namespace YoutubeSnoop
         private string _parentUrl;
         public string ParentUrl => Set(ref _parentUrl);
 
+        private string _videoUrl;
+        public string VideoUrl => Set(ref _videoUrl);
+
         public YoutubeComment(Comment response) : base(response)
         {
         }
@@ -90,6 +93,7 @@ namespace YoutubeSnoop
 
             _url = GetUrl(_videoId, _id);
             _parentUrl = GetUrl(_videoId, _parentId);
+            _videoUrl = YoutubeVideo.GetUrl(_videoId);
         }
 
         public override string ToString()

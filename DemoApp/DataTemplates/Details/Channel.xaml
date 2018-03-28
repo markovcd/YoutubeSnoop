@@ -7,12 +7,12 @@
         <StackPanel>
             <ContentControl ContentTemplate="{DynamicResource Template.List.Channel}" Content="{Binding}"/>
 
-            <!--<TextBlock Margin="5">
-                <Hyperlink Command="{Binding DataContext.ShowPlaylistItemsCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">Get items</Hyperlink>
-            </TextBlock>-->
+            <TextBlock Margin="5">
+                <Hyperlink Command="{Binding DataContext.ShowChannelUploadsCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">Uploads</Hyperlink>
+            </TextBlock>
 
-            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Url}" Tag="URL:"/>
-            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding CustomUrl}" Tag="Custom URL:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property.Url}" Content="{Binding Url}" Tag="URL:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property.Url}" Content="{Binding CustomUrl}" Tag="Custom URL:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Description}" Tag="Description:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding PublishedAt}" Tag="Published at:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding SubscriberCount}" Tag="Subscriber count:"/>

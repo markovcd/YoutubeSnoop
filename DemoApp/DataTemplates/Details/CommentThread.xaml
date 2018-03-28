@@ -10,15 +10,18 @@
             <TextBlock Margin="5">
                 <Hyperlink Command="{Binding DataContext.ShowCommentThreadDetailsCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">Details</Hyperlink>
             </TextBlock>
-            
+
+            <TextBlock Margin="5">
+                <Hyperlink Command="{Binding DataContext.ShowCommentThreadVideoCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">Video</Hyperlink>
+            </TextBlock>
+
             <TextBlock Margin="5">
                 <Hyperlink Command="{Binding DataContext.ShowCommentThreadRepliesCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">Replies</Hyperlink>
             </TextBlock>
 
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property.Url}" Content="{Binding Url}" Tag="Url:"/>
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property.Url}" Content="{Binding VideoUrl}" Tag="Video URL:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding TopLevelComment.PublishedAt}" Tag="Published at:"/>
-            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ChannelId}" Tag="Channel ID:"/>
-            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding VideoId}" Tag="Video ID:"/>
         </StackPanel>
 
 

@@ -9,13 +9,12 @@
             <TextBlock Margin="5">
                 <Hyperlink Command="{Binding DataContext.ShowSearchResultDetailsCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">Details</Hyperlink>
             </TextBlock>
-            
+
+            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property.Url}" Content="{Binding Url}" Tag="Url:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ResultKind}" Tag="Kind:"/>
-            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Url}" Tag="Url:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding PublishedAt}" Tag="Published at:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding Description}" Tag="Description:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ChannelTitle}" Tag="Channel title:"/>
-            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ChannelId}" Tag="Channel Id:"/>
         </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

@@ -59,7 +59,7 @@ namespace YoutubeSnoop
             _totalReplyCount = response.Snippet.TotalReplyCount.GetValueOrDefault();
             _videoId = response.Snippet.VideoId;
 
-            _url = YoutubeComment.GetUrl(_videoId, null, _id);
+            _url = YoutubeComment.GetUrl(_videoId, _id);
         }
     }
 }

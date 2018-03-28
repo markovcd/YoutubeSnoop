@@ -65,6 +65,9 @@ namespace YoutubeSnoop
         private string _url;
         public string Url => Set(ref _url);
 
+        private string _channelUrl;
+        public string ChannelUrl => Set(ref _channelUrl);
+
         public YoutubeVideo(Video response) : base(response)
         {
         }
@@ -91,6 +94,8 @@ namespace YoutubeSnoop
                 _channelTitle = response.Snippet.ChannelTitle;
                 int.TryParse(response.Snippet.CategoryId, out _categoryId);
                 _thumbnails = response.Snippet.Thumbnails?.Clone();
+
+                _channelUrl = YoutubeChannel.GetUrl(_channelId);
             }
 
             if (response.Statistics != null)

@@ -38,8 +38,10 @@ namespace DemoApp
 
         public ICommand OpenUrlCommand => new RelayCommand<string>(OpenUrl, CanOpenUrl);
         public ICommand SearchCommand => new RelayCommand(Search, CanSearch);
+        public ICommand ShowCommentParentCommand => new RelayCommand<YoutubeComment>(ShowCommentParent, CanShowCommentParent);                
         public ICommand ShowCommentThreadDetailsCommand => new RelayCommand<YoutubeCommentThread>(ShowCommentThreadDetails, CanShowCommentThreadDetails);
         public ICommand ShowCommentThreadRepliesCommand => new RelayCommand<YoutubeCommentThread>(ShowCommentThreadReplies, CanShowCommentThreadReplies);
+        public ICommand ShowChannelUploadsCommand => new RelayCommand<YoutubeChannel>(ShowChannelUploads, CanShowChannelUploads);
         public ICommand ShowSearchResultDetailsCommand => new RelayCommand<YoutubeSearchResult>(ShowSearchResultDetails, CanShowSearchResultDetails);
         public ICommand ShowPlaylistItemDetailsCommand => new RelayCommand<YoutubePlaylistItem>(ShowPlaylistItemDetails, CanShowPlaylistItemDetails);
         public ICommand ShowPlaylistItemsCommand => new RelayCommand<YoutubePlaylist>(ShowPlaylistItems, CanShowPlaylistItems);
@@ -57,6 +59,11 @@ namespace DemoApp
             return !string.IsNullOrEmpty(SearchQuery) && !IsSearching;
         }
 
+        private bool CanShowCommentParent(YoutubeComment comment)
+        {
+            return comment != null;
+        }
+
         private bool CanShowCommentThreadDetails(YoutubeCommentThread commentThread)
         {
             return commentThread != null;
@@ -65,6 +72,11 @@ namespace DemoApp
         private bool CanShowCommentThreadReplies(YoutubeCommentThread commentThread)
         {
             return commentThread != null && commentThread.TotalReplyCount != 0;
+        }
+
+        private bool CanShowChannelUploads(YoutubeChannel channel)
+        {
+            return channel != null && channel.UploadsCount != 0;
         }
 
         private bool CanShowPlaylistItems(YoutubePlaylist playlist)
@@ -108,6 +120,11 @@ namespace DemoApp
             FillList(Youtube.Search(searchQuery).Take(50));
         }
 
+        private void ShowCommentParent(YoutubeComment comment)
+        {
+            SelectedItem = comment.Parent()?.RequestAllParts();
+        }
+
         private void ShowCommentThreadDetails(YoutubeCommentThread commentThread)
         {
             SelectedItem = commentThread.TopLevelComment;
@@ -116,6 +133,11 @@ namespace DemoApp
         private void ShowCommentThreadReplies(YoutubeCommentThread commentThread)
         {
             FillList(commentThread.Replies);
+        }
+
+        private void ShowChannelUploads(YoutubeChannel channel)
+        {
+            FillList(channel.Uploads().RequestAllParts().Take(50));
         }
 
         private void ShowPlaylistItems(YoutubePlaylist playlist)
@@ -151,7 +173,7 @@ namespace DemoApp
 
         private void ShowVideoChannel(YoutubeVideo video)
         {
-            SelectedItem = video.Channel();
+            SelectedItem = video.Channel().RequestAllParts();
         }
 
         private void FillList(IEnumerable<IYoutubeItem> items)

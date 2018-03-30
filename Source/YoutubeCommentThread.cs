@@ -20,20 +20,11 @@ namespace YoutubeSnoop
         private IReadOnlyList<YoutubeComment> _replies;
         public IReadOnlyList<YoutubeComment> Replies => Set(ref _replies);
 
-        private string _channelId;
-        public string ChannelId => Set(ref _channelId);
-
         private YoutubeComment _topLevelComment;
         public YoutubeComment TopLevelComment => Set(ref _topLevelComment);
 
         private int _totalReplyCount;
         public int TotalReplyCount => Set(ref _totalReplyCount);
-
-        private string _videoId;
-        public string VideoId => Set(ref _videoId);
-
-        private string _url;
-        public string Url => Set(ref _url);
 
         public YoutubeCommentThread(CommentThread response) : base(response)
         {
@@ -54,12 +45,8 @@ namespace YoutubeSnoop
 
             if (response.Snippet == null) return;
 
-            _channelId = response.Snippet.ChannelId;
             _topLevelComment = new YoutubeComment(response.Snippet.TopLevelComment);
             _totalReplyCount = response.Snippet.TotalReplyCount.GetValueOrDefault();
-            _videoId = response.Snippet.VideoId;
-
-            _url = YoutubeComment.GetUrl(_videoId, _id);
         }
     }
 }

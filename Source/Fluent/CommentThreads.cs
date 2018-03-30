@@ -171,16 +171,12 @@ namespace YoutubeSnoop.Fluent
 
         public static YoutubeVideo Video(this YoutubeCommentThread commentThread)
         {
-            if (commentThread.VideoId == null) commentThread = commentThread.RequestSnippet();
-            if (commentThread.VideoId == null) return null;
-            return Video(commentThread.VideoId);
+            return commentThread.TopLevelComment.Video();
         }
 
         public static YoutubeChannel Channel(this YoutubeCommentThread commentThread)
         {
-            if (commentThread.ChannelId == null) commentThread = commentThread.RequestSnippet();
-            if (commentThread.ChannelId == null) return null;
-            return Channel(commentThread.ChannelId);
+            return commentThread.TopLevelComment.Channel();
         }
     }
 }

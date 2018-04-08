@@ -12,6 +12,10 @@
             </TextBlock>
 
             <TextBlock Margin="5">
+                <Hyperlink Command="{Binding DataContext.ShowCommentCommentThreadCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">Thread</Hyperlink>
+            </TextBlock>
+            
+            <TextBlock Margin="5">
                 <Hyperlink Command="{Binding DataContext.ShowCommentVideoCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">Video</Hyperlink>
             </TextBlock>
 
@@ -21,7 +25,6 @@
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding PublishedAt}" Tag="Published at:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding UpdatedAt}" Tag="Updated at:"/>
             <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding LikeCount}" Tag="Like count:"/>
-            <ContentControl ContentTemplate="{DynamicResource Template.Details.Property}" Content="{Binding ParentId}" Tag="Parent ID:"/>
         </StackPanel>
 
 

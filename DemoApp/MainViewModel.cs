@@ -11,7 +11,7 @@ using YoutubeSnoop.Fluent;
 
 namespace DemoApp
 {
-    class MainViewModel : BindableBase
+    internal class MainViewModel : BindableBase
     {
         public ObservableCollection<IYoutubeItem> Items { get; }
 
@@ -36,78 +36,21 @@ namespace DemoApp
             set => SetProperty(ref _isSearching, value);
         }
 
-        public ICommand OpenUrlCommand => new RelayCommand<string>(OpenUrl, CanOpenUrl);
-        public ICommand SearchCommand => new RelayCommand(Search, CanSearch);
-        public ICommand ShowCommentParentCommand => new RelayCommand<YoutubeComment>(ShowCommentParent, CanShowCommentParent);                
-        public ICommand ShowCommentThreadDetailsCommand => new RelayCommand<YoutubeCommentThread>(ShowCommentThreadDetails, CanShowCommentThreadDetails);
-        public ICommand ShowCommentThreadRepliesCommand => new RelayCommand<YoutubeCommentThread>(ShowCommentThreadReplies, CanShowCommentThreadReplies);
-        public ICommand ShowChannelUploadsCommand => new RelayCommand<YoutubeChannel>(ShowChannelUploads, CanShowChannelUploads);
-        public ICommand ShowSearchResultDetailsCommand => new RelayCommand<YoutubeSearchResult>(ShowSearchResultDetails, CanShowSearchResultDetails);
-        public ICommand ShowPlaylistItemDetailsCommand => new RelayCommand<YoutubePlaylistItem>(ShowPlaylistItemDetails, CanShowPlaylistItemDetails);
-        public ICommand ShowPlaylistItemsCommand => new RelayCommand<YoutubePlaylist>(ShowPlaylistItems, CanShowPlaylistItems);
-        public ICommand ShowRelatedVideosCommand => new RelayCommand<YoutubeVideo>(ShowRelatedVideos, CanShowRelatedVideos);
-        public ICommand ShowVideoCommentThreadsCommand => new RelayCommand<YoutubeVideo>(ShowVideoCommentThreads, CanShowVideoCommentThreads);
-        public ICommand ShowVideoChannelCommand => new RelayCommand<YoutubeVideo>(ShowVideoChannel, CanShowVideoChannel);
-
-        private bool CanOpenUrl(string url)
-        {
-            return !string.IsNullOrEmpty(url); 
-        }
-
-        private bool CanSearch()
-        {
-            return !string.IsNullOrEmpty(SearchQuery) && !IsSearching;
-        }
-
-        private bool CanShowCommentParent(YoutubeComment comment)
-        {
-            return comment != null;
-        }
-
-        private bool CanShowCommentThreadDetails(YoutubeCommentThread commentThread)
-        {
-            return commentThread != null;
-        }
-
-        private bool CanShowCommentThreadReplies(YoutubeCommentThread commentThread)
-        {
-            return commentThread != null && commentThread.TotalReplyCount != 0;
-        }
-
-        private bool CanShowChannelUploads(YoutubeChannel channel)
-        {
-            return channel != null && channel.UploadsCount != 0;
-        }
-
-        private bool CanShowPlaylistItems(YoutubePlaylist playlist)
-        {
-            return playlist != null && !IsSearching;
-        }
-
-        private bool CanShowPlaylistItemDetails(YoutubePlaylistItem playlistItem)
-        {
-            return playlistItem != null;
-        }
-
-        private bool CanShowRelatedVideos(YoutubeVideo video)
-        {
-            return video != null && !IsSearching;
-        }
-
-        private bool CanShowSearchResultDetails(YoutubeSearchResult searchResult)
-        {
-            return searchResult != null;
-        }
-
-        private bool CanShowVideoCommentThreads(YoutubeVideo video)
-        {
-            return video != null && !IsSearching && video.CommentCount != 0;
-        }
-
-        private bool CanShowVideoChannel(YoutubeVideo video)
-        {
-            return video != null && !string.IsNullOrEmpty(video.ChannelId);
-        }
+        public ICommand OpenUrlCommand => new RelayCommand<string>(OpenUrl, s => !string.IsNullOrEmpty(s));
+        public ICommand SearchCommand => new RelayCommand(Search, () => !string.IsNullOrEmpty(SearchQuery) && !IsSearching);
+        public ICommand ShowCommentCommentThreadCommand => new RelayCommand<YoutubeComment>(ShowCommentCommentThread, c => c != null);
+        public ICommand ShowCommentVideoCommand => new RelayCommand<YoutubeComment>(ShowCommentVideo, c => c != null);
+        public ICommand ShowCommentParentCommand => new RelayCommand<YoutubeComment>(ShowCommentParent, c => c?.ParentId != null);                
+        public ICommand ShowCommentThreadDetailsCommand => new RelayCommand<YoutubeCommentThread>(ShowCommentThreadDetails, c => c != null);
+        public ICommand ShowCommentThreadRepliesCommand => new RelayCommand<YoutubeCommentThread>(ShowCommentThreadReplies, c => c?.TotalReplyCount != 0);
+        public ICommand ShowCommentThreadVideoCommand => new RelayCommand<YoutubeCommentThread>(ShowCommentThreadVideo, c => c != null);
+        public ICommand ShowChannelUploadsCommand => new RelayCommand<YoutubeChannel>(ShowChannelUploads, c => c?.UploadsCount != 0);
+        public ICommand ShowSearchResultDetailsCommand => new RelayCommand<YoutubeSearchResult>(ShowSearchResultDetails, s => s != null);
+        public ICommand ShowPlaylistItemDetailsCommand => new RelayCommand<YoutubePlaylistItem>(ShowPlaylistItemDetails, p => p != null);
+        public ICommand ShowPlaylistItemsCommand => new RelayCommand<YoutubePlaylist>(ShowPlaylistItems, p => p != null && !IsSearching);
+        public ICommand ShowRelatedVideosCommand => new RelayCommand<YoutubeVideo>(ShowRelatedVideos, v => v != null && !IsSearching);
+        public ICommand ShowVideoCommentThreadsCommand => new RelayCommand<YoutubeVideo>(ShowVideoCommentThreads, v => !IsSearching && v?.CommentCount != 0);
+        public ICommand ShowVideoChannelCommand => new RelayCommand<YoutubeVideo>(ShowVideoChannel, v => !string.IsNullOrEmpty(v?.ChannelId));
 
         private void OpenUrl(string url)
         {
@@ -120,9 +63,19 @@ namespace DemoApp
             FillList(Youtube.Search(searchQuery).Take(50));
         }
 
+        private void ShowCommentCommentThread(YoutubeComment comment)
+        {
+            SelectedItem = comment.CommentThread();
+        }
+
+        private void ShowCommentVideo(YoutubeComment comment)
+        {
+            SelectedItem = comment.Video();
+        }
+
         private void ShowCommentParent(YoutubeComment comment)
         {
-            SelectedItem = comment.Parent()?.RequestAllParts();
+            SelectedItem = comment.Parent();
         }
 
         private void ShowCommentThreadDetails(YoutubeCommentThread commentThread)
@@ -133,6 +86,11 @@ namespace DemoApp
         private void ShowCommentThreadReplies(YoutubeCommentThread commentThread)
         {
             FillList(commentThread.Replies);
+        }
+
+        private void ShowCommentThreadVideo(YoutubeCommentThread commentThread)
+        {
+            SelectedItem = commentThread.Video();
         }
 
         private void ShowChannelUploads(YoutubeChannel channel)

@@ -78,11 +78,16 @@ namespace YoutubeSnoop.Fluent
             return Comments().ForParentId(comment.Id);
         }
 
-        public static YoutubeCommentThread Parent(this YoutubeComment comment)
+        public static YoutubeComment Parent(this YoutubeComment comment)
         {
-            if (comment.ParentId != null) CommentThread(comment.ParentId);
+            if (comment.ParentId != null) return Comment(comment.ParentId);
 
-            return CommentThread(comment.Id);
+            return null;
+        }
+
+        public static YoutubeCommentThread CommentThread(this YoutubeComment comment)
+        {
+            return CommentThread(comment.Id.Split('.')[0]);
         }
 
         public static YoutubeVideo Video(this YoutubeComment comment)

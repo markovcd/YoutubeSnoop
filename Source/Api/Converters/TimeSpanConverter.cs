@@ -10,8 +10,7 @@ namespace YoutubeSnoop.Api.Converters
         {
             if (reader?.TokenType == JsonToken.String)
             {
-                var timeSpan = XmlConvert.ToTimeSpan(reader.Value?.ToString());
-                return timeSpan;
+                return XmlConvert.ToTimeSpan(reader.Value?.ToString());
             }
 
             throw new InvalidOperationException();

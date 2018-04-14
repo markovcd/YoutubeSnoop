@@ -6,7 +6,7 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubePlaylistItem : IYoutubeItem
+    public sealed class YoutubePlaylistItem : IYoutubeItem, ITitle, IDescription, IUrl
     {
         public PlaylistItem RawData { get; }
         public ResourceKind Kind { get; }
@@ -21,6 +21,7 @@ namespace YoutubeSnoop
         public string PlaylistId { get; }
         public int? Position { get; }
         public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails { get; }
+        public Thumbnail DefaultThumbnail { get; }
         public string Url { get; }
 
         public YoutubePlaylistItem(PlaylistItem response)
@@ -43,6 +44,10 @@ namespace YoutubeSnoop
             PlaylistId = response.Snippet.PlaylistId;
             Position = response.Snippet.Position;
             Thumbnails = response.Snippet.Thumbnails?.Clone();
+
+            Thumbnail defaultThumbnail = null;
+            Thumbnails?.TryGetValue(ThumbnailSize.Default, out defaultThumbnail);
+            DefaultThumbnail = defaultThumbnail;
 
             switch (ItemKind)
             {

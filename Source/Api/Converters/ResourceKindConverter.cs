@@ -10,8 +10,7 @@ namespace YoutubeSnoop.Api.Converters
         {
             if (reader?.TokenType == JsonToken.String)
             {
-                var kind = Extensions.ParseResourceKind(reader.Value.ToString());
-                return kind;
+                return Extensions.ParseResourceKind(reader.Value.ToString());
             }
 
             throw new InvalidOperationException();

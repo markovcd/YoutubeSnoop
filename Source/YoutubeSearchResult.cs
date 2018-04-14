@@ -6,7 +6,7 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeSearchResult : IYoutubeItem
+    public sealed class YoutubeSearchResult : IYoutubeItem, ITitle, IDescription, IUrl
     {
         public SearchResult RawData { get; }
         public ResourceKind Kind { get; }
@@ -18,6 +18,7 @@ namespace YoutubeSnoop
         public string Description { get; }
         public string ChannelTitle { get; }
         public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails { get; }
+        public Thumbnail DefaultThumbnail { get; }
         public string Url { get; }
 
         public YoutubeSearchResult(SearchResult response)
@@ -46,7 +47,10 @@ namespace YoutubeSnoop
             Description = response.Snippet.Description;
             ChannelTitle = response.Snippet.ChannelTitle;
             Thumbnails = response.Snippet.Thumbnails?.Clone();
-            
+
+            Thumbnail defaultThumbnail = null;
+            Thumbnails?.TryGetValue(ThumbnailSize.Default, out defaultThumbnail);
+            DefaultThumbnail = defaultThumbnail;
         }
     }
 }

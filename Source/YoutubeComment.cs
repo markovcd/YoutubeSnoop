@@ -6,7 +6,7 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeComment : YoutubeItem<Comment, CommentSettings>, IYoutubeItem
+    public sealed class YoutubeComment : YoutubeItem<Comment, CommentSettings>, IYoutubeItem, IUrl
     {
         private const string _commentUrl = "&lc={0}";
 

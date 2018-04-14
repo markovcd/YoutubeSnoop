@@ -7,7 +7,7 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeSubscription : YoutubeItem<Subscription, SubscriptionSettings>, IYoutubeItem
+    public sealed class YoutubeSubscription : YoutubeItem<Subscription, SubscriptionSettings>, IYoutubeItem, ITitle, IDescription
     {
         private Subscription _rawData;
         public Subscription RawData => Set(ref _rawData);
@@ -39,6 +39,9 @@ namespace YoutubeSnoop
         private IReadOnlyDictionary<ThumbnailSize, Thumbnail> _thumbnails;
         public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails => Set(ref _thumbnails);
 
+        private Thumbnail _defaultThumbnail;
+        public Thumbnail DefaultThumbnail => Set(ref _defaultThumbnail);
+
         public YoutubeSubscription(Subscription response) : base(response)
         {
         }
@@ -64,6 +67,7 @@ namespace YoutubeSnoop
                 _description = response.Snippet.Description;
                 _channelTitle = response.Snippet.ChannelTitle;
                 _thumbnails = response.Snippet.Thumbnails?.Clone();
+                _thumbnails?.TryGetValue(ThumbnailSize.Default, out _defaultThumbnail);
             }
         }
     }

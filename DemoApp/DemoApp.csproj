@@ -57,7 +57,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converters\BooleanInvertConverter.cs" />
     <Compile Include="RelayCommand.cs" />
     <Page Include="DataTemplates\Details\Comment.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -143,8 +142,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BindableBase.cs" />
-    <Compile Include="Converters\ThumbnailsToImageSourceConverter.cs" />
     <Compile Include="DataTemplates\DataTemplateSelector.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">

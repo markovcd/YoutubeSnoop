@@ -7,7 +7,7 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeActivity : YoutubeItem<Activity, ActivitySettings>, IYoutubeItem
+    public sealed class YoutubeActivity : YoutubeItem<Activity, ActivitySettings>, IYoutubeItem, ITitle, IDescription
     {
         private Activity _rawData;
         public Activity RawData => Set(ref _rawData);
@@ -29,6 +29,9 @@ namespace YoutubeSnoop
 
         private IReadOnlyDictionary<ThumbnailSize, Thumbnail> _thumbnails;
         public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails => Set(ref _thumbnails);
+
+        private Thumbnail _defaultThumbnail;
+        public Thumbnail DefaultThumbnail => Set(ref _defaultThumbnail);
 
         private string _channelId;
         public string ChannelId => Set(ref _channelId);
@@ -91,6 +94,7 @@ namespace YoutubeSnoop
                 _description = response.Snippet.Description;
                 _publishedAt = response.Snippet.PublishedAt.GetValueOrDefault();
                 _thumbnails = response.Snippet.Thumbnails?.Clone();
+                _thumbnails?.TryGetValue(ThumbnailSize.Default, out _defaultThumbnail);
                 _channelId = response.Snippet.ChannelId;
                 _channelTitle = response.Snippet.ChannelTitle;
                 _groupId = response.Snippet.GroupId;

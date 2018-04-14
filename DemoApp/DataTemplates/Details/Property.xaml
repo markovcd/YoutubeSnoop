@@ -1,7 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:y="clr-namespace:YoutubeSnoop;assembly=YoutubeSnoop"
-                    xmlns:c="clr-namespace:DemoApp.Converters">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <DataTemplate x:Key="Template.Details.Property">
         <Grid HorizontalAlignment="Stretch">

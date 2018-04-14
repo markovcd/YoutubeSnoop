@@ -7,9 +7,9 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeVideo : YoutubeItem<Video, VideoSettings>, IYoutubeItem
+    public sealed class YoutubeVideo : YoutubeItem<Video, VideoSettings>, IYoutubeItem, ITitle, IDescription, IUrl
     {
-        private const string _videoUrl = @"https://www.youtube.com/watch?v={0}";
+        private const string _videoUrl = "https://www.youtube.com/watch?v={0}";
 
         private Video _rawData;
         public Video RawData => Set(ref _rawData);
@@ -37,6 +37,9 @@ namespace YoutubeSnoop
 
         private IReadOnlyDictionary<ThumbnailSize, Thumbnail> _thumbnails;
         public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails => Set(ref _thumbnails);
+
+        private Thumbnail _defaultThumbnail;
+        public Thumbnail DefaultThumbnail => Set(ref _defaultThumbnail);
 
         private int _categoryId;
         public int CategoryId => Set(ref _categoryId);
@@ -94,7 +97,7 @@ namespace YoutubeSnoop
                 _channelTitle = response.Snippet.ChannelTitle;
                 int.TryParse(response.Snippet.CategoryId, out _categoryId);
                 _thumbnails = response.Snippet.Thumbnails?.Clone();
-
+                _thumbnails?.TryGetValue(ThumbnailSize.Default, out _defaultThumbnail);
                 _channelUrl = YoutubeChannel.GetUrl(_channelId);
             }
 

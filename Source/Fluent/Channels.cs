@@ -105,13 +105,13 @@ namespace YoutubeSnoop.Fluent
         public static YoutubeChannel RequestAllParts(this YoutubeChannel channel)
         {
             return channel.RequestContentDetails()
-                           .RequestBrandingSettings()
-                           .RequestContentOwnerDetails()
-                           .RequestLocalizations()
-                           .RequestStatistics()
-                           .RequestStatus()
-                           .RequestTopicDetails()
-                           .RequestSnippet();
+                          .RequestBrandingSettings()
+                          .RequestContentOwnerDetails()
+                          .RequestLocalizations()
+                          .RequestStatistics()
+                          .RequestStatus()
+                          .RequestTopicDetails()
+                          .RequestSnippet();
         }
 
         public static YoutubeChannels RequestPart(this YoutubeChannels channels, PartType partType)

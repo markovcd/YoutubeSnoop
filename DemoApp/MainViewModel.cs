@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using YoutubeSnoop;
@@ -11,9 +11,9 @@ using YoutubeSnoop.Fluent;
 
 namespace DemoApp
 {
-    internal class MainViewModel : BindableBase
+    internal class MainViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<IYoutubeItem> Items { get; }
+        public ObservableCollection<IYoutubeItem> Items { get; } = new ObservableCollection<IYoutubeItem>();
 
         private IYoutubeItem _selectedItem;
         public IYoutubeItem SelectedItem
@@ -29,15 +29,15 @@ namespace DemoApp
             set => SetProperty(ref _searchQuery, value);
         }
 
-        private bool _isSearching;
-        public bool IsSearching
+        private bool _isIdle = true;
+        public bool IsIdle
         {
-            get => _isSearching;
-            set => SetProperty(ref _isSearching, value);
+            get => _isIdle;
+            set => SetProperty(ref _isIdle, value);
         }
 
         public ICommand OpenUrlCommand => new RelayCommand<string>(OpenUrl, s => !string.IsNullOrEmpty(s));
-        public ICommand SearchCommand => new RelayCommand(Search, () => !string.IsNullOrEmpty(SearchQuery) && !IsSearching);
+        public ICommand SearchCommand => new RelayCommand(Search, () => !string.IsNullOrEmpty(SearchQuery) && IsIdle);
         public ICommand ShowCommentCommentThreadCommand => new RelayCommand<YoutubeComment>(ShowCommentCommentThread, c => c != null);
         public ICommand ShowCommentVideoCommand => new RelayCommand<YoutubeComment>(ShowCommentVideo, c => c != null);
         public ICommand ShowCommentParentCommand => new RelayCommand<YoutubeComment>(ShowCommentParent, c => c?.ParentId != null);                
@@ -45,11 +45,12 @@ namespace DemoApp
         public ICommand ShowCommentThreadRepliesCommand => new RelayCommand<YoutubeCommentThread>(ShowCommentThreadReplies, c => c?.TotalReplyCount != 0);
         public ICommand ShowCommentThreadVideoCommand => new RelayCommand<YoutubeCommentThread>(ShowCommentThreadVideo, c => c != null);
         public ICommand ShowChannelUploadsCommand => new RelayCommand<YoutubeChannel>(ShowChannelUploads, c => c?.UploadsCount != 0);
+        public ICommand ShowChannelPlaylistsCommand => new RelayCommand<YoutubeChannel>(ShowChannelPlaylists, c => c != null);
         public ICommand ShowSearchResultDetailsCommand => new RelayCommand<YoutubeSearchResult>(ShowSearchResultDetails, s => s != null);
         public ICommand ShowPlaylistItemDetailsCommand => new RelayCommand<YoutubePlaylistItem>(ShowPlaylistItemDetails, p => p != null);
-        public ICommand ShowPlaylistItemsCommand => new RelayCommand<YoutubePlaylist>(ShowPlaylistItems, p => p != null && !IsSearching);
-        public ICommand ShowRelatedVideosCommand => new RelayCommand<YoutubeVideo>(ShowRelatedVideos, v => v != null && !IsSearching);
-        public ICommand ShowVideoCommentThreadsCommand => new RelayCommand<YoutubeVideo>(ShowVideoCommentThreads, v => !IsSearching && v?.CommentCount != 0);
+        public ICommand ShowPlaylistItemsCommand => new RelayCommand<YoutubePlaylist>(ShowPlaylistItems, p => p != null && IsIdle);
+        public ICommand ShowRelatedVideosCommand => new RelayCommand<YoutubeVideo>(ShowRelatedVideos, v => v != null && IsIdle);
+        public ICommand ShowVideoCommentThreadsCommand => new RelayCommand<YoutubeVideo>(ShowVideoCommentThreads, v => IsIdle && v?.CommentCount != 0);
         public ICommand ShowVideoChannelCommand => new RelayCommand<YoutubeVideo>(ShowVideoChannel, v => !string.IsNullOrEmpty(v?.ChannelId));
 
         private void OpenUrl(string url)
@@ -98,6 +99,11 @@ namespace DemoApp
             FillList(channel.Uploads().RequestAllParts().Take(50));
         }
 
+        private void ShowChannelPlaylists(YoutubeChannel channel)
+        {
+            FillList(channel.Playlists().RequestAllParts().Take(50));
+        }
+
         private void ShowPlaylistItems(YoutubePlaylist playlist)
         {            
             FillList(playlist.Items().RequestAllParts().Take(50));
@@ -117,9 +123,9 @@ namespace DemoApp
         {        
             var details = searchResult.Details();
 
-            if (details is YoutubeVideo) details = (details as YoutubeVideo).RequestAllParts();
-            if (details is YoutubePlaylist) details = (details as YoutubePlaylist).RequestAllParts();
-            if (details is YoutubeChannel) details = (details as YoutubeChannel).RequestAllParts();
+            if (details is YoutubeVideo) details = (details as YoutubeVideo)?.RequestAllParts();
+            if (details is YoutubePlaylist) details = (details as YoutubePlaylist)?.RequestAllParts();
+            if (details is YoutubeChannel) details = (details as YoutubeChannel)?.RequestAllParts();
 
             SelectedItem = details;
         }
@@ -138,22 +144,38 @@ namespace DemoApp
         {
             Items.Clear();
             SearchQuery = null;
-            IsSearching = true;
+            IsIdle = false;
 
             Task.Run(() =>
             {
                 foreach (var item in items)
                 {
-                    App.Current.Dispatcher.BeginInvoke((Action)(() => Items.Add(item)));
+                    App.Current.Dispatcher.Invoke(() => Items.Add(item));
                 }
 
-                App.Current.Dispatcher.BeginInvoke((Action)(() => IsSearching = false));
+                App.Current.Dispatcher.Invoke(() => IsIdle = true);
             });
         }
 
-        public MainViewModel()
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
-            Items = new ObservableCollection<IYoutubeItem>();
+            if (Equals(storage, value)) return false;
+
+            storage = value;
+            OnPropertyChanged(propertyName);
+
+            return true;
         }
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
     }
 }

@@ -6,7 +6,7 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeChannelSection : YoutubeItem<ChannelSection, ChannelSectionSettings>, IYoutubeItem
+    public sealed class YoutubeChannelSection : YoutubeItem<ChannelSection, ChannelSectionSettings>, IYoutubeItem, ITitle
     {
         private string _id;
         public string Id => Set(ref _id);

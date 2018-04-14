@@ -5,7 +5,7 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeVideoCategory : YoutubeItem<VideoCategory, VideoCategorySettings>, IYoutubeItem
+    public sealed class YoutubeVideoCategory : YoutubeItem<VideoCategory, VideoCategorySettings>, IYoutubeItem, ITitle
     {
         private VideoCategory _rawData;
         public VideoCategory RawData => Set(ref _rawData);

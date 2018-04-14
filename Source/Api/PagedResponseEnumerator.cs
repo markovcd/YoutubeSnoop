@@ -15,7 +15,7 @@ namespace YoutubeSnoop.Api
     {
         private readonly IList<IPagedResponse<TItem>> _responses;
         private int _index;
-        private Func<string, IPagedResponse<TItem>> _getNextResponse;
+        private readonly Func<string, IPagedResponse<TItem>> _getNextResponse;
 
         public IPagedResponse<TItem> Current => _responses[_index];
         object IEnumerator.Current => Current;

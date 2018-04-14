@@ -7,10 +7,10 @@ using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop
 {
-    public sealed class YoutubeChannel : YoutubeItem<Channel, ChannelSettings>, IYoutubeItem
+    public sealed class YoutubeChannel : YoutubeItem<Channel, ChannelSettings>, IYoutubeItem, ITitle, IDescription, IUrl
     {
-        private const string _channelUrl = @"https://www.youtube.com/channel/{0}";
-        private const string _channelUrlCustom = @"https://www.youtube.com/{0}";
+        private const string _channelUrl = "https://www.youtube.com/channel/{0}";
+        private const string _channelUrlCustom = "https://www.youtube.com/{0}";
 
         private Channel _rawData;
         public Channel RawData => Set(ref _rawData);
@@ -35,6 +35,9 @@ namespace YoutubeSnoop
 
         private IReadOnlyDictionary<ThumbnailSize, Thumbnail> _thumbnails;
         public IReadOnlyDictionary<ThumbnailSize, Thumbnail> Thumbnails => Set(ref _thumbnails);
+
+        private Thumbnail _defaultThumbnail;
+        public Thumbnail DefaultThumbnail => Set(ref _defaultThumbnail);
 
         private string _uploadsPlaylistId;
         public string UploadsPlaylistId => Set(ref _uploadsPlaylistId);
@@ -78,6 +81,7 @@ namespace YoutubeSnoop
                 _customUrl = GetUrl(response.Snippet.CustomUrl, true);
                 _publishedAt = response.Snippet.PublishedAt.GetValueOrDefault();
                 _thumbnails = response.Snippet.Thumbnails?.Clone();
+                _thumbnails?.TryGetValue(ThumbnailSize.Default, out _defaultThumbnail);
             }
 
             if (response.ContentDetails != null)

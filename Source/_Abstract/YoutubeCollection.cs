@@ -13,27 +13,40 @@ namespace YoutubeSnoop
         where TResponse : class, IResponse
         where TSettings : class, ISettings
     {
+        private bool _isFirstItemDownloaded;
+
         protected IRequest<TResponse, TSettings> Request { get; }
 
         public TSettings Settings { get; }
         public IReadOnlyList<PartType> PartTypes { get; }
 
         private int? _resultsPerPage;
-        public int? ResultsPerPage => _resultsPerPage; // TODO : will be set when first page is downloaded
+        public int? ResultsPerPage => _resultsPerPage;
 
         private int? _totalResults;
-        public int? TotalResults => _totalResults; // TODO : will be set when first page is downloaded
+        public int? TotalResults => _totalResults;
 
         protected YoutubeCollection(IRequest<TResponse, TSettings> request)
         {
             Request = request;
             PartTypes = request.PartTypes.ToList().AsReadOnly();
             Settings = request.Settings.Clone();
+            request.Deserialized += Request_Deserialized;
         }
 
-        protected YoutubeCollection(TSettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20) 
+        private void Request_Deserialized(object sender, ResponseEventArgs<TResponse> e)
+        {
+            if (_isFirstItemDownloaded) return;
+
+            _isFirstItemDownloaded = true;
+            _resultsPerPage = e.Response.PageInfo.ResultsPerPage;
+            _totalResults = e.Response.PageInfo.TotalResults;
+        }
+
+        protected YoutubeCollection(TSettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
             : this(Api.Request.Create<TResponse, TSettings>(settings, partTypes, resultsPerPage))
         {
+            _resultsPerPage = resultsPerPage;
         }
 
         public IEnumerator<TItem> GetEnumerator()

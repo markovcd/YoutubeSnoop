@@ -100,14 +100,14 @@ namespace YoutubeSnoop.Api
             return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Videos.Video>(), new UrlFormatter());
         }   
     }
-
+   
     /// <summary>
     /// Core functionality class of YoutubeSnoop. 
     /// </summary>
-    /// <typeparam name="TItem"></typeparam>
+    /// <typeparam name="TResponse"></typeparam>
     /// <typeparam name="TSettings"></typeparam>
-    public class Request<TItem, TSettings> : IRequest<TItem, TSettings>
-        where TItem : class, IResponse
+    public class Request<TResponse, TSettings> : IRequest<TResponse, TSettings>
+        where TResponse : class, IResponse
         where TSettings : class, ISettings
     {
         private const string _defaultApiKey = "AIzaSyAHVb6LDoO5aARmDlUe9PIeU_U1et1bWd8"; // default project Api key, do not touch!
@@ -115,19 +115,21 @@ namespace YoutubeSnoop.Api
         private readonly string _apiKey;
 
         private readonly IJsonDownloader _jsonDownloader;
-        private readonly IPagedResponseDeserializer<TItem> _responseDeserializer;
+        private readonly IPagedResponseDeserializer<TResponse> _responseDeserializer;
         private readonly IUrlFormatter _apiUrlFormatter;
 
-        private TItem _firstItem;
-        public TItem FirstItem => _firstItem ?? (_firstItem = Items.FirstOrDefault());
+        private TResponse _firstItem;
+        public TResponse FirstItem => _firstItem ?? (_firstItem = Items.FirstOrDefault());
 
-        public IEnumerable<TItem> Items { get; }
+        public IEnumerable<TResponse> Items { get; }
         public TSettings Settings { get; }
         public int ResultsPerPage { get; }
 
         public IEnumerable<PartType> PartTypes { get; }
 
-        public Request(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TItem> responseDeserializer, IUrlFormatter apiUrlFormatter, string apiKey = null)
+        public event EventHandler<ResponseEventArgs<TResponse>> Deserialized;
+
+        public Request(TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TResponse> responseDeserializer, IUrlFormatter apiUrlFormatter, string apiKey = null)
         {
             _jsonDownloader = jsonDownloader;
             _responseDeserializer = responseDeserializer;
@@ -141,12 +143,19 @@ namespace YoutubeSnoop.Api
             Items = this.SelectMany(i => i.Items);
         }
 
-        public IPagedResponse<TItem> Deserialize(string pageToken = null)
+        protected virtual void OnDeserialized(ResponseEventArgs<TResponse> a)
         {
-            return Deserialize(_apiUrlFormatter, _jsonDownloader, _responseDeserializer, Settings, PartTypes, ResultsPerPage, pageToken, _apiKey);
+            Deserialized?.Invoke(this, a);
         }
 
-        public static IPagedResponse<TItem> Deserialize(IUrlFormatter apiUrlFormatter, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TItem> responseDeserializer,
+        public IPagedResponse<TResponse> Deserialize(string pageToken = null)
+        {
+            var response = Deserialize(_apiUrlFormatter, _jsonDownloader, _responseDeserializer, Settings, PartTypes, ResultsPerPage, pageToken, _apiKey);
+            OnDeserialized(new ResponseEventArgs<TResponse>(pageToken, response));
+            return response;
+        }
+ 
+        public static IPagedResponse<TResponse> Deserialize(IUrlFormatter apiUrlFormatter, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TResponse> responseDeserializer,
                                                         TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, string pageToken = null, string apiKey = null)
         {
             var requestUrl = apiUrlFormatter.Format(settings, partTypes, pageToken, resultsPerPage, apiKey ?? _defaultApiKey);
@@ -154,9 +163,9 @@ namespace YoutubeSnoop.Api
             return responseDeserializer.Deserialize(json);
         }
 
-        public IEnumerator<IPagedResponse<TItem>> GetEnumerator()
+        public IEnumerator<IPagedResponse<TResponse>> GetEnumerator()
         {
-            return new PagedResponseEnumerator<TItem>(Deserialize);
+            return new PagedResponseEnumerator<TResponse>(Deserialize);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

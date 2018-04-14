@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Enums;
 
@@ -12,5 +13,6 @@ namespace YoutubeSnoop.Api
         TResponse FirstItem { get; }
         TSettings Settings { get; }
         IEnumerable<PartType> PartTypes { get; }
+        event EventHandler<ResponseEventArgs<TResponse>> Deserialized;
     }
 }

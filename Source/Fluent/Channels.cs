@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
@@ -6,6 +7,16 @@ namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
+        public static IEnumerable<YoutubeChannel> TakePages(this YoutubeChannels channels, int pageCount)
+        {
+            return channels.Take(channels.ResultsPerPage.GetValueOrDefault(ResultsPerPage) * pageCount);
+        }
+
+        public static IEnumerable<YoutubeChannel> TakePage(this YoutubeChannels channels)
+        {
+            return channels.TakePages(1);
+        }
+
         public static YoutubeChannels Channels(ChannelSettings settings, params PartType[] partTypes)
         {
             return new YoutubeChannels(settings, partTypes, ResultsPerPage);

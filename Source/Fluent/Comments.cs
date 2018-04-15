@@ -1,10 +1,22 @@
-﻿using YoutubeSnoop.Api;
+﻿using System.Collections.Generic;
+using System.Linq;
+using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
+        public static IEnumerable<YoutubeComment> TakePages(this YoutubeComments comments, int pageCount)
+        {
+            return comments.Take(comments.ResultsPerPage.GetValueOrDefault(ResultsPerPage) * pageCount);
+        }
+
+        public static IEnumerable<YoutubeComment> TakePage(this YoutubeComments comments)
+        {
+            return comments.TakePages(1);
+        }
+
         public static YoutubeComments Comments(CommentSettings settings = null)
         {
             return new YoutubeComments(settings, null, ResultsPerPage);

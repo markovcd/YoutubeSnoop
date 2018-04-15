@@ -14,7 +14,8 @@ namespace YoutubeSnoop.Api
        
         private const bool _prettyPrint = false;
         private const string _prettyPrintName = "prettyPrint";
-      
+        private const string _resultsPerPageName = "maxResults";
+
         private static readonly Argument _prettyPrintArgument = new Argument<bool>(_prettyPrintName, _prettyPrint);
 
         public static string Format(ISettings settings, IEnumerable<PartType> partTypes, string pageToken, int resultsPerPage, string key)
@@ -22,7 +23,7 @@ namespace YoutubeSnoop.Api
             var arguments = settings.GetArguments().ToList();
             arguments.Add(new PartTypeArgument(partTypes));
             arguments.Add(new Argument(nameof(pageToken), pageToken));
-            arguments.Add(new Argument<int>(nameof(resultsPerPage), resultsPerPage));
+            arguments.Add(new Argument<int>(_resultsPerPageName, resultsPerPage));
             arguments.Add(new Argument(nameof(key), key));
             arguments.Add(_prettyPrintArgument);
 

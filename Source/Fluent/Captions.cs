@@ -1,9 +1,21 @@
-﻿using YoutubeSnoop.Api;
+﻿using System.Collections.Generic;
+using System.Linq;
+using YoutubeSnoop.Api;
 
 namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
+        public static IEnumerable<YoutubeCaption> TakePages(this YoutubeCaptions captions, int pageCount)
+        {
+            return captions.Take(captions.ResultsPerPage.GetValueOrDefault(ResultsPerPage) * pageCount);
+        }
+
+        public static IEnumerable<YoutubeCaption> TakePage(this YoutubeCaptions captions)
+        {
+            return captions.TakePages(1);
+        }
+
         public static YoutubeCaptions Captions(CaptionSettings settings = null)
         {
             return new YoutubeCaptions(settings, null, ResultsPerPage);

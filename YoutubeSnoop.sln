@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeSnoop", "Source\YoutubeSnoop.csproj", "{535ADC79-3134-4255-9FF3-24E6DFE4D3CD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{79136768-C860-4E98-B246-9406BEC6CF13}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{04E3BA06-7735-40DE-896E-FFC89A29490A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp", "DemoApp\DemoApp.csproj", "{40C65F26-8E18-44CC-AF96-376283EBE909}"
@@ -21,10 +19,6 @@ Global
 		{535ADC79-3134-4255-9FF3-24E6DFE4D3CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{535ADC79-3134-4255-9FF3-24E6DFE4D3CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{535ADC79-3134-4255-9FF3-24E6DFE4D3CD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79136768-C860-4E98-B246-9406BEC6CF13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79136768-C860-4E98-B246-9406BEC6CF13}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79136768-C860-4E98-B246-9406BEC6CF13}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79136768-C860-4E98-B246-9406BEC6CF13}.Release|Any CPU.Build.0 = Release|Any CPU
 		{04E3BA06-7735-40DE-896E-FFC89A29490A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{04E3BA06-7735-40DE-896E-FFC89A29490A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04E3BA06-7735-40DE-896E-FFC89A29490A}.Release|Any CPU.ActiveCfg = Release|Any CPU

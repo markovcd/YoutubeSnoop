@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using YoutubeSnoop.Api;
 using YoutubeSnoop.Enums;
 
@@ -6,6 +8,16 @@ namespace YoutubeSnoop.Fluent
 {
     public static partial class Youtube
     {
+        public static IEnumerable<YoutubeSearchResult> TakePages(this YoutubeSearch search, int pageCount)
+        {
+            return search.Take(search.ResultsPerPage.GetValueOrDefault(ResultsPerPage) * pageCount);
+        }
+
+        public static IEnumerable<YoutubeSearchResult> TakePage(this YoutubeSearch search)
+        {
+            return search.TakePages(1);
+        }
+
         public static YoutubeSearch Search(SearchSettings settings = null)
         {
             return new YoutubeSearch(settings, null, ResultsPerPage);
@@ -49,22 +61,27 @@ namespace YoutubeSnoop.Fluent
         {
             return search.OrderBy(SearchOrder.Date);
         }
+
         public static YoutubeSearch OrderByRating(this YoutubeSearch search)
         {
             return search.OrderBy(SearchOrder.Rating);
         }
+
         public static YoutubeSearch OrderByRelevance(this YoutubeSearch search)
         {
             return search.OrderBy(SearchOrder.Relevance);
         }
+
         public static YoutubeSearch OrderByTitle(this YoutubeSearch search)
         {
             return search.OrderBy(SearchOrder.Title);
         }
+
         public static YoutubeSearch OrderByVideoCount(this YoutubeSearch search)
         {
             return search.OrderBy(SearchOrder.VideoCount);
         }
+
         public static YoutubeSearch OrderByViewCount(this YoutubeSearch search)
         {
             return search.OrderBy(SearchOrder.ViewCount);

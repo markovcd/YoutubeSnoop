@@ -13,6 +13,8 @@ namespace YoutubeSnoop
         where TResponse : class, IResponse
         where TSettings : class, ISettings
     {
+        private bool _isFirstItem = true;
+
         protected IRequest<TResponse, TSettings> Request { get; }
 
         public TSettings Settings { get; }
@@ -24,19 +26,26 @@ namespace YoutubeSnoop
         private int? _totalResults;
         public int? TotalResults => _totalResults;
 
+        public EventHandler Deserialized;
+
         protected YoutubeCollection(IRequest<TResponse, TSettings> request)
         {
             Request = request;
             PartTypes = request.PartTypes.ToList().AsReadOnly();
             Settings = request.Settings.Clone();
-            Request.Deserialized += Request_Deserialized;
+            Request.Deserialized += (s, a) => OnDeserialized(a);
         }
 
-        private void Request_Deserialized(object sender, ResponseEventArgs<TResponse> e)
+        protected virtual void OnDeserialized(ResponseEventArgs<TResponse> a)
         {
-            _resultsPerPage = e.Response.PageInfo.ResultsPerPage;
-            _totalResults = e.Response.PageInfo.TotalResults;
-            Request.Deserialized -= Request_Deserialized;
+            if (_isFirstItem)
+            {
+                _resultsPerPage = a.Response.PageInfo.ResultsPerPage;
+                _totalResults = a.Response.PageInfo.TotalResults;
+                _isFirstItem = false;
+            }
+
+            Deserialized?.Invoke(this, a);
         }
 
         protected YoutubeCollection(TSettings settings = null, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)

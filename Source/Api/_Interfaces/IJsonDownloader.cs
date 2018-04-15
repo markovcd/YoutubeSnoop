@@ -1,7 +1,9 @@
-﻿namespace YoutubeSnoop.Api
+﻿using System.Threading.Tasks;
+
+namespace YoutubeSnoop.Api
 {
     public interface IJsonDownloader
     {
-        string Download(string url);
+        Task<string> DownloadAsync(string url);
     }
 }

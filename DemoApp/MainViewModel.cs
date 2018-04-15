@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using YoutubeSnoop;
 using YoutubeSnoop.Fluent;
@@ -53,6 +52,11 @@ namespace DemoApp
         public ICommand ShowVideoCommentThreadsCommand => new RelayCommand<YoutubeVideo>(ShowVideoCommentThreads, v => IsIdle && v?.CommentCount != 0);
         public ICommand ShowVideoChannelCommand => new RelayCommand<YoutubeVideo>(ShowVideoChannel, v => !string.IsNullOrEmpty(v?.ChannelId));
 
+        public MainViewModel()
+        {
+            Youtube.ResultsPerPage = 50;
+        }
+
         private void OpenUrl(string url)
         {
             Process.Start(new ProcessStartInfo(url));
@@ -61,7 +65,7 @@ namespace DemoApp
         private void Search()
         {
             var searchQuery = SearchQuery;
-            FillList(Youtube.Search(searchQuery).Take(50));
+            FillList(Youtube.Search(searchQuery).TakePages(2));
         }
 
         private void ShowCommentCommentThread(YoutubeComment comment)
@@ -96,17 +100,17 @@ namespace DemoApp
 
         private void ShowChannelUploads(YoutubeChannel channel)
         {
-            FillList(channel.Uploads().RequestAllParts().Take(50));
+            FillList(channel.Uploads().RequestAllParts().TakePage());
         }
 
         private void ShowChannelPlaylists(YoutubeChannel channel)
         {
-            FillList(channel.Playlists().RequestAllParts().Take(50));
+            FillList(channel.Playlists().RequestAllParts().TakePage());
         }
 
         private void ShowPlaylistItems(YoutubePlaylist playlist)
         {            
-            FillList(playlist.Items().RequestAllParts().Take(50));
+            FillList(playlist.Items().RequestAllParts().TakePage());
         }
 
         private void ShowPlaylistItemDetails(YoutubePlaylistItem playlistItem)
@@ -116,7 +120,7 @@ namespace DemoApp
 
         private void ShowRelatedVideos(YoutubeVideo video)
         {
-            FillList(video.RelatedVideos().Take(50));
+            FillList(video.RelatedVideos().TakePage());
         }
 
         private void ShowSearchResultDetails(YoutubeSearchResult searchResult)
@@ -132,29 +136,27 @@ namespace DemoApp
 
         private void ShowVideoCommentThreads(YoutubeVideo video)
         {
-            FillList(video.Comments().RequestAllParts().Take(50));
+            FillList(video.Comments().RequestAllParts().TakePage());
         }
 
         private void ShowVideoChannel(YoutubeVideo video)
         {
             SelectedItem = video.Channel().RequestAllParts();
         }
-
-        private void FillList(IEnumerable<IYoutubeItem> items)
+#pragma warning disable RECS0165
+        private async void FillList(IEnumerable<IYoutubeItem> items)
+#pragma warning restore RECS0165
         {
             Items.Clear();
             SearchQuery = null;
             IsIdle = false;
 
-            Task.Run(() =>
+            foreach (var item in items)
             {
-                foreach (var item in items)
-                {
-                    App.Current.Dispatcher.Invoke(() => Items.Add(item));
-                }
+                await App.Current.Dispatcher.BeginInvoke((Action)(() => Items.Add(item)));
+            }
 
-                App.Current.Dispatcher.Invoke(() => IsIdle = true);
-            });
+            IsIdle = true;
         }
 
         #region INotifyPropertyChanged

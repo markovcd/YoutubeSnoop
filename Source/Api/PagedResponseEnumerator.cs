@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using YoutubeSnoop.Api.Entities;
 
 namespace YoutubeSnoop.Api
@@ -31,7 +30,7 @@ namespace YoutubeSnoop.Api
         {
             _index++;
 
-            if (!_responses.Any())
+            if (_responses.Count == 0)
             {
                 _responses.Add(_getNextResponse(null));
             }

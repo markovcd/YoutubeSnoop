@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using YoutubeSnoop;
 using YoutubeSnoop.Fluent;
@@ -151,10 +151,13 @@ namespace DemoApp
             SearchQuery = null;
             IsIdle = false;
 
-            foreach (var item in items)
+            await Task.Run(() =>
             {
-                await App.Current.Dispatcher.BeginInvoke((Action)(() => Items.Add(item)));
-            }
+                foreach (var item in items)
+                {
+                    App.Current.Dispatcher.Invoke(() => Items.Add(item));
+                }
+            });
 
             IsIdle = true;
         }

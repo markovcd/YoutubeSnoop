@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -10,21 +9,19 @@ namespace YoutubeSnoop.Api
     /// </summary>
     public class JsonDownloader : IJsonDownloader
     {
+        [DebuggerNonUserCode]
         public static async Task<string> DownloadAsync(string url)
         {
             using (var http = new HttpClient())
             {
-                return await http.GetStringAsync(url).ConfigureAwait(false);
-            }
+                var response = await http.GetAsync(url).ConfigureAwait(false);
 
-            //try
-            //{
-            //    return http.DownloadString(url);
-            //}
-            //catch (WebException ex)
-            //{
-            //    throw RequestException.FromWebException(ex);
-            //}
+                var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                if (!response.IsSuccessStatusCode) throw RequestException.FromJson(json);
+
+                return json;
+            }
         }
 
         [DebuggerNonUserCode]

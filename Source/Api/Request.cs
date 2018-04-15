@@ -98,7 +98,7 @@ namespace YoutubeSnoop.Api
         public static Request<Entities.Videos.Video, VideoSettings> Create(VideoSettings settings, IEnumerable<PartType> partTypes = null, int resultsPerPage = 20)
         {
             return Create(settings, partTypes, resultsPerPage, new JsonDownloader(), new PagedResponseDeserializer<Entities.Videos.Video>(), new UrlFormatter());
-        }   
+        }
     }
    
     /// <summary>
@@ -157,9 +157,10 @@ namespace YoutubeSnoop.Api
  
         public static IPagedResponse<TResponse> Deserialize(IUrlFormatter apiUrlFormatter, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TResponse> responseDeserializer,
                                                         TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, string pageToken = null, string apiKey = null)
-        {
+        {        
             var requestUrl = apiUrlFormatter.Format(settings, partTypes, pageToken, resultsPerPage, apiKey ?? _defaultApiKey);
-            var json = jsonDownloader.Download(requestUrl);
+            var json = jsonDownloader.DownloadAsync(requestUrl).Result;
+
             return responseDeserializer.Deserialize(json);
         }
 

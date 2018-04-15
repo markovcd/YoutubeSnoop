@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using YoutubeSnoop.Api.Entities;
 
@@ -16,15 +15,6 @@ namespace YoutubeSnoop.Api
         public static RequestException FromJson(string json)
         {
             return JObject.Parse(json).SelectToken("error").ToObject<RequestException>();
-        }
-
-        public static RequestException FromWebException(WebException ex)
-        {
-            string errorJson;
-
-            using (var reader = new StreamReader(ex.Response.GetResponseStream())) errorJson = reader.ReadToEnd();
-
-            return FromJson(errorJson);
         }
     }
 }

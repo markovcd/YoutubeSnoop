@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using YoutubeSnoop.Api.Entities;
 using YoutubeSnoop.Enums;
 
@@ -148,25 +149,25 @@ namespace YoutubeSnoop.Api
             Deserialized?.Invoke(this, a);
         }
 
-        public IPagedResponse<TResponse> Deserialize(string pageToken = null)
+        public async Task<IPagedResponse<TResponse>> DeserializeAsync(string pageToken = null)
         {
-            var response = Deserialize(_apiUrlFormatter, _jsonDownloader, _responseDeserializer, Settings, PartTypes, ResultsPerPage, pageToken, _apiKey);
+            var response = await DeserializeAsync(_apiUrlFormatter, _jsonDownloader, _responseDeserializer, Settings, PartTypes, ResultsPerPage, pageToken, _apiKey).ConfigureAwait(false);
             OnDeserialized(new ResponseEventArgs<TResponse>(pageToken, response));
             return response;
         }
  
-        public static IPagedResponse<TResponse> Deserialize(IUrlFormatter apiUrlFormatter, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TResponse> responseDeserializer,
+        public static async Task<IPagedResponse<TResponse>> DeserializeAsync(IUrlFormatter apiUrlFormatter, IJsonDownloader jsonDownloader, IPagedResponseDeserializer<TResponse> responseDeserializer,
                                                         TSettings settings, IEnumerable<PartType> partTypes, int resultsPerPage, string pageToken = null, string apiKey = null)
-        {        
+        {
             var requestUrl = apiUrlFormatter.Format(settings, partTypes, pageToken, resultsPerPage, apiKey ?? _defaultApiKey);
-            var json = jsonDownloader.DownloadAsync(requestUrl).Result;
+            var json = await jsonDownloader.DownloadAsync(requestUrl).ConfigureAwait(false);
 
             return responseDeserializer.Deserialize(json);
         }
 
         public IEnumerator<IPagedResponse<TResponse>> GetEnumerator()
         {
-            return new PagedResponseEnumerator<TResponse>(Deserialize);
+            return new PagedResponseEnumerator<TResponse>(p => DeserializeAsync(p).Result);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

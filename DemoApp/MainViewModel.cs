@@ -39,7 +39,7 @@ namespace DemoApp
         public ICommand SearchCommand => new RelayCommand(Search, () => !string.IsNullOrEmpty(SearchQuery) && IsIdle);
         public ICommand ShowCommentCommentThreadCommand => new RelayCommand<YoutubeComment>(ShowCommentCommentThread, c => c != null);
         public ICommand ShowCommentVideoCommand => new RelayCommand<YoutubeComment>(ShowCommentVideo, c => c != null);
-        public ICommand ShowCommentParentCommand => new RelayCommand<YoutubeComment>(ShowCommentParent, c => c?.ParentId != null);                
+        public ICommand ShowCommentParentCommand => new RelayCommand<YoutubeComment>(ShowCommentParent, c => c?.ParentId != null);
         public ICommand ShowCommentThreadDetailsCommand => new RelayCommand<YoutubeCommentThread>(ShowCommentThreadDetails, c => c != null);
         public ICommand ShowCommentThreadRepliesCommand => new RelayCommand<YoutubeCommentThread>(ShowCommentThreadReplies, c => c?.TotalReplyCount != 0);
         public ICommand ShowCommentThreadVideoCommand => new RelayCommand<YoutubeCommentThread>(ShowCommentThreadVideo, c => c != null);
@@ -124,12 +124,12 @@ namespace DemoApp
         }
 
         private void ShowSearchResultDetails(YoutubeSearchResult searchResult)
-        {        
+        {
             var details = searchResult.Details();
 
-            if (details is YoutubeVideo) details = (details as YoutubeVideo)?.RequestAllParts();
-            if (details is YoutubePlaylist) details = (details as YoutubePlaylist)?.RequestAllParts();
-            if (details is YoutubeChannel) details = (details as YoutubeChannel)?.RequestAllParts();
+            if (details is YoutubeVideo video) details = video.RequestAllParts();
+            if (details is YoutubePlaylist playlist) details = playlist.RequestAllParts();
+            if (details is YoutubeChannel channel) details = channel.RequestAllParts();
 
             SelectedItem = details;
         }
@@ -150,14 +150,14 @@ namespace DemoApp
             Items.Clear();
             SearchQuery = null;
             IsIdle = false;
-
+            
             await Task.Run(() =>
             {
                 foreach (var item in items)
                 {
                     App.Current.Dispatcher.Invoke(() => Items.Add(item));
                 }
-            });
+            }).ConfigureAwait(false);
 
             IsIdle = true;
         }

@@ -47,7 +47,7 @@ The intermediate way:
 
 
 	var channelSettings = new ChannelSettings { ForUsername = "some YouTube username" };
-	var channel = new YoutubeChannel(channelSettings);
+	var channel = new YoutubeChannel(channelSettings, new[] { PartType.Snippet, PartType.ContentDetails });
 
 	var playlistItemSettings = new PlaylistItemSettings { PlaylistId = channel.UploadsPlaylistId };
 	var channelUploads = new YoutubePlaylistItems(playlistItemSettings);
@@ -56,3 +56,25 @@ The intermediate way:
 	var channelSearch = new YoutubeSearch(searchSettings3).ToList();
 	
 The hard way:
+
+        var videoSettings = new VideoSettings { Id = "some video id" };
+	var video = Request.Create(videoSettings, new[] { PartType.Snippet, PartType.ContentDetails });
+	Console.WriteLine(video.FirstItem.Snippet.Title);
+
+	var commentThreadSettings = new CommentThreadSettings { VideoId = video.FirstItem.Id };
+	var comments = Request.Create(commentThreadSettings);
+
+	var searchSettings = new SearchSettings { RelatedToVideoId = video.FirstItem.Id };
+	var related = Request.Create(searchSettings);
+
+	var searchSettings2 = new SearchSettings { Query = "my first search query", PublishedBefore = DateTime.Now, Order = SearchOrder.Relevance };
+	var search = Request.Create(searchSettings2).First().Items.ToList();
+
+	var channelSettings = new ChannelSettings { ForUsername = "some YouTube username" };
+	var channel = Request.Create(channelSettings, new[] { PartType.Snippet, PartType.ContentDetails });
+
+	var playlistItemSettings = new PlaylistItemSettings { PlaylistId = channel.FirstItem.ContentDetails.RelatedPlaylists?.Uploads };
+	var channelUploads = Request.Create(playlistItemSettings);
+
+	var searchSettings3 = new SearchSettings { Query = "find some stuff", ChannelId = channel.FirstItem.Id };
+	var channelSearch = Request.Create(searchSettings3).First().Items.ToList();

@@ -18,7 +18,12 @@ namespace YoutubeSnoop.Api
 
                 var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                if (!response.IsSuccessStatusCode) throw RequestException.FromJson(json);
+                if (!response.IsSuccessStatusCode)
+                {
+                    var ex = RequestException.FromJson(json);
+                    if (ex == null) response.EnsureSuccessStatusCode();
+                    throw ex;
+                }
 
                 return json;
             }

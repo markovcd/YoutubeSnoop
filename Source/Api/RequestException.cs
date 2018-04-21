@@ -14,7 +14,10 @@ namespace YoutubeSnoop.Api
 
         public static RequestException FromJson(string json)
         {
-            return JObject.Parse(json).SelectToken("error").ToObject<RequestException>();
+            if (string.IsNullOrWhiteSpace(json)) return null;
+            if (!JObject.Parse(json).TryGetValue("error", out var requestException)) return null;
+
+            return requestException?.ToObject<RequestException>();
         }
     }
 }

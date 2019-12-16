@@ -1,0 +1,24 @@
+name: .NET Core
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.108
+    - name: Publish NuGet
+      uses: rohith/publish-nuget@v1.0.0
+      with:
+        # Project (csproj) directory path relative from the root of repository
+        project_dir: Source
+        # Format of the tag to be created, `*` is placeholder for actual version
+       
+        # API key for the NuGet feed
+        nuget_key: oy2c4aywwt43t6l44moqbe7b4e6i6dte5nlemmukzzntaa
